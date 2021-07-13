@@ -1,0 +1,27 @@
+{
+  "name": "talentadmin",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "ant-design-vue": "^2.2.1",
+    "axios": "^0.21.1",
+    "store": "^2.0.12",
+    "vue": "^3.0.5",
+    "vue-router": "^4.0.10",
+    "vuex": "^4.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^16.3.1",
+    "@types/store": "^2.0.2",
+    "@vitejs/plugin-vue": "^1.2.4",
+    "@vue/compiler-sfc": "^3.0.5",
+    "sass": "^1.35.2",
+    "typescript": "^4.3.2",
+    "vite": "^2.4.0",
+    "vue-tsc": "^0.0.24"
+  }
+}
