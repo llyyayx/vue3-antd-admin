@@ -9,6 +9,11 @@ export const constantRouterMap: RouteRecordRaw[] = [
     component: () => import('/src/views/login/login.vue')
   },
   {
+    path: '/layout',
+    name: 'layout',
+    component: () => import('/src/layout/index.vue')
+  },
+  {
     path: '/403',
     name: '403',
     component: () => import('/src/errorPages/403.vue')

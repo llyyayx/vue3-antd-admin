@@ -6,7 +6,7 @@
         <div class="login-container-form">
           <div class="login-container-hello">您好!</div>
           <div class="login-container-title">欢迎来到通用管理后台</div>
-          <a-form ref="formRef" :model="form" :rules="rules">
+          <a-form ref="formRef" :model="form" :rules="rules" @keyup.enter="handleSubmit">
             <a-form-item name="username">
               <a-input v-model:value="form.username" autocomplete="off" placeholder="请输入账号">
                 <template v-slot:prefix>
@@ -35,12 +35,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, UnwrapRef } from "vue"
-import { useRouter } from 'vue-router'
 import { useStore } from 'vuex' 
+import { useRouter } from 'vue-router'
 import { message } from 'ant-design-vue'
-import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
 import { LoginFrom } from '@/types/views/login'
+import { defineComponent, reactive, ref, UnwrapRef } from "vue"
+import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
 export default defineComponent({
   name: "login",
   components: {
@@ -82,7 +82,9 @@ export default defineComponent({
     const handleSubmit = (): void => {
       formRef.value.validate().then(() => {
         store.dispatch('user/login', form).then(e => {
-          router.push('/home')
+          const route = router.currentRoute.value
+          const url = route.query.redirect || '/'
+          router.push({ path: url as string })
         }).catch(err => {
           message.error(err.message || err.data.message)
         })

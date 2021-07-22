@@ -1,28 +1,22 @@
-import { createStore } from 'vuex'
-import { App } from 'vue'
-import user from './modules/user'
+import { createStore, ModuleTree } from 'vuex'
+import user, { UserState } from './modules/user'
+import tabs, { TabState } from './modules/tabs'
+import menu, { menuState } from './modules/menu'
 
-export type IndexState = {
-  count: number
+export interface AllState {
+  user: UserState,
+  tabs: TabState,
+  menu: menuState
 }
 
-const state: IndexState = {
-  count: 1
-}
 
 // 实例化
-const store = createStore({
-
-  state,
-
-  mutations: {
-    increment (state: IndexState) {
-      state.count++
-    }
-  },
+const store = createStore<AllState>({
 
   modules: {
-    user
+    user,
+    tabs,
+    menu
   }
 
 })

@@ -1,9 +1,11 @@
-import { ActionContext } from 'vuex'
-import { IndexState } from '../index'
 import storage from 'store'
+import { AllState } from '../index'
+import { ActionContext } from 'vuex'
+import { generator } from '@/utils/parsingRouter'
+import { message } from 'ant-design-vue'
 import { LoginFrom } from '@/types/views/login'
-import { loginSuccess, loginError } from '@/types/api/login'
-import { login } from '@/api/login'
+import { LoginSuccess, RouterTable } from '@/types/api/login'
+import { login, info, menu } from '@/api/login'
 
 // 处理用户登录、登出、个人信息、权限路由
 
@@ -11,7 +13,8 @@ export type UserState = {
   token: string,
   name: string,
   avatar: string,
-  roles: string[]
+  roles: string[],
+  routers?: RouterTable
 }
 
 const state: UserState = {
@@ -22,7 +25,9 @@ const state: UserState = {
   // 头像
   avatar: '',
   // 角色(鉴权)
-  roles: []
+  roles: [],
+  // 路由表(原始未解析)
+  routers: []
 }
 
 const user = {
@@ -40,7 +45,15 @@ const user = {
     
     // 设置用户信息
     setInfo (state: UserState, info: UserState) {
-      state = info
+      const { name, avatar, roles } = info
+      state.name = name
+      state.avatar = avatar
+      state.roles = roles
+    },
+
+    // 设置路由表(原始未解析)
+    setRouters (state: UserState, routers: RouterTable) {
+      state.routers = routers
     }
   
   },
@@ -48,10 +61,10 @@ const user = {
   actions: {
 
     // 登陆
-    login (context: ActionContext<UserState, IndexState>, params: LoginFrom) {
+    login (context: ActionContext<UserState, AllState>, params: LoginFrom) {
       return new Promise((resolve, reject) => {
         login(params).then(e => {
-          const data: loginSuccess = e.data
+          const data: LoginSuccess = e.data
           storage.set('token', data.token)
           context.commit('setToken', data.token)
           resolve(data) 
@@ -62,18 +75,34 @@ const user = {
     },
 
     // 获取用户信息
-    userInfo (context: ActionContext<UserState, IndexState>) {
+    userInfo (context: ActionContext<UserState, AllState>) {
       return new Promise((resolve, reject) => {
-        if (context.state.token) {
-          const userInfo = {
-            name: '赛罗奥特曼',
-            avatar: 'http://img.duoziwang.com/2018/17/05282053232079.jpg',
-            roles: ['admin'],
-            token: context.state.token
+        info().then(e => {
+          const info: UserState = e.data.info 
+          context.commit('setInfo', info)
+          resolve(e)
+        }).catch(err => {
+          message.error(err.message || err.data.message)
+          if (err.data && err.data.code !== -401) {
+            reject(err)
           }
-        } else {
-          reject({code: -60, message: '请重新登陆'})
-        }
+        })
+      })
+    },
+
+    // 获取菜单
+    menu (context: ActionContext<UserState, AllState>) {
+      return new Promise((resolve) => {
+        menu().then(e => {
+          const routeTable: RouterTable = e.data.data
+          context.commit('setRouters', routeTable)
+          // 初始化侧边菜单
+          context.rootState.menu.menuRouter = routeTable[0]['children'] || []
+          context.rootState.menu.menuId = routeTable[0]['id']
+          resolve(generator(routeTable))
+        }).catch(err => {
+          message.error(err.message || err.data.message)
+        })
       })
     }
 

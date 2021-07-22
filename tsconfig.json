@@ -8,6 +8,7 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "suppressImplicitAnyIndexErrors": true,
     "lib": ["esnext", "dom"],
     "baseUrl": "./",
     "paths": {
