@@ -117,6 +117,7 @@ export default defineComponent({
  .main__container {
   background-color: #FFF;
   min-height: 280px;
+  overflow: hidden;
 }
 </style>
 <style lang="scss">

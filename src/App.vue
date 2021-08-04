@@ -1,12 +1,22 @@
 <template>
-  <router-view></router-view>
+  <a-config-provider v-bind="getPopupContainer">
+    <router-view></router-view>
+  </a-config-provider>
 </template>
 
 <script lang="ts">
+import 'moment/dist/locale/zh-cn'
 import { defineComponent } from 'vue'
-
+import zhCN from 'ant-design-vue/es/locale/zh_CN'
 export default defineComponent({
-  name: 'App'
+  name: 'App',
+  data () {
+    return {
+      getPopupContainer: {
+        locale: zhCN
+      }
+    }
+  }
 })
 </script>
 

@@ -1,3 +1,4 @@
+import { App } from 'vue'
 import storage from 'store'
 import router from '@/router'
 import { regAxios } from './install'
@@ -49,7 +50,7 @@ request.interceptors.response.use((response: AxiosResponse): AxiosResponse | Pro
 }, errorHandler)
 
 export const globalAxios = {
-  install (app: any) {
+  install (app: App) {
     app.use(regAxios, request)
   }
 }

@@ -4,12 +4,13 @@ import { RouterTable } from '@/types/api/login'
 
 export type menuState = {
   menuRouter: RouterTable,
-  // 顶层id(栏目)
   menuId: number
 }
 
 const state: menuState = {
+  // 侧边菜单
   menuRouter: [],
+  // 顶层id(栏目)
   menuId: 1
 }
 

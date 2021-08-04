@@ -1,11 +1,11 @@
 import storage from 'store'
 import { AllState } from '../index'
 import { ActionContext } from 'vuex'
-import { generator } from '@/utils/parsingRouter'
 import { message } from 'ant-design-vue'
 import { LoginFrom } from '@/types/views/login'
-import { LoginSuccess, RouterTable } from '@/types/api/login'
+import { RouterTable } from '@/types/api/login'
 import { login, info, menu } from '@/api/login'
+import { generator } from '@/utils/parsingRouter'
 
 // 处理用户登录、登出、个人信息、权限路由
 
@@ -54,6 +54,13 @@ const user = {
     // 设置路由表(原始未解析)
     setRouters (state: UserState, routers: RouterTable) {
       state.routers = routers
+    },
+
+    // 用户退出登陆
+    logout (state: UserState) {
+      storage.remove('token')
+      // 为了重新加载用户信息及路由组
+      state.name = ''
     }
   
   },
@@ -64,10 +71,10 @@ const user = {
     login (context: ActionContext<UserState, AllState>, params: LoginFrom) {
       return new Promise((resolve, reject) => {
         login(params).then(e => {
-          const data: LoginSuccess = e.data
+          const data = e.data
           storage.set('token', data.token)
           context.commit('setToken', data.token)
-          resolve(data) 
+          resolve(data)
         }).catch(err => {
           reject(err)
         })
@@ -78,7 +85,7 @@ const user = {
     userInfo (context: ActionContext<UserState, AllState>) {
       return new Promise((resolve, reject) => {
         info().then(e => {
-          const info: UserState = e.data.info 
+          const info = e.data.info 
           context.commit('setInfo', info)
           resolve(e)
         }).catch(err => {
@@ -94,7 +101,7 @@ const user = {
     menu (context: ActionContext<UserState, AllState>) {
       return new Promise((resolve) => {
         menu().then(e => {
-          const routeTable: RouterTable = e.data.data
+          const routeTable = e.data.data
           context.commit('setRouters', routeTable)
           // 初始化侧边菜单
           context.rootState.menu.menuRouter = routeTable[0]['children'] || []

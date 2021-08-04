@@ -30,7 +30,7 @@
         </div>
       </a-col>
     </a-row>
-    <div class="login-container-tips">基于vue3+ant-design-vue+vite+ts开发的开源通过后台框架</div>
+    <div class="login-container-tips">基于vue3+ant-design-vue+vite+ts开发的开源通用后台框架</div>
   </div>
 </template>
 

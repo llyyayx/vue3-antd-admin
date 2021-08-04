@@ -41,7 +41,7 @@ import storage from 'store'
 import router from '@/router'
 import { mapState, useStore } from 'vuex'
 import aIcon from '@/components/aicon/aicon.vue'
-import { defineComponent, watch, computed } from "vue"
+import { defineComponent, watch, computed, onBeforeMount } from "vue"
 import { RouterObj, RouterTable } from '@/types/api/login'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
 export default defineComponent({
@@ -73,7 +73,7 @@ export default defineComponent({
 
     // 退出登录
     const logout = () => {
-      storage.remove('token')
+      store.commit('user/logout')
       router.push('/login')
     }
 
@@ -91,6 +91,10 @@ export default defineComponent({
     }
 
     watch(activeKey, () => {
+      tabClick(activeKey.value)
+    })
+    
+    onBeforeMount(() => {
       tabClick(activeKey.value)
     })
 

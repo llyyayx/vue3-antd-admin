@@ -5,6 +5,7 @@ const path = require('path')
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/talent',
   plugins: [vue(), vueJsx()],
   resolve: {
     alias: {

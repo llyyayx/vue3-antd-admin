@@ -12,7 +12,6 @@ export default defineComponent({
     }
   },
   render () {
-
     const menuSub = (router: RouterObj) => {
       const subSlots: Slots = {
         title: () => [<span>{ router.name }</span>],
