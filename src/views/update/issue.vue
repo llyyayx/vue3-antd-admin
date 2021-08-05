@@ -6,6 +6,7 @@
       <li>目前还没有适配手机端，需要适配手机端</li>
       <li>输出警告：evTools failed to load SourceMap: Could not load content for http://localhost:3000/talent/update/antd.css.map</li>
       <li>依赖外部接口，自身还没有mock数据</li>
+      <li>antd全量引入，a-icon全量引入没有按需加载，导致打包后体积达到3M</li>
     </ul>
   </div>
 </template>
