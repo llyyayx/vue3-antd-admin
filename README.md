@@ -14,6 +14,8 @@
 
 [http://www.lelebk.com](http://www.lelebk.com)
 
+账号：admin    密码：123456
+
 
 #### 安装使用
 
