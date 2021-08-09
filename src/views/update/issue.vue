@@ -14,6 +14,12 @@
       <li class="solve">增删改功能没有自定义显示隐藏</li>
       <li class="solve">自定义插入表单slot</li>
     </ul>
+    <div class="title">2021年08月09日</div>
+    <ul>
+      <li class="solve">formItem不应为必填prop</li>
+      <li class="solve">操作栏左右内边距去除</li>
+      <li class="solve">操作栏可插入slot</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

@@ -28,9 +28,10 @@
     >
       <template #operation="item">
         <div class="operation">
-          <a-button type="link" size="small" @click="defaultEdit(item)" v-if="edit">编辑</a-button>
+          <a @click="defaultEdit(item)" v-if="edit">编辑</a>
           <a-divider type="vertical" v-if="edit" />
-          <a-button type="link" size="small" danger @click="defaultDel(item)" v-if="del">删除</a-button>
+          <a class="danger" @click="defaultDel(item)" v-if="del">删除</a>
+          <slot name="operationMore" />
         </div>
       </template>
       <template v-slot:[key]="item" v-for="(value, key) in $slots">
@@ -94,7 +95,8 @@ export default defineComponent({
     // 添加/修改_条目
     formItem: {
       type: Array as PropType<FormItem[]>,
-      required: true
+      required: false,
+      default: []
     },
     // 查询条目
     selectItem: {
@@ -397,6 +399,12 @@ export default defineComponent({
   }
   & .table__btn {
     display: flex;
+  }
+  & .operation {
+    color: #1890FF;
+    & .danger {
+      color: #FF4D4F
+    }
   }
 }
 </style>

@@ -15,6 +15,19 @@
     <template v-slot:status="item">
       测试-{{ item.value.text.name }}
     </template>
+    <template #operationMore>
+      <a-divider type="vertical" />
+      <a-dropdown>
+        <a class="ant-dropdown-link" @click.prevent>更多</a>
+        <template #overlay>
+          <a-menu>
+            <a-menu-item>
+              <a class="del">修改密码</a>
+            </a-menu-item>
+          </a-menu>
+        </template>
+      </a-dropdown>
+    </template>
   </tableLayout>
 </template>
 <script lang="ts">
