@@ -8,6 +8,12 @@
       <li>依赖外部接口，自身还没有mock数据</li>
       <li>antd全量引入，a-icon全量引入没有按需加载，导致打包后体积达到3M</li>
     </ul>
+    <div class="title">2021年08月08日</div>
+    <ul>
+      <li class="solve">没有查询条件时，查询和重置按钮依然显示</li>
+      <li class="solve">增删改功能没有自定义显示隐藏</li>
+      <li class="solve">自定义插入表单slot</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

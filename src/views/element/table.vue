@@ -9,8 +9,12 @@
     :add="addData"
     :edit="editData"
     :del="delData"
+    :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
     ref="layout" 
   >
+    <template v-slot:status="item">
+      测试-{{ item.value.text.name }}
+    </template>
   </tableLayout>
 </template>
 <script lang="ts">
@@ -27,7 +31,7 @@ export default defineComponent({
       { title: '序号', dataIndex: 'id' }, {  title: '姓名', dataIndex: 'name' },
       { title: '年龄', dataIndex: 'age' }, { title: '住址', dataIndex: 'addr' },
       { title: '手机号', dataIndex: 'phone' }, { title: '行业', dataIndex: 'industry' },
-      { title: '净资产(亿元)', dataIndex: 'wealth' },
+      { title: '净资产(亿元)', dataIndex: 'wealth' }, {  title: '状态', slots: { customRender: 'status' } },
     ]
     const formItem = [
       { title: '姓名', key: 'name', type: 'input' }, { title: '年龄', key: 'age', type: 'number' },
@@ -52,7 +56,14 @@ export default defineComponent({
       industry: [{required: true, message: '请输入行业', trigger: 'change',type:'string'}],
       wealth: [{required: true, message: '请输入净资产', trigger: 'change',type:'number'}]
     }
-    return { columns, formItem, selectItem, getData, addData, editData, delData, rules }
+    const selectedRowKeys = ref<any[]>([])
+    const onSelectChange = (keys: []) => {
+      selectedRowKeys.value.splice(0)
+      keys.forEach(key => {
+        selectedRowKeys.value.push(key)
+      })
+    }
+    return { columns, formItem, selectItem, getData, addData, editData, delData, rules, selectedRowKeys, onSelectChange }
   }
 })
 </script>

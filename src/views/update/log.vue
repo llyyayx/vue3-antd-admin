@@ -4,6 +4,12 @@
     <ul>
       <li>通用框架的基础路由、鉴权、无限嵌套菜单、tableLayout组件、登陆退出完成，正式上线github</li>
     </ul>
+    <div class="title">2021年08月09日</div>
+    <ul>
+      <li>解决了没有查询条件时，查询和重置按钮依然显示</li>
+      <li>增删改功能可以自主设置显示隐藏</li>
+      <li>增加自定义插入表单slot配置</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

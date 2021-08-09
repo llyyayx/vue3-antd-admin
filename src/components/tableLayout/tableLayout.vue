@@ -1,7 +1,7 @@
 <template>
   <a-card class="table__layout">
     <template #title>
-      <div class="table__top">
+      <div class="table__top" v-if="selectItem && selectItem.length > 0">
         <Form 
           ref="selectForm"
           :formItem="selectItem || []"
@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="table__btn">
-        <a-button type="primary" @click="defaultAdd">新增</a-button>
+        <a-button type="primary" @click="defaultAdd" v-if="add">新增</a-button>
         <slot name="button" />
       </div>
     </template>
@@ -28,17 +28,21 @@
     >
       <template #operation="item">
         <div class="operation">
-          <a-button type="link" size="small" @click="defaultEdit(item)">编辑</a-button>
-          <a-divider type="vertical" />
-          <a-button type="link" size="small" danger @click="defaultDel(item)">删除</a-button>
+          <a-button type="link" size="small" @click="defaultEdit(item)" v-if="edit">编辑</a-button>
+          <a-divider type="vertical" v-if="edit" />
+          <a-button type="link" size="small" danger @click="defaultDel(item)" v-if="del">删除</a-button>
         </div>
+      </template>
+      <template v-slot:[key]="item" v-for="(value, key) in $slots">
+        <slot :name="key" :value="item"></slot>
       </template>
     </a-table>
   </a-card>
-  <Modal 
+  <Modal
     ref="addModal" 
     title="添加数据" 
     @ok="addSubmit"
+    v-if="add"
   >
     <Form 
       ref="addForm"
@@ -52,6 +56,7 @@
     ref="editModal" 
     title="编辑数据" 
     @ok="editSubmit"
+    v-if="edit"
   >
     <Form 
       ref="editForm"
@@ -110,21 +115,21 @@ export default defineComponent({
     },
     // 添加接口_false不展示
     add: {
-      type: [Function, Boolean] as PropType<SetData>,
+      type: Function as PropType<SetData>,
       required: false,
-      default: false
+      default: undefined
     },
     // 修改接口_false不展示
     edit: {
-      type: [Function, Boolean] as PropType<SetData>,
+      type: Function as PropType<SetData>,
       required: false,
-      default: false
+      default: undefined
     },
     // 删除接口_false不展示
     del: {
-      type: [Function, Boolean] as PropType<SetData>,
+      type: Function as PropType<SetData>,
       required: false,
-      default: false
+      default: undefined
     },
     // 列表/编辑/删除_主键
     rowkey: {
@@ -179,7 +184,7 @@ export default defineComponent({
     }
 
   },
-  setup (props) {
+  setup (props, context) {
 
     /**** 表单初始化 ****/
 
@@ -200,15 +205,17 @@ export default defineComponent({
 
     // 初始化操作栏
     onBeforeMount(() => {
-      const action: ColumnProps = {
-        title: '操作',
-        width: 200,
-        key: 'operation',
-        fixed: 'right',
-        slots: { customRender: 'operation' }
+      if (props.del || props.edit) {
+        const action: ColumnProps = {
+          title: '操作',
+          width: 200,
+          key: 'operation',
+          fixed: 'right',
+          slots: { customRender: 'operation' }
+        }
+        // 防止多次插入
+        if (!util.arrIsKey(props.columns, 'key', 'operation')) props.columns.push(action)
       }
-      // 防止多次插入
-      if (!util.arrIsKey(props.columns, 'key', 'operation')) props.columns.push(action)
     })
 
     // 初始化分页
@@ -316,6 +323,7 @@ export default defineComponent({
 
     // 删除事件
     const defaultDel = (e: any) => {
+      const delFun = props.del as SetData
       const data = {}
       const key = props.delKey ? props.delKey : props.rowkey
       data[key] = e.text[key]
@@ -324,7 +332,7 @@ export default defineComponent({
         content: '请谨慎选择此操作不可逆',
         icon: createVNode(QuestionCircleOutlined),
         onOk () {
-          return props.del(data).then(e => {
+          return delFun(data).then(e => {
             message.success(e.data.message)
             getData()
           }).catch(err => {
