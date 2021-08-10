@@ -13,6 +13,11 @@
       <li>去除操作栏左右内边距，a-button换为a标签</li>
       <li>操作栏增加operationMore插槽</li>
     </ul>
+    <div class="title">2021年08月10日</div>
+    <ul>
+      <li>解决添加编辑数据时，规则验证失败按钮loading未取消</li>
+      <li>多文本框独占一行提供给了解决方案，用户可以自行设置formItem的labelCol项，具体看示例</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

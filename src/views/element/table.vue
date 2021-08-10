@@ -55,7 +55,7 @@ export default defineComponent({
           {value: 30, title: '30亿'},{value: 40, title: '40亿'},
           {value: 999, title: '50亿+'}
         ] 
-      },
+      },{ title: '备注', key: 'content', type: 'textarea', itemWidth: 'calc(100% - 20px)', labelCol: 3 },
     ]
     const selectItem = [
       { title: '姓名', key: 'name', type: 'input', itemWidth: '290px' }, { title: '年龄', key: 'age', type: 'number', itemWidth: '290px' },

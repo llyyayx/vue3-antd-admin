@@ -51,6 +51,7 @@
       :rules="addRules ? addRules : rules"
       :setData="add"
       @succeed="addComplete"
+      @fail="addModal.loading(false)"
     />
   </Modal>
   <Modal 
@@ -61,11 +62,13 @@
   >
     <Form 
       ref="editForm"
+      :dataKey="editKey ? editKey : rowkey"
       :formItem="editItem ? editItem : formItem"
       :rules="editRules ? editRules : rules"
       :setData="edit"
       :defaultData="editData"
       @succeed="editComplete"
+      @fail="editModal.loading(false)"
     />
   </Modal>
 </template>

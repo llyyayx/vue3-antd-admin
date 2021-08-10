@@ -19,6 +19,8 @@
       <li class="solve">formItem不应为必填prop</li>
       <li class="solve">操作栏左右内边距去除</li>
       <li class="solve">操作栏可插入slot</li>
+      <li class="solve">添加编辑数据时，规则验证失败按钮loading未取消</li>
+      <li class="solve">多文本框独占一行</li>
     </ul>
   </div>
 </template>

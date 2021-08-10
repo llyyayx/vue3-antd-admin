@@ -2,8 +2,6 @@
   <a-form 
     ref="formRef"
     :rules="rules"
-    :labelCol="{span: 6}"
-    :wrapperCol="{span: 18}"
     :model="formData"
     layout="inline"
     class="comform"
@@ -13,6 +11,8 @@
         :label="item.title"
         :name="item.key"
         :style="{ width: item.itemWidth || 'calc(50% - 20px)' }"
+        :labelCol="{span: item.labelCol ? item.labelCol : 6}"
+        :wrapperCol="{span: item.labelCol ? 24-item.labelCol : 18}"
         class="form__item"
       >
         <!-- 输入框 -->
@@ -50,7 +50,7 @@
         />
         <!-- 多行文本输入 -->
         <a-textarea
-          v-model:value="formData[item.key]" 
+          v-model:value="formData[item.key]"
           :allowClear="true" 
           autocomplete="off" 
           :placeholder="'请输入'+item.title"
@@ -97,12 +97,23 @@ import { FormItem, SetData } from './type'
 import { defineComponent, PropType, ref, watch, reactive, computed } from 'vue'
 export default defineComponent({
   name: 'comForm',
-  emits: ['succeed'],
+  emits: ['succeed', 'fail'],
   props: {
     // 表单项
     formItem: {
       type: Array as PropType<FormItem[]>,
       required: true
+    },
+    // 提交数据的api接口
+    setData: {
+      type: Function as PropType<SetData>,
+      required: true
+    },
+    // 修改数据的key
+    dataKey: {
+      type: String,
+      required: false,
+      default: undefined
     },
     // 规则
     rules: {
@@ -110,16 +121,11 @@ export default defineComponent({
       required: false,
       default: {}
     },
-    // 影响数据的api方法
-    setData: {
-      type: Function as PropType<SetData>,
-      required: true
-    },
-    // 初始化数据
+    // 初始化数据(编辑)
     defaultData: {
-      type: [Object, Boolean],
+      type: Object,
       required: false,
-      default: false
+      default: {}
     }
   },
   setup (props, context) {
@@ -127,8 +133,13 @@ export default defineComponent({
     // 表单数据
     const formData = computed(() => {
       let data = reactive({})
-      if (props.defaultData) {
-        data = props.defaultData
+      if (Object.keys(props.defaultData).length > 0) {
+        props.formItem.forEach(item => {
+          data[item.key] = props.defaultData[item.key] || undefined
+        })
+        if (props.dataKey) {
+          data[props.dataKey] = props.defaultData[props.dataKey] || undefined
+        }
       } else {
         props.formItem.forEach(item => {
           data[item.key] = item.defaultVal || undefined
@@ -149,7 +160,10 @@ export default defineComponent({
           context.emit('succeed', e)
         }).catch(err => {
           message.error(err.message || err.data.message)
+          context.emit('fail', 'api返回错误')
         })
+      }).catch(() => {
+        context.emit('fail', '规则验证未通过')
       })
     }
 

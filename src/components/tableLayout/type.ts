@@ -8,9 +8,10 @@ export interface FormItem {
   title: string,
   key: string,
   type: string,
-  options?: any[]
-  itemWidth?: string
-  defaultVal?: any
+  options?: any[],
+  itemWidth?: string,
+  defaultVal?: any,
+  labelCol?: number
 }
 
 // 表单提交函数类型_增改
