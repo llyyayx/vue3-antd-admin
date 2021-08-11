@@ -24,8 +24,8 @@
     </ul>
     <div class="title">2021年08月10日</div>
     <ul>
-      <li>表单没有图片上传组件</li>
-      <li>需要增加开源许可证，避免风险</li>
+      <li class="solve">表单没有图片上传组件</li>
+      <li class="solve">需要增加开源许可证，避免风险</li>
     </ul>
   </div>
 </template>
