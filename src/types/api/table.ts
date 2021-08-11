@@ -6,3 +6,7 @@ export interface TableList extends ResponseData {
   pageSize: number,
   data: []
 }
+
+export interface UploadApi extends ResponseData {
+  url: string
+}

@@ -1,6 +1,6 @@
 import request from '../request'
 import { AxiosResponse } from 'axios'
-import { TableList } from '@/types/api/table'
+import { TableList, UploadApi } from '@/types/api/table'
 import { ResponseData } from '@/types/api/public'
 
 type ConfigType<T=ResponseData> = Promise<AxiosResponse<T>>
@@ -32,6 +32,14 @@ export const editData = (data: any): ConfigType => {
 export const delData = (data: any): ConfigType => {
   return request({
     url: '/table/del',
+    method: 'post',
+    data
+  })
+}
+
+export const upload = (data: any): ConfigType<UploadApi> => {
+  return request({
+    url: '/table/upload',
     method: 'post',
     data
   })

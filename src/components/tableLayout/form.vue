@@ -87,17 +87,27 @@
           :options="item.options"
           v-if="item.type === 'radio'"
         />
+        <!-- 文件上传 -->
+        <upload
+          v-model:value="formData[item.key]"
+          :upload="item.upload"
+          v-if="item.type === 'upload'"
+        />
       </a-form-item>
     </template>
   </a-form>
 </template>
 <script lang="ts">
+import upload from './upload.vue'
 import { message } from 'ant-design-vue'
 import { FormItem, SetData } from './type'
 import { defineComponent, PropType, ref, watch, reactive, computed } from 'vue'
 export default defineComponent({
   name: 'comForm',
   emits: ['succeed', 'fail'],
+  components: {
+    upload
+  },
   props: {
     // 表单项
     formItem: {

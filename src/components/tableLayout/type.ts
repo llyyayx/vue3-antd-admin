@@ -11,7 +11,8 @@ export interface FormItem {
   options?: any[],
   itemWidth?: string,
   defaultVal?: any,
-  labelCol?: number
+  labelCol?: number,
+  upload?: UploadFun
 }
 
 // 表单提交函数类型_增改
@@ -19,6 +20,13 @@ export type SetData = (x?: any) => Promise<AxiosResponse<ResponseData>>
 
 // 表单提交函数类型_查询
 export type GetData = (x?: any) => Promise<AxiosResponse<TableList>>
+
+// 文件上传组件
+export interface UploadData extends ResponseData  {
+  url: string
+}
+
+export type UploadFun = (x?: any) => Promise<AxiosResponse<UploadData>>
 
 export interface TableProps {
   columns: ColumnProps[],

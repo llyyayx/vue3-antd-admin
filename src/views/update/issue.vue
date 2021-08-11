@@ -22,6 +22,11 @@
       <li class="solve">添加编辑数据时，规则验证失败按钮loading未取消</li>
       <li class="solve">多文本框独占一行</li>
     </ul>
+    <div class="title">2021年08月10日</div>
+    <ul>
+      <li>表单没有图片上传组件</li>
+      <li>需要增加开源许可证，避免风险</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

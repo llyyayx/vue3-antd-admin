@@ -18,6 +18,11 @@
       <li>解决添加编辑数据时，规则验证失败按钮loading未取消</li>
       <li>多文本框独占一行提供给了解决方案，用户可以自行设置formItem的labelCol项，具体看示例</li>
     </ul>
+    <div class="title">2021年08月11日</div>
+    <ul>
+      <li>增加表单上传图片组件upload，用户可以自行设置formItem的type为upload</li>
+      <li>增加开源许可证</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">
