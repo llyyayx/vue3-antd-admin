@@ -23,6 +23,12 @@
       <li>增加表单上传图片组件upload，用户可以自行设置formItem的type为upload</li>
       <li>增加开源许可证</li>
     </ul>
+    <div class="title">2021年08月12日</div>
+    <ul>
+      <li>解决查询初始条件，首次取数据没有被添加</li>
+      <li>增加操作栏slots返回行数据</li>
+      <li>全局刷新增加等待loading酷炫动画</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

@@ -5,9 +5,35 @@
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
+    <style>
+      .windowLoading{margin:0;width:100%;height:100vh;overflow:hidden}
+      .windowLoading{display:flex;flex-direction:column;justify-content:center;align-items:center}
+      .windowLoading h1{font-family:'Helvetica','Arial',sans-serif;font-size:1.05rem}
+      .windowLoading .logo{position:relative;width:100px;height:100px;box-sizing:border-box;background-color:white}
+      .windowLoading .logo::before,.logo::after{content:'';position:absolute;width:100%;height:100%;box-sizing:border-box;border:4px solid transparent;animation-timing-function:linear}
+      .windowLoading .logo::before{top:0;left:0;border-top-color:black;border-right-color:black;animation:windowLoading-border-before 1.5s infinite;animation-direction:alternate}
+      .windowLoading .logo::after{bottom:0;right:0;border-bottom-color:black;border-left-color:black;animation:windowLoading-border-after 1.5s infinite;animation-direction:alternate}
+      .windowLoading .logo>div{position:absolute}
+      .windowLoading .logo .red{top:4px;bottom:0;left:0;border-right:4px solid black;background-color:#ea5664;animation:windowLoading-red 1.5s infinite;animation-direction:alternate}
+      .windowLoading .logo .orange{bottom:0;left:27%;right:4px;border-top:4px solid black;background-color:#f3b93f;animation:orange 1.5s infinite;animation-direction:alternate}
+      .windowLoading .logo .white{right:5px;top:4px;bottom:50%;height:50%;border-left:4px solid black;background-color:#fff;animation:windowLoading-white 1.5s infinite;animation-direction:alternate}
+      @keyframes windowLoading-border-before{0%{width:0;height:0;border-right-color:transparent}5.99%{border-right-color:transparent}6%{height:0;width:100%;border-right-color:black}25%,100%{width:100%;height:100%}}
+      @keyframes windowLoading-border-after{0%,24.99%{width:0;height:0;border-left-color:transparent;border-bottom-color:transparent}25%{border-left-color:transparent;border-bottom-color:black}36.99%{border-left-color:transparent}37%{height:0;width:100%;border-left-color:black}50%,100%{width:100%;height:100%}}
+      @keyframes windowLoading-red{0%,50%{width:0;opacity:0}50.01%{opacity:1}65%,100%{width:27%;opacity:1}}@keyframes orange{0%,65%{height:0;opacity:0}65.01%{opacity:1}80%,100%{height:50%;opacity:1}}
+      @keyframes windowLoading-white{0%,75%{width:0;opacity:0}75.01%{opacity:1}90%,100%{width:27%;opacity:1}}
+    </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div class="windowLoading">
+        <div class="logo">
+          <div class="white"></div>
+          <div class="orange"></div>
+          <div class="red"></div>
+        </div>
+        <h1>Loading ...</h1>
+      </div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

@@ -15,14 +15,14 @@
     <template v-slot:status="item">
       测试-{{ item.value.text.name }}
     </template>
-    <template #operationMore>
+    <template #operationMore="item">
       <a-divider type="vertical" />
       <a-dropdown>
         <a class="ant-dropdown-link" @click.prevent>更多</a>
         <template #overlay>
           <a-menu>
             <a-menu-item>
-              <a class="del">修改密码</a>
+              <a @click="editPassword(item)">修改密码</a>
             </a-menu-item>
           </a-menu>
         </template>
@@ -60,7 +60,7 @@ export default defineComponent({
       { title: '备注', key: 'content', type: 'textarea', itemWidth: 'calc(100% - 20px)', labelCol: 3 },
     ]
     const selectItem = [
-      { title: '姓名', key: 'name', type: 'input', itemWidth: '290px' }, { title: '年龄', key: 'age', type: 'number', itemWidth: '290px' },
+      { title: '姓名', key: 'name', type: 'input', itemWidth: '290px' }, { title: '年龄', key: 'age', type: 'number', itemWidth: '290px', defaultVal: 20 },
       { title: '住址', key: 'addr', type: 'input', itemWidth: '290px' }
     ]
     const rules = {
@@ -71,6 +71,9 @@ export default defineComponent({
       industry: [{required: true, message: '请输入行业', trigger: 'change',type:'string'}],
       wealth: [{required: true, message: '请输入净资产', trigger: 'change',type:'number'}]
     }
+    const editPassword = (item: any) => {
+      console.log(item)
+    }
     const selectedRowKeys = ref<any[]>([])
     const onSelectChange = (keys: []) => {
       selectedRowKeys.value.splice(0)
@@ -78,7 +81,7 @@ export default defineComponent({
         selectedRowKeys.value.push(key)
       })
     }
-    return { columns, formItem, selectItem, getData, addData, editData, delData, rules, selectedRowKeys, onSelectChange }
+    return { columns, formItem, selectItem, getData, addData, editData, delData, rules, selectedRowKeys, onSelectChange, editPassword }
   }
 })
 </script>

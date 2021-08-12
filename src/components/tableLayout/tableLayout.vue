@@ -31,7 +31,7 @@
           <a @click="defaultEdit(item)" v-if="edit">编辑</a>
           <a-divider type="vertical" v-if="edit" />
           <a class="danger" @click="defaultDel(item)" v-if="del">删除</a>
-          <slot name="operationMore" />
+          <slot name="operationMore" :value="item" />
         </div>
       </template>
       <template v-slot:[key]="item" v-for="(value, key) in $slots">
@@ -81,7 +81,7 @@ import { message, Modal as antModal } from 'ant-design-vue'
 import { QuestionCircleOutlined } from '@ant-design/icons-vue'
 import { ColumnProps } from 'ant-design-vue/es/table/interface'
 import { defaultTableProps } from 'ant-design-vue/es/table/Table'
-import { defineComponent, ref, reactive, createVNode, computed, onBeforeMount, PropType } from 'vue'
+import { defineComponent, ref, reactive, createVNode, computed, onBeforeMount, onMounted, PropType } from 'vue'
 export default defineComponent({
   name: 'comTable',
   components: {
@@ -260,7 +260,10 @@ export default defineComponent({
       }) 
     }
 
-    getData()
+    onMounted(() => {
+      getData()
+    })
+    
 
     /**** 表单主动事件 ****/
 

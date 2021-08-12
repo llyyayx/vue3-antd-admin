@@ -27,6 +27,11 @@
       <li class="solve">表单没有图片上传组件</li>
       <li class="solve">需要增加开源许可证，避免风险</li>
     </ul>
+    <div class="title">2021年08月11日</div>
+    <ul>
+      <li class="solve">查询初始条件，首次取数据没有被添加</li>
+      <li class="solve">操作栏slots没有返回行数据</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">
