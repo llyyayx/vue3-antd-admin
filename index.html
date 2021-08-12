@@ -8,7 +8,7 @@
     <style>
       .windowLoading{margin:0;width:100%;height:100vh;overflow:hidden}
       .windowLoading{display:flex;flex-direction:column;justify-content:center;align-items:center}
-      .windowLoading h1{font-family:'Helvetica','Arial',sans-serif;font-size:1.05rem}
+      .windowLoading .loadingText{font-family:'Helvetica','Arial',sans-serif;font-size:16px;font-weight:700;text-align:center;margin:10px 0;}
       .windowLoading .logo{position:relative;width:100px;height:100px;box-sizing:border-box;background-color:white}
       .windowLoading .logo::before,.logo::after{content:'';position:absolute;width:100%;height:100%;box-sizing:border-box;border:4px solid transparent;animation-timing-function:linear}
       .windowLoading .logo::before{top:0;left:0;border-top-color:black;border-right-color:black;animation:windowLoading-border-before 1.5s infinite;animation-direction:alternate}
@@ -31,7 +31,7 @@
           <div class="orange"></div>
           <div class="red"></div>
         </div>
-        <h1>Loading ...</h1>
+        <div class="loadingText">Loading ...</div>
       </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
