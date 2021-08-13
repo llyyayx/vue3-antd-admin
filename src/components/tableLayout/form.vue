@@ -87,6 +87,12 @@
           :options="item.options"
           v-if="item.type === 'radio'"
         />
+        <!-- 多选框 -->
+        <a-checkbox-group 
+          v-model:value="formData[item.key]" 
+          :options="item.options"
+          v-if="item.type === 'checkbox'"
+        />
         <!-- 文件上传 -->
         <upload
           v-model:value="formData[item.key]"

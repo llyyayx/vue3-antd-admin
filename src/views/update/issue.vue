@@ -32,6 +32,11 @@
       <li class="solve">查询初始条件，首次取数据没有被添加</li>
       <li class="solve">操作栏slots没有返回行数据</li>
     </ul>
+    <div class="title">2021年08月12日</div>
+    <ul>
+      <li class="solve">添加表单在点击取消后无法重置内容</li>
+      <li>考虑增加编辑前查询数据接口</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

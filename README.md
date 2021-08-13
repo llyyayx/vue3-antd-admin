@@ -55,6 +55,8 @@ npm run dev
   id?: '',
   # 菜单父id(可选)
   pid?: ''
+  # 是否隐藏菜单
+  hidden?: ''
 }
 ```
 

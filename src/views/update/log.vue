@@ -29,6 +29,12 @@
       <li>增加操作栏slots返回行数据</li>
       <li>全局刷新增加等待loading酷炫动画</li>
     </ul>
+    <div class="title">2021年08月13日</div>
+    <ul>
+      <li>修复添加表单在点击取消后无法重置内容</li>
+      <li>增加checkout组件</li>
+      <li>增加路由菜单隐藏功能，routerTable->hidden设置为true隐藏，默认为false</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

@@ -37,9 +37,9 @@ export default defineComponent({
     }
 
     const menuCreate = (router: RouterObj) => {
-      if (router.children) {
+      if (router.children && !router.hidden) {
         return menuSub(router)
-      } else {
+      } else if (!router.hidden) {
         return menuItem(router)
       }
     }

@@ -57,6 +57,13 @@ export default defineComponent({
         ]
       },
       { title: '头像', key: 'avatar', type: 'upload', upload: upload },
+      { title: '车型', key: 'cat', type: 'checkbox', options: [
+        { label: '奥迪', value: 'aodi' },
+        { label: '宝马', value: 'baoma' },
+        { label: '沃尔沃', value: 'oero' },
+        { label: '丰田', value: 'fengt' },
+        { label: '本田', value: 'bent' }
+      ] },
       { title: '备注', key: 'content', type: 'textarea', itemWidth: 'calc(100% - 20px)', labelCol: 3 },
     ]
     const selectItem = [

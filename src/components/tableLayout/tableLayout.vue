@@ -43,6 +43,7 @@
     ref="addModal" 
     title="添加数据" 
     @ok="addSubmit"
+    @cancel="addForm.reset()"
     v-if="add"
   >
     <Form 
@@ -58,6 +59,7 @@
     ref="editModal" 
     title="编辑数据" 
     @ok="editSubmit"
+    @cancel="editForm.reset()"
     v-if="edit"
   >
     <Form 
