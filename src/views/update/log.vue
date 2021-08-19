@@ -35,6 +35,10 @@
       <li>增加checkout组件</li>
       <li>增加路由菜单隐藏功能，routerTable->hidden设置为true隐藏，默认为false</li>
     </ul>
+    <div class="title">2021年08月19日</div>
+    <ul>
+      <li>优化header tab的css样式</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">
