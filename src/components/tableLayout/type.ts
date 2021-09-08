@@ -15,8 +15,15 @@ export interface FormItem {
   upload?: UploadFun
 }
 
-// 表单提交函数类型_增改
+// 表单提交函数类型_增改删
 export type SetData = (x?: any) => Promise<AxiosResponse<ResponseData>>
+
+// 表单提交函数类型_修改数据查询结果
+export type EditData = (x?: any) => Promise<AxiosResponse<{
+  code: number,
+  message: string,
+  data: any
+}>>
 
 // 表单提交函数类型_查询
 export type GetData = (x?: any) => Promise<AxiosResponse<TableList>>

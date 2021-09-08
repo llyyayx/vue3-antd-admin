@@ -39,6 +39,10 @@
     <ul>
       <li>优化header tab的css样式</li>
     </ul>
+    <div class="title">2021年09月08日</div>
+    <ul>
+      <li>增加编辑前数据拉取，不配置默认取该行数据</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

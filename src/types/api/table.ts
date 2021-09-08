@@ -7,6 +7,10 @@ export interface TableList extends ResponseData {
   data: []
 }
 
+export interface EditData extends ResponseData {
+  data: any
+}
+
 export interface UploadApi extends ResponseData {
   url: string
 }

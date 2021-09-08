@@ -7,6 +7,7 @@
     :rules="rules"
     :get="getData"
     :add="addData"
+    :editData="editGetData"
     :edit="editData"
     :del="delData"
     :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
@@ -32,7 +33,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { getData, addData, editData, delData, upload } from '@/api/table'
+import { getData, addData, editGetData, editData, delData, upload } from '@/api/table'
 import tableLayout from '@/components/tableLayout/tableLayout.vue'
 export default defineComponent({
   name: 'el_table',
@@ -88,7 +89,7 @@ export default defineComponent({
         selectedRowKeys.value.push(key)
       })
     }
-    return { columns, formItem, selectItem, getData, addData, editData, delData, rules, selectedRowKeys, onSelectChange, editPassword }
+    return { columns, formItem, selectItem, getData, addData, editGetData, editData, delData, rules, selectedRowKeys, onSelectChange, editPassword }
   }
 })
 </script>

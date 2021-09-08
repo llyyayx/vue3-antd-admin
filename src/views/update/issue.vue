@@ -35,7 +35,7 @@
     <div class="title">2021年08月12日</div>
     <ul>
       <li class="solve">添加表单在点击取消后无法重置内容</li>
-      <li>考虑增加编辑前查询数据接口</li>
+      <li class="solve">考虑增加编辑前查询数据接口</li>
     </ul>
   </div>
 </template>

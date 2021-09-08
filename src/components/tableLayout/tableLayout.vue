@@ -78,7 +78,7 @@
 import util from '@/utils'
 import Form from './form.vue'
 import Modal from './modal.vue'
-import { FormItem, SetData, GetData } from './type'
+import { FormItem, SetData, GetData, EditData} from './type'
 import { message, Modal as antModal } from 'ant-design-vue'
 import { QuestionCircleOutlined } from '@ant-design/icons-vue'
 import { ColumnProps } from 'ant-design-vue/es/table/interface'
@@ -123,6 +123,12 @@ export default defineComponent({
     // 添加接口_false不展示
     add: {
       type: Function as PropType<SetData>,
+      required: false,
+      default: undefined
+    },
+    // 拉取修改数据接口_false修改前不调用
+    editData: {
+      type: Function as PropType<EditData>,
       required: false,
       default: undefined
     },
@@ -310,11 +316,26 @@ export default defineComponent({
 
     // 点击表单编辑按钮
     const defaultEdit = (e: any) => {
-      editModal.value.open()
-      const data = e.text
-      Object.keys(data).forEach(key => {
-        editData[key] = data[key]
-      })
+      if (props.editData === undefined) {
+        editModal.value.open()
+        const data = e.text
+        Object.keys(data).forEach(key => {
+          editData[key] = data[key]
+        })
+      } else {
+        loading.value = true
+        props.editData().then(e => {
+          const data = e.data.data
+          Object.keys(data).forEach(key => {
+            editData[key] = data[key]
+          })
+          loading.value = false
+          editModal.value.open()
+        }).catch(err => {
+          message.error(err.message || err.data.message)
+          loading.value = false
+        })
+      }
     }
 
     // 提交编辑好的数据
