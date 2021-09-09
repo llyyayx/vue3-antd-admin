@@ -43,6 +43,10 @@
     <ul>
       <li>增加编辑前数据拉取，不配置默认取该行数据</li>
     </ul>
+    <div class="title">2021年09月09日</div>
+    <ul>
+      <li>修复page项无效问题</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">
