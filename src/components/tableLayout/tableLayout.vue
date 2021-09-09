@@ -22,7 +22,7 @@
       v-bind="tableProps"
       :rowKey='rowkey'
       :dataSource="dataSource"
-      :pagination="paging"
+      :pagination="page === true ? paging : false"
       :loading="loading"
       @change="tableChange"
     >
@@ -250,13 +250,17 @@ export default defineComponent({
     const getData = () => {
       loading.value = true
       const selectData = selectForm.value ? selectForm.value.formData : {}
-      const params = {}
+      const params: any = {}
       Object.keys(selectData).forEach(key => {
         if (selectData[key]) {
           params[key] = selectData[key]
         }
       })
-      props.get({ current: paging.current, pageSize: paging.pageSize, ...params }).then(e => {
+      if (props.page) {
+        params.current = paging.current
+        params.pageSize = paging.pageSize
+      }
+      props.get(params).then(e => {
         dataSource.value = e.data.data
         const { current, total } = e.data
         paging.current = current
@@ -285,7 +289,7 @@ export default defineComponent({
 
     /**** 查询数据 ****/
 
-    const selectFun = async (selectData: any) => {
+    const selectFun: SetData = async (selectData: any): Promise<any> => {
       const { current, pageSize } = paging
       const params = {
         current,
