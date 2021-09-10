@@ -69,7 +69,7 @@ export default defineComponent({
     ]
     const selectItem = [
       { title: '姓名', key: 'name', type: 'input', itemWidth: '290px' }, { title: '年龄', key: 'age', type: 'number', itemWidth: '290px', defaultVal: 20 },
-      { title: '住址', key: 'addr', type: 'input', itemWidth: '290px' }
+      { title: '住址', key: 'addr', type: 'input', itemWidth: '290px' }, { title: '日期', key: 'time', type: 'rangePicker', itemWidth: '290px' }
     ]
     const rules = {
       name: [{required: true, message: '请输入姓名', trigger: 'change'}],

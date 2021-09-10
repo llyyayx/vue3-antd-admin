@@ -47,6 +47,11 @@
     <ul>
       <li>修复page项无效问题</li>
     </ul>
+    <div class="title">2021年09月10日</div>
+    <ul>
+      <li>修复重置筛选表单数组值异常问题</li>
+      <li>重置筛选点击后自动再次拉取数据</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

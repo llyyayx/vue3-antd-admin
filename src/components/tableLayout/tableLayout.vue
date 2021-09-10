@@ -10,7 +10,7 @@
         />
         <div class="table__top_select">
           <a-button type="primary" @click="selectForm.onSubmit()">查询</a-button>
-          <a-button class="top_btn" @click="selectForm.reset()">重置</a-button>
+          <a-button class="top_btn" @click="resetQuery">重置</a-button>
         </div>
       </div>
       <div class="table__btn">
@@ -68,7 +68,7 @@
       :formItem="editItem ? editItem : formItem"
       :rules="editRules ? editRules : rules"
       :setData="edit"
-      :defaultData="editData"
+      :defaultData="editDefData"
       @succeed="editComplete"
       @fail="editModal.loading(false)"
     />
@@ -312,11 +312,17 @@ export default defineComponent({
       dataSource.value = e.data.data
     }
 
+    // 重置查询条件
+    const resetQuery = () => {
+      selectForm.value.reset()
+      getData()
+    }
+
     /**** 编辑数据 ****/
 
     const editForm = ref()
     const editModal = ref()
-    let editData: any = reactive({})
+    let editDefData: any = reactive({})
 
     // 点击表单编辑按钮
     const defaultEdit = (e: any) => {
@@ -324,14 +330,14 @@ export default defineComponent({
         editModal.value.open()
         const data = e.text
         Object.keys(data).forEach(key => {
-          editData[key] = data[key]
+          editDefData[key] = data[key]
         })
       } else {
         loading.value = true
         props.editData().then(e => {
           const data = e.data.data
           Object.keys(data).forEach(key => {
-            editData[key] = data[key]
+            editDefData[key] = data[key]
           })
           loading.value = false
           editModal.value.open()
@@ -403,8 +409,8 @@ export default defineComponent({
     
     return { 
       dataSource, tableProps, paging, loading, tableChange,
-      selectForm, selectFun, selectComplete,
-      editData, editForm, editModal, defaultEdit, editSubmit, editComplete,
+      selectForm, selectFun, selectComplete, resetQuery,
+      editDefData, editForm, editModal, defaultEdit, editSubmit, editComplete,
       defaultDel,
       addForm, addModal, defaultAdd, addSubmit, addComplete
     }
