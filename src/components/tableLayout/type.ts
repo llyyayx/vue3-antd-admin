@@ -12,7 +12,8 @@ export interface FormItem {
   itemWidth?: string,
   defaultVal?: any,
   labelCol?: number,
-  upload?: UploadFun
+  upload?: UploadFun,
+  slotName?: string
 }
 
 // 表单提交函数类型_增改删

@@ -99,6 +99,8 @@
           :upload="item.upload"
           v-if="item.type === 'upload'"
         />
+        <!-- 自定义插槽 -->
+        <slot :name="item.slotName" :formData="formData" :key="item.key" v-if="item.type === 'slot'" />
       </a-form-item>
     </template>
   </a-form>

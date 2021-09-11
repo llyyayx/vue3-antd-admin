@@ -7,7 +7,11 @@
           :formItem="selectItem || []"
           :setData="selectFun"
           @succeed="selectComplete"
-        />
+        >
+          <template v-slot:[formSlot(item)]="{ formData, key }" v-for="item in (selectItem ? selectItem : [])">
+            <slot :name="item.slotName" :formData="formData" :key="key"  v-if="item.type === 'slot'" />
+          </template>
+        </Form>
         <div class="table__top_select">
           <a-button type="primary" @click="selectForm.onSubmit()">查询</a-button>
           <a-button class="top_btn" @click="resetQuery">重置</a-button>
@@ -53,7 +57,11 @@
       :setData="add"
       @succeed="addComplete"
       @fail="addModal.loading(false)"
-    />
+    >
+      <template v-slot:[formSlot(item)]="{ formData, key }" v-for="item in (addItem ? addItem : formItem)">
+        <slot :name="item.slotName" :formData="formData" :key="key"  v-if="item.type === 'slot'" />
+      </template>
+    </Form>
   </Modal>
   <Modal 
     ref="editModal" 
@@ -71,7 +79,11 @@
       :defaultData="editDefData"
       @succeed="editComplete"
       @fail="editModal.loading(false)"
-    />
+    >
+      <template v-slot:[formSlot(item)]="{ formData, key }" v-for="item in (editItem ? editItem : formItem)">
+        <slot :name="item.slotName" :formData="formData" :key="key"  v-if="item.type === 'slot'" />
+      </template>
+    </Form>
   </Modal>
 </template>
 <script lang="ts">
@@ -406,6 +418,10 @@ export default defineComponent({
       getData()
     }
 
+    //
+    const formSlot = (item: FormItem) => {
+      return item.slotName ? item.slotName : 'noSlot'
+    }
     
     return { 
       dataSource, tableProps, paging, loading, tableChange,
@@ -413,7 +429,7 @@ export default defineComponent({
       editDefData, editForm, editModal, defaultEdit, editSubmit, editComplete,
       defaultDel,
       addForm, addModal, defaultAdd, addSubmit, addComplete,
-      getData
+      getData, formSlot
     }
 
   }

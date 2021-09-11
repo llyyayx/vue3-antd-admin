@@ -29,6 +29,9 @@
         </template>
       </a-dropdown>
     </template>
+    <template v-slot:custom="data">
+      <a-input v-model:value="data.formData[data.key]" />
+    </template>
   </tableLayout>
 </template>
 <script lang="ts">
@@ -66,6 +69,7 @@ export default defineComponent({
         { label: '本田', value: 'bent' }
       ] },
       { title: '备注', key: 'content', type: 'textarea', itemWidth: 'calc(100% - 20px)', labelCol: 3 },
+      { title: '表单插槽', key: 'formnet', type: 'slot', slotName: 'custom' },
     ]
     const selectItem = [
       { title: '姓名', key: 'name', type: 'input', itemWidth: '290px' }, { title: '年龄', key: 'age', type: 'number', itemWidth: '290px', defaultVal: 20 },
@@ -77,7 +81,8 @@ export default defineComponent({
       addr: [{required: true, message: '请输入地址', trigger: 'change'}],
       phone: [{required: true, message: '请输入手机号', trigger: 'change'}],
       industry: [{required: true, message: '请输入行业', trigger: 'change',type:'string'}],
-      wealth: [{required: true, message: '请输入净资产', trigger: 'change',type:'number'}]
+      wealth: [{required: true, message: '请输入净资产', trigger: 'change',type:'number'}],
+      formnet: [{required: true, message: '请输入表单插槽', trigger: 'change'}],
     }
     const editPassword = (item: any) => {
       console.log(item)

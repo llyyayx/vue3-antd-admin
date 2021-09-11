@@ -55,6 +55,7 @@
     <div class="title">2021年09月11日</div>
     <ul>
       <li>暴露getData内置方法</li>
+      <li>增加筛选、添加、编辑表单的自定义插槽功能</li>
     </ul>
   </div>
 </template>
