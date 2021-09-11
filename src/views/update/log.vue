@@ -52,6 +52,10 @@
       <li>修复重置筛选表单数组值异常问题</li>
       <li>重置筛选点击后自动再次拉取数据</li>
     </ul>
+    <div class="title">2021年09月11日</div>
+    <ul>
+      <li>暴露getData内置方法</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

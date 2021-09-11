@@ -412,7 +412,8 @@ export default defineComponent({
       selectForm, selectFun, selectComplete, resetQuery,
       editDefData, editForm, editModal, defaultEdit, editSubmit, editComplete,
       defaultDel,
-      addForm, addModal, defaultAdd, addSubmit, addComplete
+      addForm, addModal, defaultAdd, addSubmit, addComplete,
+      getData
     }
 
   }
