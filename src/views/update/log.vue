@@ -57,6 +57,10 @@
       <li>暴露getData内置方法</li>
       <li>增加筛选、添加、编辑表单的自定义插槽功能</li>
     </ul>
+    <div class="title">2021年09月14日</div>
+    <ul>
+      <li>修复调用查询编辑数据接口未加主键问题</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

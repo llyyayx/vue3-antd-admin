@@ -346,7 +346,8 @@ export default defineComponent({
         })
       } else {
         loading.value = true
-        props.editData().then(e => {
+        const editKey = props.editKey || props.rowkey
+        props.editData({ [editKey]: e.text[editKey] }).then(e => {
           const data = e.data.data
           Object.keys(data).forEach(key => {
             editDefData[key] = data[key]
