@@ -13,7 +13,8 @@ export interface FormItem {
   defaultVal?: any,
   labelCol?: number,
   upload?: UploadFun,
-  slotName?: string
+  slotName?: string,
+  optionKey?: string
 }
 
 // 表单提交函数类型_增改删
@@ -29,12 +30,19 @@ export type EditData = (x?: any) => Promise<AxiosResponse<{
 // 表单提交函数类型_查询
 export type GetData = (x?: any) => Promise<AxiosResponse<TableList>>
 
+// options选项查询函数
+export type OptionsData = () => Promise<AxiosResponse<{
+  code: number,
+  message: string,
+  data: any
+}>>
+
 // 文件上传组件
 export interface UploadData extends ResponseData  {
   url: string
 }
 
-export type UploadFun = (x?: any) => Promise<AxiosResponse<UploadData>>
+export type UploadFun = (x?: any) => Promise<AxiosResponse<UploadData>>   
 
 export interface TableProps {
   columns: ColumnProps[],
@@ -42,9 +50,11 @@ export interface TableProps {
   selectItem?: FormItem[],
   rules?: any,
   get: SetData,
-  add?: SetData | boolean,
-  edit?: SetData | boolean,
-  del?: SetData | boolean,
+  add?: SetData,
+  editData?: EditData,
+  edit?: SetData,
+  del?: SetData,
+  options?: OptionsData,
   rowkey?: string,
   page?: boolean,
 

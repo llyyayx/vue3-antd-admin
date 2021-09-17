@@ -14,3 +14,7 @@ export interface EditData extends ResponseData {
 export interface UploadApi extends ResponseData {
   url: string
 }
+
+export interface OptionsData extends ResponseData {
+  data: any
+}

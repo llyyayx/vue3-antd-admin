@@ -90,7 +90,7 @@
 import util from '@/utils'
 import Form from './form.vue'
 import Modal from './modal.vue'
-import { FormItem, SetData, GetData, EditData} from './type'
+import { FormItem, SetData, GetData, EditData, OptionsData } from './type'
 import { message, Modal as antModal } from 'ant-design-vue'
 import { QuestionCircleOutlined } from '@ant-design/icons-vue'
 import { ColumnProps } from 'ant-design-vue/es/table/interface'
@@ -153,6 +153,12 @@ export default defineComponent({
     // 删除接口_false不展示
     del: {
       type: Function as PropType<SetData>,
+      required: false,
+      default: undefined
+    },
+    // 取远程多选项接口
+    options: {
+      type: Function as PropType<OptionsData>,
       required: false,
       default: undefined
     },
@@ -284,8 +290,32 @@ export default defineComponent({
       }) 
     }
 
+    // 取远程多选选项
+    const getOptions = () => {
+      if (props.options) {
+        props.options().then(e => {
+          props.selectItem && setOptions(props.selectItem, e.data.data)
+          props.formItem && setOptions(props.formItem, e.data.data)
+          props.addItem && setOptions(props.addItem, e.data.data)
+          props.editItem && setOptions(props.editItem, e.data.data)
+        }).catch(err => {
+          message.error(err.message || err.data.message)
+        })
+      }
+    }
+
+    // 设置远程选项到配置项内
+    const setOptions = (items: FormItem[], data: any) => {
+      items.forEach(item => {
+        if (item.optionKey) {
+          item.options = data[item.optionKey] || []
+        }
+      })
+    }
+
     onMounted(() => {
       getData()
+      getOptions()
     })
     
 

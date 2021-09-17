@@ -10,6 +10,7 @@
     :editData="editGetData"
     :edit="editData"
     :del="delData"
+    :options="options"
     :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
     ref="layout" 
   >
@@ -36,7 +37,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { getData, addData, editGetData, editData, delData, upload } from '@/api/table'
+import { getData, addData, editGetData, editData, delData, upload, options } from '@/api/table'
 import tableLayout from '@/components/tableLayout/tableLayout.vue'
 export default defineComponent({
   name: 'el_table',
@@ -61,20 +62,15 @@ export default defineComponent({
         ]
       },
       { title: '头像', key: 'avatar', type: 'upload', upload: upload },
-      { title: '车型', key: 'cat', type: 'checkbox', options: [
-        { label: '奥迪', value: 'aodi' },
-        { label: '宝马', value: 'baoma' },
-        { label: '沃尔沃', value: 'oero' },
-        { label: '丰田', value: 'fengt' },
-        { label: '本田', value: 'bent' }
-      ] },
+      { title: '车型', key: 'cat', type: 'checkbox', options: [], optionKey: 'cat' },
       { title: '备注', key: 'content', type: 'textarea', itemWidth: 'calc(100% - 20px)', labelCol: 3 },
       { title: '表单插槽', key: 'formnet', type: 'slot', slotName: 'custom' },
     ]
-    const selectItem = [
+    const selectItem = ref([
       { title: '姓名', key: 'name', type: 'input', itemWidth: '290px' }, { title: '年龄', key: 'age', type: 'number', itemWidth: '290px', defaultVal: 20 },
-      { title: '住址', key: 'addr', type: 'input', itemWidth: '290px' }, { title: '日期', key: 'time', type: 'rangePicker', itemWidth: '290px' }
-    ]
+      { title: '住址', key: 'addr', type: 'input', itemWidth: '290px' }, { title: '日期', key: 'time', type: 'rangePicker', itemWidth: '290px' },
+      { title: '行业', key: 'industry', type: 'select', options: [], optionKey: 'industry', itemWidth: '290px' }
+    ])
     const rules = {
       name: [{required: true, message: '请输入姓名', trigger: 'change'}],
       age: [{required: true, message: '请输入年龄', trigger: 'change',type:'number'}],
@@ -94,7 +90,7 @@ export default defineComponent({
         selectedRowKeys.value.push(key)
       })
     }
-    return { columns, formItem, selectItem, getData, addData, editGetData, editData, delData, rules, selectedRowKeys, onSelectChange, editPassword }
+    return { columns, formItem, selectItem, getData, addData, editGetData, editData, delData, options, rules, selectedRowKeys, onSelectChange, editPassword }
   }
 })
 </script>
