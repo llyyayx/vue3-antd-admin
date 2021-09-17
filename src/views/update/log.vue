@@ -61,6 +61,10 @@
     <ul>
       <li>修复调用查询编辑数据接口未加主键问题</li>
     </ul>
+    <div class="title">2021年09月17日</div>
+    <ul>
+      <li>添加通过接口拉取多选项功能</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">
