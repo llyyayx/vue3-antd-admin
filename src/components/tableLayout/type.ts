@@ -64,4 +64,5 @@ export interface TableProps {
   delKey?: string,
   addRules?: any,
   editRules?: any
+  params?: any
 }

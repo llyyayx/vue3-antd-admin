@@ -65,6 +65,10 @@
     <ul>
       <li>添加通过接口拉取多选项功能</li>
     </ul>
+    <div class="title">2021年09月18日</div>
+    <ul>
+      <li>添加查询接口固定参数配置</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

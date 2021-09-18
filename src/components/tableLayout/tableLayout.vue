@@ -212,6 +212,12 @@ export default defineComponent({
       type: Object,
       required: false,
       default: undefined
+    },
+    // 固定参数
+    params: {
+      type: Object,
+      required: false,
+      default: undefined
     }
 
   },
@@ -277,6 +283,9 @@ export default defineComponent({
       if (props.page) {
         params.current = paging.current
         params.pageSize = paging.pageSize
+      }
+      if (props.params) {
+        Object.assign(params, props.params)
       }
       props.get(params).then(e => {
         dataSource.value = e.data.data
