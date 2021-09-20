@@ -69,6 +69,11 @@
     <ul>
       <li>添加查询接口固定参数配置</li>
     </ul>
+    <div class="title">2021年09月20日</div>
+    <ul>
+      <li>筛选列表总数不变问题修复</li>
+      <li>重置筛选流程优化</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

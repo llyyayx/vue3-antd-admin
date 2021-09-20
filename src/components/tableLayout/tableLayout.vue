@@ -289,9 +289,10 @@ export default defineComponent({
       }
       props.get(params).then(e => {
         dataSource.value = e.data.data
-        const { current, total } = e.data
+        const { current, total, pageSize } = e.data
         paging.current = current
         paging.total = total
+        paging.pageSize = pageSize
         loading.value = false
       }).catch(err => {
         message.error(err.message || err.data.message)
@@ -341,10 +342,9 @@ export default defineComponent({
     /**** 查询数据 ****/
 
     const selectFun: SetData = async (selectData: any): Promise<any> => {
-      const { current, pageSize } = paging
       const params = {
-        current,
-        pageSize,
+        current: 1,
+        pageSize: paging.pageSize,
         ...selectData
       }
       loading.value = true
@@ -361,11 +361,16 @@ export default defineComponent({
     // 查询提交完成
     const selectComplete = (e: any) => {
       dataSource.value = e.data.data
+      const { current, total, pageSize } = e.data
+      paging.current = current
+      paging.total = total
+      paging.pageSize = pageSize
     }
 
     // 重置查询条件
     const resetQuery = () => {
       selectForm.value.reset()
+      paging.current = 1
       getData()
     }
 
