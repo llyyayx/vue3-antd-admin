@@ -40,6 +40,7 @@
     <div class="title">2021年09月21日</div>
     <ul>
       <li>参数链接页面刷新参数丢失，tab切换参数丢失</li>
+      <li>隐藏页面tab也需要不显示，现在跳转到隐藏页面tab会追加（看看主流的怎么处理）</li>
     </ul>
   </div>
 </template>
