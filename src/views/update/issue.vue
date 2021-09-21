@@ -37,6 +37,10 @@
       <li class="solve">添加表单在点击取消后无法重置内容</li>
       <li class="solve">考虑增加编辑前查询数据接口</li>
     </ul>
+    <div class="title">2021年09月21日</div>
+    <ul>
+      <li>参数链接页面刷新参数丢失，tab切换参数丢失</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">
