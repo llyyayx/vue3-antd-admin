@@ -51,9 +51,9 @@ export default defineComponent({
         route.matched.forEach(item => {
           openKeys.value.push(item.name as string)
         })
+        // 设置顶部tab(栏目)切换
+        store.commit('menu/setId', route.matched[0]['meta']['id'])
       }
-      // 设置顶部tab(栏目)切换
-      store.commit('menu/setId', route.matched[0]['meta']['id'])
     }
 
     onBeforeMount(setMenuKey)
