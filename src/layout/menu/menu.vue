@@ -45,11 +45,13 @@ export default defineComponent({
     const openKeys = ref<string[]>([])
 
     const setMenuKey = () => {
-      selectedKeys.value = [route.name as string]
-      openKeys.value = []
-      route.matched.forEach(item => {
-        openKeys.value.push(item.name as string)
-      })
+      if (!route.meta.hidden) {
+        selectedKeys.value = [route.name as string]
+        openKeys.value = []
+        route.matched.forEach(item => {
+          openKeys.value.push(item.name as string)
+        })
+      }
       // 设置顶部tab(栏目)切换
       store.commit('menu/setId', route.matched[0]['meta']['id'])
     }

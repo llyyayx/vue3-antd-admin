@@ -5,7 +5,7 @@ import { constantRouterMap } from '@/router/basics.router'
 
 export interface TabItem {
   title: string,
-  path: string,
+  fullPath: string,
   name?: string
 }
 
@@ -44,7 +44,7 @@ const tabs = {
 
       // 防止重复添加
       for (let i = 0; i < tabList.length; i++) {
-        if ( tabList[i]['path'] === item.path ) {
+        if ( tabList[i]['fullPath'] === item.fullPath ) {
           result = false
           break
         }
@@ -73,12 +73,12 @@ const tabs = {
       }
 
       for (let i = 0; i < tabList.length; i++) {
-        if (tabList[i]['path'] === key) {
-          if (route.path === key) {
+        if (tabList[i]['fullPath'] === key) {
+          if (route.fullPath === key) {
             if (tabList.length-1 === i) {
-              router.push(tabList[i-1]['path'])
+              router.push(tabList[i-1]['fullPath'])
             } else {
-              router.push(tabList[i+1]['path'])
+              router.push(tabList[i+1]['fullPath'])
             }
           }
           tabList.splice(i, 1)
@@ -103,14 +103,14 @@ const tabs = {
       }
 
       for(let i = 0; i < tabList.length; i++) {
-        if (tabList[i]['path'] === route.path) {
+        if (tabList[i]['fullPath'] === route.fullPath) {
           current = i
           break
         }
       }
 
       if (index < current) {
-        router.push(tabList[index]['path'])
+        router.push(tabList[index]['fullPath'])
       }
 
       tabList.splice(index + 1, tabList.length-1)
@@ -132,14 +132,14 @@ const tabs = {
       }
 
       for(let i = 0; i < tabList.length; i++) {
-        if (tabList[i]['path'] === route.path) {
+        if (tabList[i]['fullPath'] === route.fullPath) {
           current = i
           break
         }
       }
 
       if (index > current) {
-        router.push(tabList[index]['path'])
+        router.push(tabList[index]['fullPath'])
       }
 
       tabList.splice(0, index)
@@ -151,7 +151,7 @@ const tabs = {
      * @param { number } index 选择tab序号
      */
     delOther (state: TabState, index: number) {
-      router.push(state.tabList[index]['path'])
+      router.push(state.tabList[index]['fullPath'])
       state.tabList = [state.tabList[index]]
     }
   }

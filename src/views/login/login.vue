@@ -84,7 +84,7 @@ export default defineComponent({
         store.dispatch('user/login', form).then(e => {
           const route = router.currentRoute.value
           const url = route.query.redirect || '/'
-          router.push({ path: url as string })
+          router.push(url as string)
         }).catch(err => {
           message.error(err.message || err.data.message)
         })

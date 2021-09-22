@@ -23,10 +23,10 @@ export const permission = (router: Router) => {
                 router.addRoute(item)
               })
               const redirect = from.query.redirect as string | undefined
-              if (redirect && to.path === redirect) {
+              if (redirect && to.fullPath === redirect) {
                 next({ ...to, replace: true })
               } else {
-                next({ path: decodeURIComponent(redirect || to.path) })
+                next({ ...to })
               }
             })
           }).catch(() => {

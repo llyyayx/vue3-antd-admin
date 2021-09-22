@@ -74,6 +74,14 @@
       <li>筛选列表总数不变问题修复</li>
       <li>重置筛选流程优化</li>
     </ul>
+    <div class="title">2021年09月22日</div>
+    <ul>
+      <li>修复参数链接页面刷新参数丢失</li>
+      <li>优化隐藏页面侧边菜单不做选中</li>
+      <li>优化路由鉴权防止query丢失</li>
+      <li>登陆页面调整push(string)</li>
+      <li>tab栏把route.path更改为route.fullPath</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

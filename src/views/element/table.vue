@@ -17,6 +17,9 @@
     <template v-slot:status="item">
       测试-{{ item.value.text.name }}
     </template>
+    <template #button>
+      <a-button type="primary" style="margin-left: 20px" @click="toDetail">彩蛋</a-button>
+    </template>
     <template #operationMore="item">
       <a-divider type="vertical" />
       <a-dropdown>
@@ -36,6 +39,7 @@
   </tableLayout>
 </template>
 <script lang="ts">
+import { useRouter } from 'vue-router'
 import { defineComponent, ref } from 'vue'
 import { getData, addData, editGetData, editData, delData, upload, options } from '@/api/table'
 import tableLayout from '@/components/tableLayout/tableLayout.vue'
@@ -45,12 +49,16 @@ export default defineComponent({
     tableLayout
   },
   setup () {
+    
+    // 列表
     const columns = [ 
       { title: '序号', dataIndex: 'id' }, {  title: '姓名', dataIndex: 'name' },
       { title: '年龄', dataIndex: 'age' }, { title: '住址', dataIndex: 'addr' },
       { title: '手机号', dataIndex: 'phone' }, { title: '行业', dataIndex: 'industry' },
       { title: '净资产(亿元)', dataIndex: 'wealth' }, {  title: '状态', slots: { customRender: 'status' } },
     ]
+    
+    // 表单
     const formItem = [
       { title: '姓名', key: 'name', type: 'input' }, { title: '年龄', key: 'age', type: 'number' },
       { title: '住址', key: 'addr', type: 'input' }, { title: '手机号', key: 'phone', type: 'input' },
@@ -66,11 +74,15 @@ export default defineComponent({
       { title: '备注', key: 'content', type: 'textarea', itemWidth: 'calc(100% - 20px)', labelCol: 3 },
       { title: '表单插槽', key: 'formnet', type: 'slot', slotName: 'custom' },
     ]
+
+    // 筛选
     const selectItem = ref([
       { title: '姓名', key: 'name', type: 'input', itemWidth: '290px' }, { title: '年龄', key: 'age', type: 'number', itemWidth: '290px', defaultVal: 20 },
       { title: '住址', key: 'addr', type: 'input', itemWidth: '290px' }, { title: '日期', key: 'time', type: 'rangePicker', itemWidth: '290px' },
       { title: '行业', key: 'industry', type: 'select', options: [], optionKey: 'industry', itemWidth: '290px' }
     ])
+
+    // 规则
     const rules = {
       name: [{required: true, message: '请输入姓名', trigger: 'change'}],
       age: [{required: true, message: '请输入年龄', trigger: 'change',type:'number'}],
@@ -80,17 +92,26 @@ export default defineComponent({
       wealth: [{required: true, message: '请输入净资产', trigger: 'change',type:'number'}],
       formnet: [{required: true, message: '请输入表单插槽', trigger: 'change'}],
     }
+
+    // 改密
     const editPassword = (item: any) => {
       console.log(item)
     }
+
+    // 多选
     const selectedRowKeys = ref<any[]>([])
     const onSelectChange = (keys: []) => {
-      selectedRowKeys.value.splice(0)
-      keys.forEach(key => {
-        selectedRowKeys.value.push(key)
-      })
+      selectedRowKeys.value = keys
     }
-    return { columns, formItem, selectItem, getData, addData, editGetData, editData, delData, options, rules, selectedRowKeys, onSelectChange, editPassword }
+
+    // 详情
+    const router = useRouter()
+    const toDetail = () => {
+      router.push({ path: '/element/detail', query: { id: Math.floor(Math.random()*100) } })
+    }
+
+    return { columns, formItem, selectItem, getData, addData, editGetData, editData, delData, options, rules, selectedRowKeys, onSelectChange, editPassword, toDetail }
+    
   }
 })
 </script>

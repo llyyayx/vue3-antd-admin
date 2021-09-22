@@ -8,7 +8,7 @@
     hide-add
     class="tabs__view"
   >
-    <a-tab-pane :key="item.path" v-for="(item, index) in tabList">
+    <a-tab-pane :key="item.fullPath" v-for="(item, index) in tabList">
       <template #tab>
         <a-dropdown :trigger="['contextmenu']">
           <div style="display: inline-block">{{ item.title }}</div>
@@ -56,7 +56,7 @@ export default defineComponent({
     // 添加tab方法
     const addTab = (data: RouteLocationNormalizedLoaded) => {
       store.commit('tabs/steList', {
-        path: data.path,
+        fullPath: data.fullPath,
         name: data.name,
         title: data.meta.title
       })
@@ -64,12 +64,12 @@ export default defineComponent({
 
     watch(route, to => {
       addTab(to)
-      activeKey.value = to.path
+      activeKey.value = to.fullPath
     })
 
     onBeforeMount(() => {
       addTab(route)
-      activeKey.value = route.path
+      activeKey.value = route.fullPath
     })
 
     /**
@@ -77,7 +77,7 @@ export default defineComponent({
      * @param { string } targetKey 点击的tabKey
      */
     const jump = (targetKey: string) => {
-      if (route.path !== targetKey) {
+      if (route.fullPath !== targetKey) {
         router.push(targetKey)
       } 
     }
@@ -100,7 +100,7 @@ export default defineComponent({
      */
     const condition = (tab: TabItem, index: number, item: any) => {
       switch (item.key) {
-        case 'current': store.commit('tabs/delList', tab.path); break;
+        case 'current': store.commit('tabs/delList', tab.fullPath); break;
         case 'right': store.commit('tabs/delRight', index); break;
         case 'left': store.commit('tabs/delLeft', index); break;
         case 'other': store.commit('tabs/delOther', index); break;
