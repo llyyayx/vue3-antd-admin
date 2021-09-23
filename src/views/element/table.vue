@@ -11,6 +11,10 @@
     :edit="editData"
     :del="delData"
     :options="options"
+    @editOpen="editOpen"
+    @addOpen="addOpen"
+    @editSuccess="editSuccess"
+    @addSuccess="addSuccess"
     :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
     ref="layout" 
   >
@@ -110,7 +114,26 @@ export default defineComponent({
       router.push({ path: '/element/detail', query: { id: Math.floor(Math.random()*100) } })
     }
 
-    return { columns, formItem, selectItem, getData, addData, editGetData, editData, delData, options, rules, selectedRowKeys, onSelectChange, editPassword, toDetail }
+    // 事件钩子
+    const editOpen = (data: any) => {
+      console.log('编辑弹框打开，并但会编辑数据')
+      console.log(data)
+    }
+
+    const addOpen = () => {
+      console.log('添加弹框打开，无数据')
+    }
+
+    const editSuccess = () => {
+      console.log('编辑提交成功，无数据')
+    }
+
+    const addSuccess = () => {
+      console.log('添加提交成功，无数据')
+    }
+
+    return { columns, formItem, selectItem, getData, addData, editGetData, editData, delData, options, rules, selectedRowKeys, onSelectChange, editPassword, toDetail, 
+    editOpen, addOpen, editSuccess, addSuccess }
     
   }
 })

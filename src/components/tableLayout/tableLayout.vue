@@ -102,6 +102,7 @@ export default defineComponent({
     Form,
     Modal
   },
+  emits: [ 'editOpen', 'addOpen', 'editSuccess', 'addSuccess' ],
   props: {
     ...defaultTableProps,
     // 重置ant-design的columns数据类型(属于ant的ts类型定义bug,他定义的是ColumnProps对象,实质为数组嵌套ColumnProps)
@@ -388,6 +389,7 @@ export default defineComponent({
         Object.keys(data).forEach(key => {
           editDefData[key] = data[key]
         })
+        context.emit('editOpen', editDefData)
       } else {
         loading.value = true
         const editKey = props.editKey || props.rowkey
@@ -396,6 +398,7 @@ export default defineComponent({
           Object.keys(data).forEach(key => {
             editDefData[key] = data[key]
           })
+          context.emit('editOpen', e.data)
           loading.value = false
           editModal.value.open()
         }).catch(err => {
@@ -414,6 +417,7 @@ export default defineComponent({
     // 表单编辑提交完成回调
     const editComplete = () => {
       editModal.value.close()
+      context.emit('editSuccess')
       getData()
     }
 
@@ -448,6 +452,7 @@ export default defineComponent({
     // 点击表单添加按钮 
     const defaultAdd = () => {
       addModal.value.open()
+      context.emit('addOpen')
     }
 
     // 提交添加的数据
@@ -460,6 +465,7 @@ export default defineComponent({
     const addComplete = () => {
       addModal.value.close()
       addForm.value.reset()
+      context.emit('addSuccess')
       getData()
     }
 

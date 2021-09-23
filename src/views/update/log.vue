@@ -82,6 +82,11 @@
       <li>登陆页面调整push(string)</li>
       <li>tab栏把route.path更改为route.fullPath</li>
     </ul>
+    <div class="title">2021年09月23日</div>
+    <ul>
+      <li>添加(emit)编辑弹框打开事件、编辑提交成功事件、添加数据弹框打开事件、添加数据提交成功事件</li>
+      <li>删除部分无用代码</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">
