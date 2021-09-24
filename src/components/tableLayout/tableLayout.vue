@@ -175,6 +175,12 @@ export default defineComponent({
       required: false,
       default: true
     },
+    // 默认操作栏宽度
+    operationWidth: {
+      type: Number,
+      required: false,
+      default: 200
+    },
 
     // 自定义设置项
 
@@ -246,7 +252,7 @@ export default defineComponent({
       if (props.del || props.edit) {
         const action: ColumnProps = {
           title: '操作',
-          width: 200,
+          width: props.operationWidth,
           key: 'operation',
           fixed: 'right',
           slots: { customRender: 'operation' }

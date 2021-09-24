@@ -90,6 +90,7 @@
     <div class="title">2021年09月24日</div>
     <ul>
       <li>优化树形下拉框高度</li>
+      <li>可自定义默认操作栏宽度</li>
     </ul>
   </div>
 </template>

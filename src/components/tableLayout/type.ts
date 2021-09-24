@@ -57,6 +57,7 @@ export interface TableProps {
   options?: OptionsData,
   rowkey?: string,
   page?: boolean,
+  operationWidth?: number,
 
   addItem?: FormItem[],
   editItem?: FormItem[],
