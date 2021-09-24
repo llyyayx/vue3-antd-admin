@@ -63,6 +63,7 @@
           :placeholder="'请选择'+item.title"
           :allowClear="true"
           :tree-data="item.options"
+          :dropdownStyle="{ maxHeight: '500px' }"
           style="width: 100%;"
           v-if="item.type === 'treeSelect'"
         />
