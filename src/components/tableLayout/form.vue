@@ -30,7 +30,7 @@
           :allowClear="true"
           v-if="item.type === 'select'"
         >
-          <a-select-option :value="option.value" v-for="option in item.options">{{ option.title }}</a-select-option>
+          <a-select-option :value="option.value" v-for="option in item.options">{{ option.label }}</a-select-option>
         </a-select>
         <!-- 时间选择框 -->
         <a-date-picker 

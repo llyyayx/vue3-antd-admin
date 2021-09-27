@@ -68,9 +68,9 @@ export default defineComponent({
       { title: '住址', key: 'addr', type: 'input' }, { title: '手机号', key: 'phone', type: 'input' },
       { title: '行业', key: 'industry', type: 'input' }, { title: '净资产', key: 'wealth', type: 'select', 
         options: [
-          {value: 10, title: '10亿'},{value: 20, title: '20亿'},
-          {value: 30, title: '30亿'},{value: 40, title: '40亿'},
-          {value: 999, title: '50亿+'}
+          {value: 10, label: '10亿'},{value: 20, label: '20亿'},
+          {value: 30, label: '30亿'},{value: 40, label: '40亿'},
+          {value: 999, label: '50亿+'}
         ]
       },
       { title: '头像', key: 'avatar', type: 'upload', upload: upload },
