@@ -354,6 +354,9 @@ export default defineComponent({
         pageSize: paging.pageSize,
         ...selectData
       }
+      if (props.params) {
+        Object.assign(params, props.params)
+      }
       loading.value = true
       try {
         const e = await props.get(params)

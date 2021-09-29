@@ -96,6 +96,10 @@
     <ul>
       <li>统一了formItem多选项选择名称变量(统一为：label)</li>
     </ul>
+    <div class="title">2021年09月29日</div>
+    <ul>
+      <li>修复params配置项筛选丢失问题</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">
