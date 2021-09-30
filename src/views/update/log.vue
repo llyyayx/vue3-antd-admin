@@ -100,6 +100,10 @@
     <ul>
       <li>修复params配置项筛选丢失问题</li>
     </ul>
+    <div class="title">2021年09月30日</div>
+    <ul>
+      <li>修复栏目超出没隐藏滚动</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

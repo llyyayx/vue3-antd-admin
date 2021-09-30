@@ -115,6 +115,7 @@ export default defineComponent({
     align-items: center;
     flex-grow: 1;
     & .group__tabs {
+      width: 500px;
       margin-left: 22px;
       margin-right: 22px;
       flex-grow: 1;
@@ -124,6 +125,8 @@ export default defineComponent({
   & .header__right {
     display: flex;
     align-items: center;
+    flex-shrink: 0;
+    flex-grow: 0;
     & .header__avatar {
       display: flex;
       align-items: center;

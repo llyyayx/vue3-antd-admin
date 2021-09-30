@@ -42,6 +42,10 @@
       <li class="solve">参数链接页面刷新参数丢失，tab切换参数丢失</li>
       <li class="solve">隐藏页面侧边菜单不做选中（看看主流的怎么处理）</li>
     </ul>
+    <div class="title">2021年09月30日</div>
+    <ul>
+      <li class="solve">栏目超出没隐藏滚动</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">
