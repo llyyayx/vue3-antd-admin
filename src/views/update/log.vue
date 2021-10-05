@@ -104,6 +104,10 @@
     <ul>
       <li>修复栏目超出没隐藏滚动</li>
     </ul>
+    <div class="title">2021年10月05日</div>
+    <ul>
+      <li>优化远程选项同步问题</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

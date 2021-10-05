@@ -428,6 +428,7 @@ export default defineComponent({
       editModal.value.close()
       context.emit('editSuccess')
       getData()
+      getOptions()
     }
 
     /**** 删除数据 ****/
@@ -446,6 +447,7 @@ export default defineComponent({
           return delFun(data).then(e => {
             message.success(e.data.message)
             getData()
+            getOptions()
           }).catch(err => {
             message.error(err.message || err.data.message)
           })
@@ -476,6 +478,7 @@ export default defineComponent({
       addForm.value.reset()
       context.emit('addSuccess')
       getData()
+      getOptions()
     }
 
     //
