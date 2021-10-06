@@ -55,6 +55,7 @@
       :formItem="addItem ? addItem : formItem"
       :rules="addRules ? addRules : rules"
       :setData="add"
+      :additional="addToData"
       @succeed="addComplete"
       @fail="addModal.loading(false)"
     >
@@ -225,6 +226,12 @@ export default defineComponent({
       type: Object,
       required: false,
       default: undefined
+    },
+    // 添加表单额外数据
+    addToData: {
+      type: Object,
+      required: false,
+      default: {}
     }
 
   },

@@ -145,6 +145,12 @@ export default defineComponent({
       type: Object,
       required: false,
       default: {}
+    },
+    // 表单额外追加数据
+    additional: {
+      type: Object,
+      required: false,
+      default: {}
     }
   },
   setup (props, context) {
@@ -182,6 +188,7 @@ export default defineComponent({
      */
     const onSubmit = () => {
       formRef.value.validate().then(() => {
+        Object.assign(formData.value, props.additional)
         props.setData(formData.value).then(e => {
           message.success(e.data.message)
           context.emit('succeed', e)
