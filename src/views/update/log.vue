@@ -108,6 +108,10 @@
     <ul>
       <li>优化远程选项同步问题</li>
     </ul>
+    <div class="title">2021年10月06日</div>
+    <ul>
+      <li>增加添加数据表单额外数据配置项</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">
