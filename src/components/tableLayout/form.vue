@@ -107,6 +107,7 @@
   </a-form>
 </template>
 <script lang="ts">
+import utils from './utils'
 import upload from './upload.vue'
 import { message } from 'ant-design-vue'
 import { FormItem, SetData } from './type'
@@ -155,9 +156,6 @@ export default defineComponent({
   },
   setup (props, context) {
 
-    // 数据录入组件值为数组的
-    const dataComponentArray: string[] = ['rangePicker', 'checkbox']
-
     // 表单数据
     const formData = computed(() => {
       let data = reactive({})
@@ -169,14 +167,7 @@ export default defineComponent({
           data[props.dataKey] = props.defaultData[props.dataKey] || undefined
         }
       } else {
-        props.formItem.forEach(item => {
-          // 根据值类型设置初始值
-          if (dataComponentArray.includes(item.type)) {
-            data[item.key] = item.defaultVal || []
-          } else {
-            data[item.key] = item.defaultVal || undefined
-          }
-        })
+        utils.initData(props.formItem, data)
       }
       return data
     })

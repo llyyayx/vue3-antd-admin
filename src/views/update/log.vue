@@ -112,6 +112,10 @@
     <ul>
       <li>增加添加数据表单额外数据配置项</li>
     </ul>
+    <div class="title">2021年10月12日</div>
+    <ul>
+      <li>编辑取消&完成重置配置项数据，去除整个tabelLayout内部依赖，使其独立化</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

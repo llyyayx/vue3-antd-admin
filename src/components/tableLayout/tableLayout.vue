@@ -68,7 +68,7 @@
     ref="editModal" 
     title="编辑数据" 
     @ok="editSubmit"
-    @cancel="editForm.reset()"
+    @cancel="enditCancel"
     v-if="edit"
   >
     <Form 
@@ -88,7 +88,7 @@
   </Modal>
 </template>
 <script lang="ts">
-import util from '@/utils'
+import utils from './utils'
 import Form from './form.vue'
 import Modal from './modal.vue'
 import { FormItem, SetData, GetData, EditData, OptionsData } from './type'
@@ -265,7 +265,7 @@ export default defineComponent({
           slots: { customRender: 'operation' }
         }
         // 防止多次插入
-        if (!util.arrIsKey(props.columns, 'key', 'operation')) props.columns.push(action)
+        if (!utils.arrIsKey(props.columns, 'key', 'operation')) props.columns.push(action)
       }
     })
 
@@ -395,7 +395,7 @@ export default defineComponent({
 
     const editForm = ref()
     const editModal = ref()
-    let editDefData: any = reactive({})
+    const editDefData: any = reactive({})
 
     // 点击表单编辑按钮
     const defaultEdit = (e: any) => {
@@ -434,8 +434,14 @@ export default defineComponent({
     const editComplete = () => {
       editModal.value.close()
       context.emit('editSuccess')
+      utils.initData(props.editItem || props.formItem, editDefData)
       getData()
       getOptions()
+    }
+
+    // 编辑弹框取消事件
+    const enditCancel = () => {
+      utils.initData(props.editItem || props.formItem, editDefData)
     }
 
     /**** 删除数据 ****/
@@ -496,7 +502,7 @@ export default defineComponent({
     return { 
       dataSource, tableProps, paging, loading, tableChange,
       selectForm, selectFun, selectComplete, resetQuery,
-      editDefData, editForm, editModal, defaultEdit, editSubmit, editComplete,
+      editDefData, editForm, editModal, defaultEdit, editSubmit, editComplete, enditCancel,
       defaultDel,
       addForm, addModal, defaultAdd, addSubmit, addComplete,
       getData, formSlot

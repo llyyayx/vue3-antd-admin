@@ -1,7 +1,18 @@
 import { AxiosResponse } from 'axios'
-import { TableList } from '@/types/api/table'
-import { ResponseData } from '@/types/api/public'
 import { ColumnProps, tableProps } from 'ant-design-vue/es/table/interface'
+
+interface ResponseData<T = any> {
+  code: number,
+  message: string,
+  data?: T
+}
+
+interface TableList extends ResponseData {
+  total: number,
+  current: number,
+  pageSize: number,
+  data: []
+}
 
 // 表单项类型_增改查
 export interface FormItem {
