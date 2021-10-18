@@ -116,6 +116,10 @@
     <ul>
       <li>编辑取消&完成重置配置项数据，去除整个tabelLayout内部依赖，使其独立化</li>
     </ul>
+    <div class="title">2021年10月18日</div>
+    <ul>
+      <li>tableLayout添加文件上传配置项</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

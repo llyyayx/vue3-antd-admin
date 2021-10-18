@@ -94,11 +94,17 @@
           :options="item.options"
           v-if="item.type === 'checkbox'"
         />
-        <!-- 文件上传 -->
+        <!-- 图片上传 -->
         <upload
           v-model:value="formData[item.key]"
           :upload="item.upload"
           v-if="item.type === 'upload'"
+        />
+        <!-- 文件上传 -->
+        <uploadFile
+          v-model:value="formData[item.key]"
+          :upload="item.upload"
+          v-if="item.type === 'uploadFile'"
         />
         <!-- 自定义插槽 -->
         <slot :name="item.slotName" :formData="formData" :key="item.key" v-if="item.type === 'slot'" />
@@ -109,6 +115,7 @@
 <script lang="ts">
 import utils from './utils'
 import upload from './upload.vue'
+import uploadFile from './uploadFile.vue'
 import { message } from 'ant-design-vue'
 import { FormItem, SetData } from './type'
 import { defineComponent, PropType, ref, watch, reactive, computed } from 'vue'
@@ -116,7 +123,8 @@ export default defineComponent({
   name: 'comForm',
   emits: ['succeed', 'fail'],
   components: {
-    upload
+    upload,
+    uploadFile
   },
   props: {
     // 表单项

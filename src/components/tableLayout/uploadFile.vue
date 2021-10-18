@@ -1,29 +1,25 @@
 <template>
-  <a-upload
-    name="file"
-    list-type="picture-card"
-    class="avatar-uploader"
-    :show-upload-list="false"
-    :customRequest="customRequest"
-  >
-    <a-avatar v-if="imageUrl" :size="128" shape="square" :src="imageUrl" />
-    <div v-else>
-      <loading-outlined v-if="loading"></loading-outlined>
-      <plus-outlined v-else></plus-outlined>
-      <div class="ant-upload-text">点击上传</div>
-    </div>
-  </a-upload>
+  <div class="uploadFile__component">
+    <a-upload
+      name="file"
+      class="file-uploader"
+      :show-upload-list="false"
+      :customRequest="customRequest"
+    >
+      <a-button type="primary" :loading="loading"><CloudUploadOutlined v-show="!loading" /> 上传文件</a-button>
+    </a-upload>
+    <a :href="fileUrl" target="_blank" >{{ fileUrl }}</a>
+  </div>
 </template>
 <script lang="ts">
 import { UploadFun } from './type'
 import { message } from 'ant-design-vue'
 import { defineComponent, ref, PropType } from 'vue'
-import { PlusOutlined, LoadingOutlined } from '@ant-design/icons-vue'
+import { CloudUploadOutlined } from '@ant-design/icons-vue'
 export default defineComponent({
-  name: 'uploadImg',
+  name: 'uploadFile',
   components: {
-    LoadingOutlined,
-    PlusOutlined,
+    CloudUploadOutlined
   },
   emits: ['update:value'],
   props: {
@@ -40,10 +36,10 @@ export default defineComponent({
   setup (props, context) {
 
     const loading = ref<boolean>(false);
-    const imageUrl = ref<string>('');
+    const fileUrl = ref<string>('');
 
     if (props.value) {
-      imageUrl.value = props.value
+      fileUrl.value = props.value
     }
 
     /**
@@ -57,11 +53,11 @@ export default defineComponent({
         formdata.append('file', data.file)
         props.upload(formdata).then(e => {
           loading.value = false
-          imageUrl.value = e.data.url
+          fileUrl.value = e.data.url
           context.emit('update:value', e.data.url)
         }).catch(err => {
           loading.value = false
-          imageUrl.value = ''
+          fileUrl.value = ''
           context.emit('update:value', '')
           message.error(err.message || err.data.message)
         })
@@ -70,8 +66,22 @@ export default defineComponent({
       }
     }
 
-    return { loading, imageUrl, customRequest }
+    return { loading, fileUrl, customRequest }
 
   }
 })
 </script>
+<style lang="scss" scoped>
+.uploadFile__component {
+  display: flex;
+  align-items: flex-end;
+  & a {
+    flex-shrink: 1;
+    flex-grow: 1;
+    margin-left: 6px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+</style>
