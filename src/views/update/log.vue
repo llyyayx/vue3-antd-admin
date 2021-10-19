@@ -120,6 +120,10 @@
     <ul>
       <li>tableLayout添加文件上传配置项</li>
     </ul>
+    <div class="title">2021年10月19日</div>
+    <ul>
+      <li>解决头像上传、文件上传规则验证问题，原因：a-upload组件上传前（多次）触发change事件被form组件监听了</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

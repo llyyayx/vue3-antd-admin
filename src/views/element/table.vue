@@ -94,7 +94,7 @@ export default defineComponent({
       phone: [{required: true, message: '请输入手机号', trigger: 'change'}],
       industry: [{required: true, message: '请输入行业', trigger: 'change',type:'string'}],
       wealth: [{required: true, message: '请输入净资产', trigger: 'change',type:'number'}],
-      formnet: [{required: true, message: '请输入表单插槽', trigger: 'change'}],
+      formnet: [{required: true, message: '请输入表单插槽', trigger: 'change'}]
     }
 
     // 改密

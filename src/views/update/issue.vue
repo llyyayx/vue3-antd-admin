@@ -46,6 +46,10 @@
     <ul>
       <li class="solve">栏目超出没隐藏滚动</li>
     </ul>
+    <div class="title">2021年10月19日</div>
+    <ul>
+      <li class="solve">头像上传、文件上传验证规则时，明明有值却提示请上传</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

@@ -14,14 +14,14 @@
 <script lang="ts">
 import { UploadFun } from './type'
 import { message } from 'ant-design-vue'
-import { defineComponent, ref, PropType } from 'vue'
+import { defineComponent, ref, watch, PropType } from 'vue'
 import { CloudUploadOutlined } from '@ant-design/icons-vue'
 export default defineComponent({
   name: 'uploadFile',
   components: {
     CloudUploadOutlined
   },
-  emits: ['update:value'],
+  emits: ['update:value', 'change'],
   props: {
     value: {
       type: String,
@@ -36,11 +36,16 @@ export default defineComponent({
   setup (props, context) {
 
     const loading = ref<boolean>(false);
-    const fileUrl = ref<string>('');
+    const fileUrl = ref<string | undefined>('');
 
     if (props.value) {
       fileUrl.value = props.value
     }
+
+    watch(props, (data) => {
+      fileUrl.value = data.value
+    })
+
 
     /**
      * @Desc: 自定义上传头像
@@ -53,11 +58,9 @@ export default defineComponent({
         formdata.append('file', data.file)
         props.upload(formdata).then(e => {
           loading.value = false
-          fileUrl.value = e.data.url
           context.emit('update:value', e.data.url)
         }).catch(err => {
           loading.value = false
-          fileUrl.value = ''
           context.emit('update:value', '')
           message.error(err.message || err.data.message)
         })

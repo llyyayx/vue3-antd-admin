@@ -17,7 +17,7 @@
 <script lang="ts">
 import { UploadFun } from './type'
 import { message } from 'ant-design-vue'
-import { defineComponent, ref, PropType } from 'vue'
+import { defineComponent, ref, watch, PropType } from 'vue'
 import { PlusOutlined, LoadingOutlined } from '@ant-design/icons-vue'
 export default defineComponent({
   name: 'uploadImg',
@@ -25,7 +25,7 @@ export default defineComponent({
     LoadingOutlined,
     PlusOutlined,
   },
-  emits: ['update:value'],
+  emits: ['update:value', 'change'],
   props: {
     value: {
       type: String,
@@ -40,11 +40,15 @@ export default defineComponent({
   setup (props, context) {
 
     const loading = ref<boolean>(false);
-    const imageUrl = ref<string>('');
+    const imageUrl = ref<string | undefined>('');
 
     if (props.value) {
       imageUrl.value = props.value
     }
+
+    watch(props, (data) => {
+      imageUrl.value = data.value
+    })
 
     /**
      * @Desc: 自定义上传头像
@@ -57,11 +61,9 @@ export default defineComponent({
         formdata.append('file', data.file)
         props.upload(formdata).then(e => {
           loading.value = false
-          imageUrl.value = e.data.url
           context.emit('update:value', e.data.url)
         }).catch(err => {
           loading.value = false
-          imageUrl.value = ''
           context.emit('update:value', '')
           message.error(err.message || err.data.message)
         })
