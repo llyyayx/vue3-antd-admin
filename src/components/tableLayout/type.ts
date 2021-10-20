@@ -76,6 +76,7 @@ export interface TableProps {
   editKey?: string,
   delKey?: string,
   addRules?: any,
-  editRules?: any
-  params?: any
+  editRules?: any,
+  params?: any,
+  addToData?: any
 }
