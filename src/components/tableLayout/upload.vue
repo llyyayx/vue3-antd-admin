@@ -5,6 +5,7 @@
     class="avatar-uploader"
     :show-upload-list="false"
     :customRequest="customRequest"
+    :disabled="disabled"
   >
     <a-avatar v-if="imageUrl" :size="128" shape="square" :src="imageUrl" />
     <div v-else>
@@ -36,6 +37,11 @@ export default defineComponent({
       type: Function as PropType<UploadFun>,
       required: false
     },
+    // 是否禁用
+    disabled: {
+      type: Boolean,
+      required: false
+    },
   },
   setup (props, context) {
 

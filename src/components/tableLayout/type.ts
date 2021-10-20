@@ -25,7 +25,8 @@ export interface FormItem {
   labelCol?: number,
   upload?: UploadFun,
   slotName?: string,
-  optionKey?: string
+  optionKey?: string,
+  disabled?: boolean
 }
 
 // 表单提交函数类型_增改删

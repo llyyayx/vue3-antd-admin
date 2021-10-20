@@ -21,6 +21,7 @@
           :allowClear="true" 
           autocomplete="off" 
           :placeholder="'请输入'+item.title"
+          :disabled="item.disabled ? true : false"
           v-if="item.type === 'input'"
         />
         <!-- 下拉选择框 -->
@@ -28,6 +29,7 @@
           v-model:value="formData[item.key]"
           :placeholder="'请选择'+item.title"
           :allowClear="true"
+          :disabled="item.disabled ? true : false"
           v-if="item.type === 'select'"
         >
           <a-select-option :value="option.value" v-for="option in item.options">{{ option.label }}</a-select-option>
@@ -38,6 +40,7 @@
           :allowClear="true" 
           valueFormat="YYYY-MM-DD"
           style="width: 100%;"
+          :disabled="item.disabled ? true : false"
           v-if="item.type === 'datePicker'"
         />
         <!-- 时间范围选择框 -->
@@ -46,6 +49,7 @@
           :allowClear="true"
           valueFormat="YYYY-MM-DD"
           style="width: 100%;"
+          :disabled="item.disabled ? true : false"
           v-if="item.type === 'rangePicker'"
         />
         <!-- 多行文本输入 -->
@@ -55,6 +59,7 @@
           autocomplete="off" 
           :placeholder="'请输入'+item.title"
           style="width: 100%;"
+          :disabled="item.disabled ? true : false"
           v-if="item.type === 'textarea'"
         />
         <!-- 树形下拉选择框 -->
@@ -65,6 +70,7 @@
           :tree-data="item.options"
           :dropdownStyle="{ maxHeight: '500px' }"
           style="width: 100%;"
+          :disabled="item.disabled ? true : false"
           v-if="item.type === 'treeSelect'"
         />
         <!-- 数值输入框 -->
@@ -73,6 +79,7 @@
           autocomplete="off"
           :placeholder="'请输入'+item.title"
           style="width: 100%;"
+          :disabled="item.disabled ? true : false"
           v-if="item.type === 'number'"
         />
         <!-- 开关 -->
@@ -80,30 +87,35 @@
           v-model:checked="formData[item.key]"
           checked-children="开"
           un-checked-children="关"
+          :disabled="item.disabled ? true : false"
           v-if="item.type === 'switch'"
         />
         <!-- 单选框 -->
         <a-radio-group
           v-model:value="formData[item.key]"
           :options="item.options"
+          :disabled="item.disabled ? true : false"
           v-if="item.type === 'radio'"
         />
         <!-- 多选框 -->
         <a-checkbox-group 
           v-model:value="formData[item.key]" 
           :options="item.options"
+          :disabled="item.disabled ? true : false"
           v-if="item.type === 'checkbox'"
         />
         <!-- 图片上传 -->
         <upload
           v-model:value="formData[item.key]"
           :upload="item.upload"
+          :disabled="item.disabled ? true : false"
           v-if="item.type === 'upload'"
         />
         <!-- 文件上传 -->
         <uploadFile
           v-model:value="formData[item.key]"
           :upload="item.upload"
+          :disabled="item.disabled ? true : false"
           v-if="item.type === 'uploadFile'"
         />
         <!-- 自定义插槽 -->

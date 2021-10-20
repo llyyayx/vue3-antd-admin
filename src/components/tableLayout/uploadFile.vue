@@ -5,6 +5,7 @@
       class="file-uploader"
       :show-upload-list="false"
       :customRequest="customRequest"
+      :disabled="disabled"
     >
       <a-button type="primary" :loading="loading"><CloudUploadOutlined v-show="!loading" /> 上传文件</a-button>
     </a-upload>
@@ -32,6 +33,11 @@ export default defineComponent({
       type: Function as PropType<UploadFun>,
       required: false
     },
+    // 是否禁用
+    disabled: {
+      type: Boolean,
+      required: false
+    },
   },
   setup (props, context) {
 
