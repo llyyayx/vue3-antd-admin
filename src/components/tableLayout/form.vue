@@ -3,6 +3,7 @@
     ref="formRef"
     :rules="rules"
     :model="formData"
+    :name="name"
     layout="inline"
     class="comform"
   >
@@ -82,6 +83,15 @@
           :disabled="item.disabled ? true : false"
           v-if="item.type === 'number'"
         />
+        <!-- 密码输入框 -->
+        <a-input-password
+          v-model:value="formData[item.key]" 
+          autocomplete="off"
+          :placeholder="'请输入'+item.title"
+          style="width: 100%;"
+          :disabled="item.disabled ? true : false"
+          v-if="item.type === 'password'"
+        />
         <!-- 开关 -->
         <a-switch 
           v-model:checked="formData[item.key]"
@@ -148,6 +158,12 @@ export default defineComponent({
     setData: {
       type: Function as PropType<SetData>,
       required: true
+    },
+    // 表单名称
+    name: {
+      type: String,
+      required: false,
+      default: 'form'
     },
     // 修改数据的key
     dataKey: {

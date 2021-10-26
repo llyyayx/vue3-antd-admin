@@ -128,6 +128,10 @@
     <ul>
       <li>增加表单输入项禁用功能</li>
     </ul>
+    <div class="title">2021年10月26日</div>
+    <ul>
+      <li>增加密码输入组件，增加form名称防止组件id冲突</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

@@ -4,6 +4,7 @@
       <div class="table__top" v-if="selectItem && selectItem.length > 0">
         <Form 
           ref="selectForm"
+          name="select"
           :formItem="selectItem || []"
           :setData="selectFun"
           @succeed="selectComplete"
@@ -52,6 +53,7 @@
   >
     <Form 
       ref="addForm"
+      name="add"
       :formItem="addItem ? addItem : formItem"
       :rules="addRules ? addRules : rules"
       :setData="add"
@@ -73,6 +75,7 @@
   >
     <Form 
       ref="editForm"
+      name="edit"
       :dataKey="editKey ? editKey : rowkey"
       :formItem="editItem ? editItem : formItem"
       :rules="editRules ? editRules : rules"
