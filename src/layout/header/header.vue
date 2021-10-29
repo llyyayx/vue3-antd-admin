@@ -55,7 +55,11 @@ export default defineComponent({
     ...mapState({
       name: (state: any) => state.user.name,
       avatar: (state: any) => state.user.avatar,
-      routers: (state: any) => state.user.routers
+      routers: (state: any) => {
+        const array: any[] = []
+        state.user.routers.forEach((item: any) => { if (!item.hidden) array.push(item) })
+        return array
+      }
     })
   },
   emits: ['update:collapsed'],
