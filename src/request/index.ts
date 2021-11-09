@@ -40,7 +40,7 @@ request.interceptors.response.use((response: AxiosResponse): AxiosResponse | Pro
   if (response.data.code === 200) {
     return response
   } else if (response.data.code === -401) {
-    // 登陆失效
+    // 登录失效
     storage.remove('token')
     router.push({ path: '/login', query: { redirect: router.currentRoute.value.fullPath } })
     return Promise.reject(response)

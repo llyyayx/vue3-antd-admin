@@ -68,7 +68,7 @@ export default defineComponent({
   & .title {
     display: block;
     font-weight: 700;
-    margin: 10px 0 20px;
+    margin: 30px 0 10px;
   }
   & ul {
     margin: 0;

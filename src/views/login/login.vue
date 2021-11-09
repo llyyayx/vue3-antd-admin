@@ -114,7 +114,7 @@ function data_form () {
   overflow: hidden;
   & .login-container-form {
     width: calc(100% - 40px);
-    height: 380px;
+    height: 400px;
     padding: 4vh;
     margin-top: calc((100vh - 380px) / 2);
     margin-right: 20px;

@@ -70,6 +70,7 @@ export interface TableProps {
   rowkey?: string,
   page?: boolean,
   operationWidth?: number,
+  operationShow?: boolean,
 
   addItem?: FormItem[],
   editItem?: FormItem[],

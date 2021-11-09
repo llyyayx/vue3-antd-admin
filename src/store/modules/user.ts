@@ -4,8 +4,8 @@ import { ActionContext } from 'vuex'
 import { message } from 'ant-design-vue'
 import { LoginFrom } from '@/types/views/login'
 import { RouterTable } from '@/types/api/login'
-import { login, info, menu } from '@/api/login'
 import { generator } from '@/utils/parsingRouter'
+import { login, info, menu, logout } from '@/api/login'
 
 // 处理用户登录、登出、个人信息、权限路由
 
@@ -56,8 +56,8 @@ const user = {
       state.routers = routers
     },
 
-    // 用户退出登陆
-    logout (state: UserState) {
+    // 用户退出登录
+    clearState (state: UserState) {
       storage.remove('token')
       // 为了重新加载用户信息及路由组
       state.name = ''
@@ -67,7 +67,7 @@ const user = {
 
   actions: {
 
-    // 登陆
+    // 登录
     login (context: ActionContext<UserState, AllState>, params: LoginFrom) {
       return new Promise((resolve, reject) => {
         login(params).then(e => {
@@ -109,6 +109,19 @@ const user = {
           resolve(generator(routeTable))
         }).catch(err => {
           message.error(err.message || err.data.message)
+        })
+      })
+    },
+
+    // 退出登录
+    logout (context: ActionContext<UserState, AllState>) {
+      return new Promise((resolve, reject) => {
+        logout().then(e => {
+          context.commit('clearState')
+          resolve(e)
+        }).catch(err => {
+          message.error(err.message || err.data.message)
+          reject(err)
         })
       })
     }

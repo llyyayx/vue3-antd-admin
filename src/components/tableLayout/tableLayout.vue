@@ -185,6 +185,12 @@ export default defineComponent({
       required: false,
       default: 200
     },
+    // 默认操作显隐
+    operationShow: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
 
     // 自定义设置项
 
@@ -259,7 +265,7 @@ export default defineComponent({
 
     // 初始化操作栏
     onBeforeMount(() => {
-      if (props.del || props.edit) {
+      if (props.operationShow && (props.del || props.edit)) {
         const action: ColumnProps = {
           title: '操作',
           width: props.operationWidth,

@@ -2,7 +2,7 @@
   <div class="log__container">
     <div class="title">2021年08月04日</div>
     <ul>
-      <li>通用框架的基础路由、鉴权、无限嵌套菜单、tableLayout组件、登陆退出完成，正式上线github</li>
+      <li>通用框架的基础路由、鉴权、无限嵌套菜单、tableLayout组件、登录退出完成，正式上线github</li>
     </ul>
     <div class="title">2021年08月09日</div>
     <ul>
@@ -79,7 +79,7 @@
       <li>修复参数链接页面刷新参数丢失</li>
       <li>优化隐藏页面侧边菜单不做选中</li>
       <li>优化路由鉴权防止query丢失</li>
-      <li>登陆页面调整push(string)</li>
+      <li>登录页面调整push(string)</li>
       <li>tab栏把route.path更改为route.fullPath</li>
     </ul>
     <div class="title">2021年09月23日</div>
@@ -136,6 +136,10 @@
     <ul>
       <li>顶部栏目添加隐藏功能</li>
     </ul>
+    <div class="title">2021年11月9日</div>
+    <ul>
+      <li>添加默认操作栏显隐配置项</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">
@@ -154,7 +158,7 @@ export default defineComponent({
   & .title {
     display: block;
     font-weight: 700;
-    margin: 10px 0 20px;
+    margin: 30px 0 10px;
   }
   & ul {
     margin: 0;

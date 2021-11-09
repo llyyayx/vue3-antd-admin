@@ -1,7 +1,7 @@
 import { ResponseData } from './public'
 import { UserState } from '@/store/modules/user'
 
-// 登陆接口约束
+// 登录接口约束
 export interface LoginSuccess extends ResponseData {
   token: string
 }

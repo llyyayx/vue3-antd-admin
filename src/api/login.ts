@@ -7,7 +7,7 @@ import { LoginSuccess, UserInfo, RouterData } from '@/types/api/login'
 type ConfigType<T=ResponseData> = Promise<AxiosResponse<T>>
 
 /**
- * @desc: 登陆
+ * @desc: 登录
  * @param { Object } data 输入的账号密码
  */
 export const login = (data: LoginFrom): ConfigType<LoginSuccess> => {
@@ -36,5 +36,15 @@ export const menu = (): ConfigType<RouterData> => {
   return request({
     url: '/menu',
     method: 'get'
+  })
+}
+
+/**
+ * @desc: 退出登录
+ */
+ export const logout = (): ConfigType => {
+  return request({
+    url: '/logout',
+    method: 'post'
   })
 }

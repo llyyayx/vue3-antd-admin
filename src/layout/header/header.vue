@@ -37,7 +37,6 @@
   </div>
 </template>
 <script lang="ts">
-import storage from 'store'
 import router from '@/router'
 import { mapState, useStore } from 'vuex'
 import aIcon from '@/components/aicon/aicon.vue'
@@ -77,8 +76,9 @@ export default defineComponent({
 
     // 退出登录
     const logout = () => {
-      store.commit('user/logout')
-      router.push('/login')
+      store.dispatch('user/logout').then(e => {
+        router.push('/login')
+      })
     }
 
     // 切换tab
