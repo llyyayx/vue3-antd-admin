@@ -29,8 +29,11 @@ export default defineComponent({
     }
 
     const menuItem = (router: RouterObj) => {
+      const itemSlots: Slots = {
+        icon: () => router.icon ? [<aIcon type= { router.icon || '' } />] : []
+      }
       return (
-        <a-menu-item key={ router.key }>
+        <a-menu-item v-slots={ itemSlots } key={ router.key }>
           <router-link to={ router.path }>{ router.name }</router-link>
         </a-menu-item>
       )

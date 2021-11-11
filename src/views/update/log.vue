@@ -143,6 +143,7 @@
     <div class="title">2021年11月11日</div>
     <ul>
       <li>修复列表编辑竖线显示问题</li>
+      <li>menu菜单页面级也可以添加icon</li>
     </ul>
   </div>
 </template>
