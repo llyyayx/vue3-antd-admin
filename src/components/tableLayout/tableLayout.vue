@@ -34,7 +34,7 @@
       <template #operation="item">
         <div class="operation">
           <a @click="defaultEdit(item)" v-if="edit">编辑</a>
-          <a-divider type="vertical" v-if="edit" />
+          <a-divider type="vertical" v-if="del" />
           <a class="danger" @click="defaultDel(item)" v-if="del">删除</a>
           <slot name="operationMore" :value="item" />
         </div>

@@ -140,6 +140,10 @@
     <ul>
       <li>添加默认操作栏显隐配置项</li>
     </ul>
+    <div class="title">2021年11月11日</div>
+    <ul>
+      <li>修复列表编辑竖线显示问题</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">
