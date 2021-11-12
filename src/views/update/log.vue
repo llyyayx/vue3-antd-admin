@@ -145,6 +145,11 @@
       <li>修复列表编辑竖线显示问题</li>
       <li>menu菜单页面级也可以添加icon</li>
     </ul>
+    <div class="title">2021年11月12日</div>
+    <ul>
+      <li>完善路由缓存功能</li>
+      <li>vuex设置路由缓存白名单</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

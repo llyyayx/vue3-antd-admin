@@ -11,12 +11,17 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted } from 'vue'
 import aIcon from '@/components/aicon/aicon.vue'
 export default defineComponent({
   name: 'el_icon',
   components: {
     aIcon
+  },
+  setup () {
+    onMounted(() => {
+      console.log(123)
+    })
   }
 })
 </script>

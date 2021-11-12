@@ -26,7 +26,7 @@
   </a-tabs>
   <div class="main__container">
     <router-view v-slot="{ Component }">
-      <keep-alive>
+      <keep-alive :include="includeList">
         <component :is="Component" />
       </keep-alive>
     </router-view>
@@ -41,7 +41,8 @@ export default defineComponent({
   name: 'layoutTabs',
   computed: {
     ...mapState({
-      tabList: (state: any) => state.tabs.tabList as TabItem[]
+      tabList: (state: any) => state.tabs.tabList as TabItem[],
+      includeList: (state: any) => state.keepAlive.includeList
     })
   }, 
   setup () {
@@ -62,13 +63,22 @@ export default defineComponent({
       })
     }
 
+    // 设置路由缓存(白)名单方法
+    const setKeepAlive = (data: RouteLocationNormalizedLoaded) => {
+      if (data.meta.keepAlive) {
+        store.commit('keepAlive/setKeepAlive', data.name as string)
+      }
+    }
+
     watch(route, to => {
       addTab(to)
+      setKeepAlive(to)
       activeKey.value = to.fullPath
     })
 
     onBeforeMount(() => {
       addTab(route)
+      setKeepAlive(route)
       activeKey.value = route.fullPath
     })
 

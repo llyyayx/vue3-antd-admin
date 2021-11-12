@@ -55,10 +55,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 export default defineComponent({
-  name: 'issue',
-  setup() {
-    
-  }
+  name: 'issue'
 });
 </script>
 <style lang="scss" scoped>

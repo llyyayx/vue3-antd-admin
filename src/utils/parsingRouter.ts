@@ -27,7 +27,7 @@ export const generator = (routerMap: RouterTable, parent?: RouteRecordRaw) => {
       meta: {
         id: item.id,
         title: item.name,
-        keepAlive: true,
+        keepAlive: item.keepAlive || false,
         hidden: item.hidden || false
       }
     }

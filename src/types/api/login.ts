@@ -22,7 +22,8 @@ export interface RouterObj {
   icon?: string,
   children?: RouterObj[],
   pid?: number,
-  hidden?: boolean
+  hidden?: boolean,
+  keepAlive?: boolean
 }
 
 // 路由数组约束
