@@ -150,6 +150,11 @@
       <li>完善路由缓存功能</li>
       <li>vuex设置路由缓存白名单</li>
     </ul>
+    <div class="title">2021年11月13日</div>
+    <ul>
+      <li>动态路由末尾追加通配符404</li>
+      <li>vue3 transition需要模板单个根节点与vue3 模板可以多根节点理念不符，无硬性要求待v3完善后添加</li>
+    </ul>
   </div>
 </template>
 <script lang="ts">

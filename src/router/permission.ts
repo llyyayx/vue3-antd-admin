@@ -22,6 +22,7 @@ export const permission = (router: Router) => {
               e.forEach((item: RouteRecordRaw) => {
                 router.addRoute(item)
               })
+              router.addRoute({ path: '/:pathMatch(.*)*', redirect: '/404' })
               const redirect = from.query.redirect as string | undefined
               if (redirect && to.fullPath === redirect) {
                 next({ ...to, replace: true })

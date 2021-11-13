@@ -14,6 +14,6 @@ export default defineComponent({
     ...mapState({
       includeList: (state: any) => state.keepAlive.includeList
     })
-  },
+  }
 })
 </script>
