@@ -24,8 +24,8 @@
   
 <div align="left">
   <h2>资料</h2>
-  <p><a href="http://www.lelebl.com/admin/" target="_blank">demo在线预览</a></p>
-  <p><a href="http://www.lelebl.com/docs/" target="_blank">使用文档</a></p>
+  <p><a href="http://www.lelebk.com/admin/" target="_blank">demo在线预览</a></p>
+  <p><a href="http://www.lelebk.com/docs/" target="_blank">使用文档</a></p>
   <p>账号：admin | 密码：123456</p>
 <div>
 
