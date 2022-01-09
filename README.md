@@ -1,5 +1,5 @@
 <div align="center">
-  <img width="320" src="http://www.lelebk.com/img/logo.png">
+  <img width="320" src="http://www.lelebk.com/docs/img/logo.png">
 </div>
 
 <div align="center">
@@ -25,7 +25,7 @@
 <div align="left">
   <h2>资料</h2>
   <p><a href="http://www.lelebl.com/admin/" target="_blank">demo在线预览</a></p>
-  <p><a href="http://www.lelebl.com/" target="_blank">使用文档</a></p>
+  <p><a href="http://www.lelebl.com/docs/" target="_blank">使用文档</a></p>
   <p>账号：admin | 密码：123456</p>
 <div>
 
@@ -124,7 +124,7 @@ npm run build
 
 如果你觉得这个项目对你有帮助，你可以帮作者买一杯咖啡表示支持!
 
-<img width="320" src="http://www.lelebk.com/img/zsm.jpg">
+<img width="320" src="http://www.lelebk.com/docs/img/zsm.jpg">
 
 ## 交流
 
