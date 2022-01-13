@@ -79,6 +79,12 @@ npm run build
   - tableLayout表格
   - a-icon图标
 ```
+
+## 交流
+
+vue3-antd-admin是完全开源免费的项目，在帮助开发者更方便地进行中大型管理系统开发，同时也提供 QQ 交流群使用问题欢迎在群内提问。
+
+- QQ 群 `719251151`
   
 ## 未来规划
 
@@ -125,12 +131,6 @@ npm run build
 如果你觉得这个项目对你有帮助，你可以帮作者买一杯咖啡表示支持!
 
 <img width="320" src="http://www.lelebk.com/docs/img/zsm.jpg">
-
-## 交流
-
-vue3-antd-admin是完全开源免费的项目，在帮助开发者更方便地进行中大型管理系统开发，同时也提供 QQ 交流群使用问题欢迎在群内提问。
-
-- QQ 群 `719251151`
 
 ## License
 
