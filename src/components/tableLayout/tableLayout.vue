@@ -1,6 +1,6 @@
 <template>
   <a-card class="table__layout">
-    <template #title>
+    <template #title v-if="(selectItem && selectItem.length > 0) || add || $slots.button">
       <div class="table__top" v-if="selectItem && selectItem.length > 0">
         <Form 
           ref="selectForm"
@@ -355,7 +355,7 @@ export default defineComponent({
     /**** 表单主动事件 ****/
 
     // 表格分页、排序、筛选变化时触发
-    const tableChange = (pagination: any, filters: any, sorter: any, currentDataSource: any) => {
+    const tableChange = (pagination: any) => {
       const { current, pageSize } = pagination
       paging.current = current
       paging.pageSize = pageSize

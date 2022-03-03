@@ -29,8 +29,8 @@ export default defineComponent({
   emits: ['update:value', 'change'],
   props: {
     value: {
-      type: String,
-      required: false
+      type: String,
+      required: false
     },
     // 上传文件的api接口
     upload: {
@@ -39,8 +39,8 @@ export default defineComponent({
     },
     // 是否禁用
     disabled: {
-      type: Boolean,
-      required: false
+      type: Boolean,
+      required: false
     },
   },
   setup (props, context) {
