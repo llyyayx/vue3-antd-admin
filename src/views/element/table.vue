@@ -11,6 +11,7 @@
     :edit="editData"
     :del="delData"
     :options="options"
+    :replaceFields="{ id: 'user_id' }"
     @editOpen="editOpen"
     @addOpen="addOpen"
     @editSuccess="editSuccess"
@@ -56,7 +57,7 @@ export default defineComponent({
     
     // 列表
     const columns = [ 
-      { title: '序号', dataIndex: 'id' }, {  title: '姓名', dataIndex: 'name' },
+      { title: '序号', dataIndex: 'id' }, { title: '键名转换', dataIndex: 'user_id' }, {  title: '姓名', dataIndex: 'name' },
       { title: '年龄', dataIndex: 'age' }, { title: '住址', dataIndex: 'addr' },
       { title: '手机号', dataIndex: 'phone' }, { title: '行业', dataIndex: 'industry' },
       { title: '净资产(亿元)', dataIndex: 'wealth' }, {  title: '状态', slots: { customRender: 'status' } },

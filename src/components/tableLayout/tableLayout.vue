@@ -241,6 +241,12 @@ export default defineComponent({
       type: Object,
       required: false,
       default: {}
+    },
+    // 列表数据键名自定义映射
+    replaceFields: {
+      type: Object,
+      required: false,
+      default: {}
     }
 
   },
@@ -311,7 +317,7 @@ export default defineComponent({
         Object.assign(params, props.params)
       }
       props.get(params).then(e => {
-        dataSource.value = e.data.data
+        dataSource.value = utils.addKeyIsReplace(e.data.data, props.replaceFields)
         const { current, total, pageSize } = e.data
         paging.current = current
         paging.total = total
@@ -386,7 +392,7 @@ export default defineComponent({
 
     // 查询提交完成
     const selectComplete = (e: any) => {
-      dataSource.value = e.data.data
+      dataSource.value = utils.addKeyIsReplace(e.data.data, props.replaceFields)
       const { current, total, pageSize } = e.data
       paging.current = current
       paging.total = total

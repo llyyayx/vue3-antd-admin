@@ -80,4 +80,5 @@ export interface TableProps {
   editRules?: any,
   params?: any,
   addToData?: any
+  replaceFields?: any
 }
