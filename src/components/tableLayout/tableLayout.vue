@@ -425,11 +425,11 @@ export default defineComponent({
         loading.value = true
         const editKey = props.editKey || props.rowkey
         props.editData({ [editKey]: e.text[editKey] }).then(e => {
-          const data = e.data.data
+          const data = utils.objKeyIsReplace(e.data.data, props.replaceFields)
           Object.keys(data).forEach(key => {
             editDefData[key] = data[key]
           })
-          context.emit('editOpen', e.data)
+          context.emit('editOpen', editDefData)
           loading.value = false
           editModal.value.open()
         }).catch(err => {

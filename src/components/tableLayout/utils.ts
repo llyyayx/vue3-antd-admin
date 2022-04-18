@@ -39,7 +39,7 @@ export default {
    * @desc: 在数组[对象]中追加数需要更换的键名
    * @param { any[] } arr 数组
    * @param { object } replaceFields 跟换的键名 { 原键名: 新键名 }
-   * @return { object } 追加更换键名的数组[对象] 
+   * @return { any[] } 追加更换键名的数组[对象] 
    */
   addKeyIsReplace (arr: any[], replaceFields: any ) {
     const tableData = arr
@@ -54,6 +54,24 @@ export default {
       })
     }
     return tableData
+  },
+
+  /**
+   * @desc: 在对象中追加数需要更换的键名
+   * @param { object } obj 数据对象
+   * @param { object } replaceFields 跟换的键名 { 原键名: 新键名 }
+   * @return { object } 追加更换键名的数据对象
+   */
+  objKeyIsReplace (obj: any, replaceFields: any) {
+    const replaceKeys = Object.keys(replaceFields)
+    if (replaceKeys.length > 0) {
+      replaceKeys.forEach((replaceKey: string) => {
+        if (obj.hasOwnProperty(replaceKey)) {
+          obj[replaceFields[replaceKey]] = obj[replaceKey]
+        }
+      })
+    }
+    return obj
   }
 
 }
