@@ -1,16 +1,16 @@
-import { App } from 'vue'
+import type { App } from 'vue'
 import storage from 'store'
-import router from '@/router'
-import { regAxios } from './install'
 import { message } from 'ant-design-vue'
-import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
-
+import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios from 'axios'
+import { regAxios } from './install'
+import router from '@/router'
 
 // 创建axios实例
 
 const request = axios.create({
   baseURL: import.meta.env.VITE_REQUEST_BASE_URL as string,
-  timeout: 6000
+  timeout: 6000,
 })
 
 /**
@@ -27,10 +27,9 @@ const errorHandler = (error: AxiosError): AxiosError | Promise<AxiosError> => {
  * @param { Object } config 配置参数
  */
 request.interceptors.request.use((config: AxiosRequestConfig): AxiosRequestConfig => {
-  config.headers['token'] = storage.get('token') || ''
+  config.headers.token = storage.get('token') || ''
   return config
 }, errorHandler)
-
 
 /**
  * @desc: 服务端响应后拦截
@@ -39,20 +38,22 @@ request.interceptors.request.use((config: AxiosRequestConfig): AxiosRequestConfi
 request.interceptors.response.use((response: AxiosResponse): AxiosResponse | Promise<AxiosResponse> => {
   if (response.data.code === 200) {
     return response
-  } else if (response.data.code === -401) {
+  }
+  else if (response.data.code === -401) {
     // 登录失效
     storage.remove('token')
     router.push({ path: '/login', query: { redirect: router.currentRoute.value.fullPath } })
     return Promise.reject(response)
-  } else {
+  }
+  else {
     return Promise.reject(response)
   }
 }, errorHandler)
 
 export const globalAxios = {
-  install (app: App) {
+  install(app: App) {
     app.use(regAxios, request)
-  }
+  },
 }
 
 export default request

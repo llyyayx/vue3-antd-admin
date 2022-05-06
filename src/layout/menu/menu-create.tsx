@@ -1,16 +1,17 @@
-import { defineComponent, Slots } from "vue"
-import { RouterObj } from '@/types/api/login'
+import type { Slots } from 'vue'
+import { defineComponent } from 'vue'
+import { MenuItem, SubMenu } from 'ant-design-vue/es/menu'
+import type { RouterObj } from '@/types/api/login'
 import aIcon from '@/components/aicon/aicon.vue'
-import { SubMenu, MenuItem } from 'ant-design-vue/es/menu'
 export default defineComponent({
   components: {
-    aIcon
+    AIcon: aIcon,
   },
   props: {
     router: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   render() {
     const menuSub = (router: RouterObj) => {
@@ -21,8 +22,8 @@ export default defineComponent({
             icon: () => [<aIcon type={router.icon || 'FolderOutlined'} />],
             default: () => [router.children && router.children.map(item => (
               menuCreate(item)
-            ))
-            ]
+            )),
+            ],
           }
         }</SubMenu>
       )
@@ -30,7 +31,7 @@ export default defineComponent({
 
     const menuItem = (router: RouterObj) => {
       const itemSlots: Slots = {
-        icon: () => router.icon ? [<aIcon type={router.icon || ''} />] : []
+        icon: () => router.icon ? [<aIcon type={router.icon || ''} />] : [],
       }
       return (
         <MenuItem v-slots={itemSlots} key={router.key}>
@@ -42,13 +43,12 @@ export default defineComponent({
     }
 
     const menuCreate = (router: RouterObj) => {
-      if (router.children && !router.hidden) {
+      if (router.children && !router.hidden)
         return menuSub(router)
-      } else if (!router.hidden) {
+      else if (!router.hidden)
         return menuItem(router)
-      }
     }
 
     return menuCreate(this.router as RouterObj)
-  }
+  },
 })

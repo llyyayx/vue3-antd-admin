@@ -6,16 +6,11 @@
   </router-view>
 </template>
 
-
-<script lang="ts">
-export default {
-  name: 'layoutView',
-};
-</script>
-
-<script lang="ts" setup>
+<script lang="ts" setup name="LayoutView">
 import { useKeepAliveStore } from '@/store/modules/keepAlive'
+
 const keepAliveStore = useKeepAliveStore()
 
 const includeList = computed(() => keepAliveStore.includeList)
 </script>
+

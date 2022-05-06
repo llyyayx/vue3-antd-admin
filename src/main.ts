@@ -4,12 +4,10 @@ import router from './router'
 import { store } from './store'
 import { globalAxios } from './request'
 
-import '@unocss/reset/tailwind.css'
+import '@unocss/reset/normalize.css'
 import 'uno.css'
 
-
 const app = createApp(App)
-
 
 // 使用全局axios
 app.use(globalAxios)

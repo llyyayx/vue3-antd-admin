@@ -1,47 +1,45 @@
 <template>
   <a-layout class="layout">
-
     <!-- 侧边 -->
-    <a-layout-sider width="256" v-model:collapsed="collapsed" :trigger="null" collapsible>
-      <layout-menu :collapsed="collapsed" />
+    <a-layout-sider v-model:collapsed="collapsed" width="256" :trigger="null" collapsible>
+      <LayoutMenu :collapsed="collapsed" />
     </a-layout-sider>
 
     <a-layout>
-
       <!-- 头部 -->
       <a-layout-header class="header">
-        <layout-header v-model:collapsed="collapsed" />
+        <LayoutHeader v-model:collapsed="collapsed" />
       </a-layout-header>
 
       <!-- 内容 -->
       <a-layout-content class="app-container">
-        <layout-tabs />
+        <LayoutTabs />
       </a-layout-content>
-
     </a-layout>
-
   </a-layout>
 </template>
+
 <script lang="ts">
-import { defineComponent, ref } from "vue"
+import { defineComponent, ref } from 'vue'
 import layoutMenu from './menu/menu.vue'
 import layoutTabs from './tabs/tabs.vue'
 import layoutHeader from './header/header.vue'
 import aIcon from '@/components/aicon/aicon.vue'
 export default defineComponent({
-  name: 'layout',
+  name: 'Layout',
   components: {
-    layoutMenu,
-    layoutHeader,
-    layoutTabs,
-    aIcon
+    LayoutMenu: layoutMenu,
+    LayoutHeader: layoutHeader,
+    LayoutTabs: layoutTabs,
+    AIcon: aIcon,
   },
   setup() {
     const collapsed = ref<boolean>(false)
     return { collapsed }
-  }
+  },
 })
 </script>
+
 <style lang="scss" scoped>
 .layout {
   overflow: hidden;
@@ -51,7 +49,6 @@ export default defineComponent({
     background-color: #FFF;
     padding: 0;
   }
-
 
   & .app-container {
     padding: 8px;
@@ -77,6 +74,7 @@ export default defineComponent({
   }
 }
 </style>
+
 <style lang="scss">
 .layout {
 
@@ -90,13 +88,11 @@ export default defineComponent({
     width: 4px;
   }
 
-
   & .ant-layout-sider-children::-webkit-scrollbar-thumb {
     border-radius: 10px;
     box-shadow: inset 0 0 5px #d8d8d8;
     background: #535353;
   }
-
 
   & .ant-layout-sider-children::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px #d8d8d8;

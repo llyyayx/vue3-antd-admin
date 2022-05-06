@@ -1,39 +1,35 @@
 <template>
   <a-modal
-    :title="title"
-    :width="width + 'px'"
-    :visible="show"
-    :confirm-loading="modalLoading"
-    @ok="modalOk"
+    :title="title" :width="`${width}px`" :visible="show" :confirm-loading="modalLoading" @ok="modalOk"
     @cancel="modalCancel"
   >
     <slot />
   </a-modal>
 </template>
+
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 export default defineComponent({
-  name: 'comModal',
-  emits: ['ok', 'cancel'],
+  name: 'ComModal',
   props: {
     // 弹框标题（必填）
     title: {
       type: String,
-      required: true
+      required: true,
     },
     // 弹框宽度（选填）
     width: {
       type: [Number, String],
       required: false,
-      default: 900
-    }
+      default: 900,
+    },
   },
-  setup (props, context) {
-
+  emits: ['ok', 'cancel'],
+  setup(props, context) {
     // 弹框显隐
-    let show = ref<boolean>(false)
+    const show = ref<boolean>(false)
     // 弹框路由loading
-    let modalLoading = ref<boolean>(false)
+    const modalLoading = ref<boolean>(false)
 
     // @desc: 弹框确认事件(回调)
     const modalOk = () => {
@@ -67,7 +63,6 @@ export default defineComponent({
     }
 
     return { show, modalLoading, modalOk, modalCancel, open, close, loading }
-
-  }
+  },
 })
 </script>

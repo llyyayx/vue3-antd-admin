@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
 import storage from 'store'
+import { message } from 'ant-design-vue'
 import { useMenuStore } from './menu'
 import { store } from '@/store'
 import type { RouterTable } from '@/types/api/login'
 import type { LoginFrom } from '@/types/views/login'
 import { info, login, logout, menu } from '@/api/login'
-import { message } from 'ant-design-vue'
 import { generator } from '@/utils/parsingRouter'
 
 // 处理用户登录、登出、个人信息、权限路由
@@ -58,12 +58,12 @@ export const useUserStore = defineStore({
     // 登录
     async login(params: LoginFrom) {
       return new Promise((resolve, reject) => {
-        login(params).then(res => {
+        login(params).then((res) => {
           const { data } = res
           storage.set('token', data.token)
           this.token = data.token
           resolve(data)
-        }).catch(err => {
+        }).catch((err) => {
           reject(err)
         })
       })
@@ -72,24 +72,22 @@ export const useUserStore = defineStore({
     // 获取用户信息
     async userInfo() {
       return new Promise((resolve, reject) => {
-        info().then(e => {
+        info().then((e) => {
           const info = e.data.info
           this.setInfo(info)
           resolve(e)
-        }).catch(err => {
+        }).catch((err) => {
           message.error(err.message || err.data.message)
-          if (err.data && err.data.code !== -401) {
+          if (err.data && err.data.code !== -401)
             reject(err)
-          }
         })
       })
     },
 
     // 获取菜单
     async menu() {
-
       return new Promise((resolve) => {
-        menu().then(e => {
+        menu().then((e) => {
           const routeTable = e.data.data
           this.setRouters(routeTable)
           // 初始化侧边菜单
@@ -98,20 +96,19 @@ export const useUserStore = defineStore({
           menuStore.setMenu(routeTable[0].children || [])
 
           resolve(generator(routeTable))
-        }).catch(err => {
+        }).catch((err) => {
           message.error(err.message || err.data.message)
         })
       })
-
     },
 
     // 退出登录
     async logout() {
       return new Promise((resolve, reject) => {
-        logout().then(e => {
+        logout().then((e) => {
           this.clearState()
           resolve(e)
-        }).catch(err => {
+        }).catch((err) => {
           message.error(err.message || err.data.message)
           reject(err)
         })

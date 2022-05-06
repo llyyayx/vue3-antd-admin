@@ -1,27 +1,20 @@
 <template>
-  <a-config-provider :locale="zhCN" :getPopupContainer="getPopupContainer">
-    <router-view></router-view>
+  <a-config-provider :locale="zhCN" :get-popup-container="getPopupContainer">
+    <router-view />
   </a-config-provider>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'App'
-}
-</script>
-
-<script lang="ts" setup>
-import zhCN from 'ant-design-vue/es/locale/zh_CN';
-import dayjs from 'dayjs';
-import 'dayjs/locale/zh-cn';
-dayjs.locale('zh-cn');
+<script lang="ts" setup name="App">
+import zhCN from 'ant-design-vue/es/locale/zh_CN'
+import dayjs from 'dayjs'
+import 'dayjs/locale/zh-cn'
+dayjs.locale('zh-cn')
 
 function getPopupContainer(el: any, dialogContext: any) {
-  if (dialogContext) {
-    return dialogContext.getDialogWrap();
-  } else {
-    return document.body;
-  }
+  if (dialogContext)
+    return dialogContext.getDialogWrap()
+  else
+    return document.body
 }
 </script>
 

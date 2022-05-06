@@ -3,7 +3,6 @@ import { store } from '@/store'
 import { constantRouterMap } from '@/router/basics.router'
 import router from '@/router'
 
-
 // tabs栏
 
 export interface TabItem {
@@ -51,7 +50,8 @@ export const useTabsStore = defineStore({
       if (!router.hasRoute(item.name || ''))
         result = false
 
-      if (result) tabList.push(item)
+      if (result)
+        tabList.push(item)
     },
 
     /**

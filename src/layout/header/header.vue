@@ -4,7 +4,7 @@
       <menu-unfold-outlined v-if="collapsed" class="trigger" @click="$emit('update:collapsed', !collapsed)" />
       <menu-fold-outlined v-else class="trigger" @click="$emit('update:collapsed', !collapsed)" />
       <div class="group__tabs">
-        <a-tabs :activeKey="activeKey" @tabClick="tabClick">
+        <a-tabs :active-key="activeKey" @tabClick="tabClick">
           <a-tab-pane v-for="item in routers" :key="item.id" :tab="item.name" />
         </a-tabs>
       </div>
@@ -14,11 +14,13 @@
         <div class="header__avatar">
           <a-avatar>
             <template #icon>
-              <img :src="userStore.avatar" v-if="userStore.avatar.length > 0" />
-              <img src="@/assets/layout/avatar.png" v-else />
+              <img v-if="userStore.avatar.length > 0" :src="userStore.avatar">
+              <img v-else src="@/assets/layout/avatar.png">
             </template>
           </a-avatar>
-          <div class="header__avatar-name">{{ userStore.name.length > 0 ? userStore.name : 'admin' }}</div>
+          <div class="header__avatar-name">
+            {{ userStore.name.length > 0 ? userStore.name : 'admin' }}
+          </div>
         </div>
         <template #overlay>
           <a-menu>
@@ -34,37 +36,33 @@
     </div>
   </div>
 </template>
-<script lang="ts">
-export default {
-  name: 'layoutHeader',
-};
-</script>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="layoutHeader">
+import { computed, defineComponent, onBeforeMount, watch } from 'vue'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue'
 import aIcon from '@/components/aicon/aicon.vue'
-import { defineComponent, watch, computed, onBeforeMount } from "vue"
-import { RouterObj, RouterTable } from '@/types/api/login'
-import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
+import type { RouterObj, RouterTable } from '@/types/api/login'
 import { useUserStore } from '@/store/modules/user'
 import { useMenuStore } from '@/store/modules/menu'
-
 defineProps({
   collapsed: {
     required: true,
-    type: Boolean
-  }
-});
-defineEmits(['update:collapsed']);
+    type: Boolean,
+  },
+})
+defineEmits(['update:collapsed'])
 
 const userStore = useUserStore()
 const menuStore = useMenuStore()
 const router = useRouter()
 
-
 const activeKey = computed(() => menuStore.menuId)
 const routers = computed(() => {
   const array: any[] = []
-  userStore.routers?.forEach((item: any) => { if (!item.hidden) array.push(item) })
+  userStore.routers?.forEach((item: any) => {
+    if (!item.hidden)
+      array.push(item)
+  })
   return array
 })
 

@@ -1,3 +1,4 @@
+import path from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
@@ -6,10 +7,8 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import Unocss from 'unocss/vite'
+import VueSetupExtend from 'vite-plugin-vue-setup-extend'
 import { AntDesignVueResolver, VueUseComponentsResolver } from 'unplugin-vue-components/resolvers'
-
-
-const path = require('path')
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -52,19 +51,21 @@ export default defineConfig({
     // see unocss.config.ts for config
     Unocss(),
 
+    // 在setup标签里直接写name属性
+    VueSetupExtend(),
   ],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src')
-    }
+      '@': path.resolve(__dirname, 'src'),
+    },
   },
   server: {
     proxy: {
       '/api': {
         target: 'http://lelebk.com/api',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      }
-    }
-  }
+        rewrite: path => path.replace(/^\/api/, ''),
+      },
+    },
+  },
 })
