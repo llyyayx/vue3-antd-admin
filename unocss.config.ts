@@ -5,8 +5,6 @@ import {
   presetTypography,
   presetUno,
   presetWebFonts,
-  transformerDirectives,
-  transformerVariantGroup,
 } from 'unocss'
 
 export default defineConfig({
@@ -17,11 +15,11 @@ export default defineConfig({
   presets: [
     presetUno(),
     presetAttributify(),
-    presetTypography(),
     presetIcons({
       scale: 1.2,
       warn: true,
     }),
+    presetTypography(),
     presetWebFonts({
       fonts: {
         sans: 'DM Sans',
@@ -29,9 +27,5 @@ export default defineConfig({
         mono: 'DM Mono',
       },
     }),
-  ],
-  transformers: [
-    transformerDirectives(),
-    transformerVariantGroup(),
   ],
 })

@@ -1,18 +1,15 @@
 import { createApp } from 'vue'
-import Antd from 'ant-design-vue'
-import 'ant-design-vue/dist/antd.css'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 import { globalAxios } from './request'
 
-import '@unocss/reset/normalize.css'
-import 'unocss'
+import '@unocss/reset/tailwind.css'
+import 'uno.css'
+
 
 const app = createApp(App)
 
-// 使用antd
-app.use(Antd)
 
 // 使用全局axios
 app.use(globalAxios)
