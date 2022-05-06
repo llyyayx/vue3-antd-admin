@@ -1,13 +1,6 @@
 <template>
-  <a-tabs
-    v-model:activeKey="activeKey"
-    type="editable-card" 
-    :tabBarGutter="6" 
-    @tabClick="jump"
-    @edit="deltab"
-    hide-add
-    class="tabs__view"
-  >
+  <a-tabs v-model:activeKey="activeKey" type="editable-card" :tabBarGutter="6" @tabClick="jump" @edit="deltab" hide-add
+    class="tabs__view">
     <a-tab-pane :key="item.fullPath" v-for="(item, index) in tabList">
       <template #tab>
         <a-dropdown :trigger="['contextmenu']">
@@ -44,8 +37,8 @@ export default defineComponent({
       tabList: (state: any) => state.tabs.tabList as TabItem[],
       includeList: (state: any) => state.keepAlive.includeList
     })
-  }, 
-  setup () {
+  },
+  setup() {
 
     // 激活的tab
     let activeKey = ref<string>()
@@ -53,7 +46,7 @@ export default defineComponent({
     const store = useStore()
     const route = useRoute()
     const router = useRouter()
-    
+
     // 添加tab方法
     const addTab = (data: RouteLocationNormalizedLoaded) => {
       store.commit('tabs/steList', {
@@ -89,7 +82,7 @@ export default defineComponent({
     const jump = (targetKey: string) => {
       if (route.fullPath !== targetKey) {
         router.push(targetKey)
-      } 
+      }
     }
 
     /**
@@ -118,30 +111,29 @@ export default defineComponent({
     }
 
     return { activeKey, jump, deltab, condition }
-    
+
   }
 
 })
 </script>
 <style lang="scss" scoped>
- .main__container {
+.main__container {
   background-color: #FFF;
   min-height: 280px;
   overflow: hidden;
 }
 </style>
-<style lang="scss">
+<style lang="scss" scoped>
 .tabs__view {
   & .ant-tabs-tab {
     user-select: none;
     padding: 0 16px 0 0 !important;
-    & .ant-dropdown-trigger {
-      padding-left: 16px;
-    }
   }
+
   & .ant-tabs-bar {
     margin: 0 0 8px 0;
   }
+
   & .ant-tabs-tab-active {
     font-weight: normal;
     border-bottom: 1px solid #f0f0f0 !important;

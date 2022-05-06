@@ -5,12 +5,7 @@
     </div>
     <span v-show="!collapsed">通用后台</span>
   </div>
-  <a-menu
-    theme="dark"
-    mode="inline"
-    v-model:selectedKeys="selectedKeys"
-    v-model:openKeys="openKeys"
-  >
+  <a-menu theme="dark" mode="inline" v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys">
     <create :router="item" v-for="item in menuRouter" />
   </a-menu>
 </template>
@@ -60,7 +55,7 @@ export default defineComponent({
     watch(route, setMenuKey)
 
     return { selectedKeys, openKeys }
-    
+
   }
 })
 </script>
@@ -73,18 +68,25 @@ export default defineComponent({
   line-height: 64px;
   overflow: hidden;
   white-space: nowrap;
+
+
   & .menu__logo-icon {
     width: 32px;
+
     margin-right: 8px;
+
     img {
       display: block;
       width: 100%;
+
     }
   }
+
   & span {
     display: inline-block;
     font-size: 20px;
     color: #fff;
+
   }
 }
 </style>

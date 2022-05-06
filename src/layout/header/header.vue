@@ -1,11 +1,7 @@
 <template>
   <div class="layout__header">
     <div class="header__left">
-      <menu-unfold-outlined
-        v-if="collapsed"
-        class="trigger"
-        @click="$emit('update:collapsed', !collapsed)"
-      />
+      <menu-unfold-outlined v-if="collapsed" class="trigger" @click="$emit('update:collapsed', !collapsed)" />
       <menu-fold-outlined v-else class="trigger" @click="$emit('update:collapsed', !collapsed)" />
       <div class="group__tabs">
         <a-tabs :activeKey="activeKey" @tabClick="tabClick">
@@ -27,7 +23,9 @@
         <template #overlay>
           <a-menu>
             <a-menu-item key="1" @click="logout()">
-              <template #icon><a-icon type="PoweroffOutlined" /></template>
+              <template #icon>
+                <a-icon type="PoweroffOutlined" />
+              </template>
               退出登录
             </a-menu-item>
           </a-menu>
@@ -97,7 +95,7 @@ export default defineComponent({
     watch(activeKey, () => {
       tabClick(activeKey.value)
     })
-    
+
     onBeforeMount(() => {
       tabClick(activeKey.value)
     })
@@ -114,10 +112,20 @@ export default defineComponent({
   align-items: center;
   padding: 0 22px;
   font-size: 20px;
+
   & .header__left {
     display: flex;
     align-items: center;
     flex-grow: 1;
+
+    & :deep(.ant-tabs-nav::before) {
+      display: none;
+    }
+
+    & :deep(.ant-tabs-nav) {
+      margin-bottom: 0;
+    }
+
     & .group__tabs {
       width: 500px;
       margin-left: 22px;
@@ -131,11 +139,13 @@ export default defineComponent({
     align-items: center;
     flex-shrink: 0;
     flex-grow: 0;
+
     & .header__avatar {
       display: flex;
       align-items: center;
       padding: 0 12px;
       cursor: pointer;
+
       & .header__avatar-name {
         margin-left: 6px;
         font-size: 14px;
@@ -145,13 +155,13 @@ export default defineComponent({
   }
 }
 </style>
-<style lang="scss">
+<!-- <style lang="scss">
 .layout__header {
   & .header__left {
-    & .ant-tabs-bar {
-      margin: 0;
-      border: none;
+
+    & .ant-tabs-top>.ant-tabs-nav::before,
+    .ant-tabs-top>div>.ant-tabs-nav::before {
     }
   }
 }
-</style>
+</style> -->

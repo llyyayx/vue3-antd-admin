@@ -15,7 +15,7 @@
               </a-input>
             </a-form-item>
             <a-form-item name="password">
-             <a-input-password v-model:value="form.password" autocomplete="off" placeholder="请输入密码">
+              <a-input-password v-model:value="form.password" autocomplete="off" placeholder="请输入密码">
                 <template v-slot:prefix>
                   <LockOutlined style="color: rgba(0, 0, 0, 0.25)" />
                 </template>
@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import { useStore } from 'vuex' 
+import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { message } from 'ant-design-vue'
 import { LoginFrom } from '@/types/views/login'
@@ -69,7 +69,7 @@ export default defineComponent({
       ]
     })
 
-    const formRef = ref()
+    const formRef = ref()
 
     const store = useStore()
 
@@ -96,7 +96,7 @@ export default defineComponent({
   },
 });
 
-function data_form () {
+function data_form() {
   const form: UnwrapRef<LoginFrom> = reactive({
     username: undefined,
     password: undefined
@@ -109,9 +109,10 @@ function data_form () {
 .login-container {
   width: 100%;
   height: 100vh;
-  background: url('/src/assets/login/login_bg.png');
-  background-size: cover;
+  background-image: linear-gradient(to right, #74ebd5 0%, #9face6 100%);
   overflow: hidden;
+
+
   & .login-container-form {
     width: calc(100% - 40px);
     height: 400px;
@@ -119,26 +120,31 @@ function data_form () {
     margin-top: calc((100vh - 380px) / 2);
     margin-right: 20px;
     margin-left: 20px;
-    background: url('/src/assets/login/form_bg.png');
     background-size: 100% 100%;
     border-radius: 10px;
+
     box-shadow: 0 2px 8px 0 rgba(7, 17, 27, 0.06);
+
     & .login-container-hello {
       font-size: 32px;
+
       color: #fff;
     }
+
     & .login-container-title {
       margin-bottom: 30px;
       font-size: 20px;
+
       color: #fff;
     }
   }
+
   .login-container-tips {
     position: fixed;
     bottom: 10px;
     width: 100%;
     height: 40px;
-    color: rgba(255, 255, 255, 0.856);
+    color: rgba(0, 0, 0, 0.856);
     text-align: center;
   }
 }
@@ -146,21 +152,30 @@ function data_form () {
 <style lang="scss">
 .login-container {
   & .login-container-form {
+
     & .ant-col {
       width: 100%;
       padding: 0 10px 0 10px;
+
     }
+
     & .ant-input {
       height: 35px;
     }
+
+
     & .ant-btn {
       width: 100%;
+
       height: 45px;
       border-radius: 99px;
     }
+
     & .ant-form-item-explain-error {
       color: #faad14;
+
     }
+
     & .ant-form-item-has-error {
       border-color: #faad14;
     }

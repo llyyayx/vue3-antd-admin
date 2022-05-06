@@ -14,7 +14,7 @@
       </a-layout-header>
 
       <!-- 内容 -->
-      <a-layout-content class="container">
+      <a-layout-content class="app-container">
         <layout-tabs />
       </a-layout-content>
 
@@ -46,24 +46,32 @@ export default defineComponent({
 .layout {
   overflow: hidden;
   height: 100vh;
+
   & .header {
     background-color: #FFF;
     padding: 0;
   }
-  & .container {
+
+
+  & .app-container {
     padding: 8px;
     overflow-y: auto;
     overflow-x: hidden;
   }
-  & .container::-webkit-scrollbar {
+
+  & .app-container::-webkit-scrollbar {
+
     width: 6px;
   }
-  & .container::-webkit-scrollbar-thumb {
+
+  & .app-container::-webkit-scrollbar-thumb {
     border-radius: 10px;
+
     box-shadow: inset 0 0 5px #d8d8d8;
     background: #C1C1C1;
   }
-  & .container::-webkit-scrollbar-track {
+
+  & .app-container::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px #d8d8d8;
     background: #ededed;
   }
@@ -71,18 +79,25 @@ export default defineComponent({
 </style>
 <style lang="scss">
 .layout {
+
   & .ant-layout-sider-children {
     overflow-y: auto;
     overflow-x: hidden;
+
   }
+
   & .ant-layout-sider-children::-webkit-scrollbar {
     width: 4px;
   }
+
+
   & .ant-layout-sider-children::-webkit-scrollbar-thumb {
     border-radius: 10px;
     box-shadow: inset 0 0 5px #d8d8d8;
     background: #535353;
   }
+
+
   & .ant-layout-sider-children::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px #d8d8d8;
     background: #ededed;

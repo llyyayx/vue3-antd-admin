@@ -1,24 +1,10 @@
 <template>
   <pre>tableLayout使用详情见使用文档，这其实是另一个小得开源项目。(tip: 文档编写中)</pre>
-  <tableLayout 
-    :columns="columns"
-    :formItem="formItem"
-    :selectItem="selectItem"
-    :rules="rules"
-    :get="getData"
-    :add="addData"
-    :editData="editGetData"
-    :edit="editData"
-    :del="delData"
-    :options="options"
-    :replaceFields="{ id: 'user_id' }"
-    @editOpen="editOpen"
-    @addOpen="addOpen"
-    @editSuccess="editSuccess"
-    @addSuccess="addSuccess"
-    :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
-    ref="layout" 
-  >
+  <tableLayout :columns="columns" :formItem="formItem" :selectItem="selectItem" :rules="rules" :get="getData"
+    :add="addData" :editData="editGetData" :edit="editData" :del="delData" :options="options"
+    :replaceFields="{ id: 'user_id' }" @editOpen="editOpen" @addOpen="addOpen" @editSuccess="editSuccess"
+    @addSuccess="addSuccess" :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+    ref="layout">
     <template v-slot:status="item">
       测试-{{ item.value.text.name }}
     </template>
@@ -53,25 +39,26 @@ export default defineComponent({
   components: {
     tableLayout
   },
-  setup () {
-    
+  setup() {
+
     // 列表
-    const columns = [ 
-      { title: '序号', dataIndex: 'id' }, { title: '键名转换', dataIndex: 'user_id' }, {  title: '姓名', dataIndex: 'name' },
+    const columns = [
+      { title: '序号', dataIndex: 'id' }, { title: '键名转换', dataIndex: 'user_id' }, { title: '姓名', dataIndex: 'name' },
       { title: '年龄', dataIndex: 'age' }, { title: '住址', dataIndex: 'addr' },
       { title: '手机号', dataIndex: 'phone' }, { title: '行业', dataIndex: 'industry' },
-      { title: '净资产(亿元)', dataIndex: 'wealth' }, {  title: '状态', slots: { customRender: 'status' } },
+      { title: '净资产(亿元)', dataIndex: 'wealth' }, { title: '状态', slots: { customRender: 'status' } },
     ]
-    
+
     // 表单
     const formItem = [
       { title: '姓名', key: 'name', type: 'input' }, { title: '年龄', key: 'age', type: 'number' },
       { title: '住址', key: 'addr', type: 'input' }, { title: '手机号', key: 'phone', type: 'input' },
-      { title: '行业', key: 'industry', type: 'input' }, { title: '净资产', key: 'wealth', type: 'select', 
+      { title: '行业', key: 'industry', type: 'input' }, {
+        title: '净资产', key: 'wealth', type: 'select',
         options: [
-          {value: 10, label: '10亿'},{value: 20, label: '20亿'},
-          {value: 30, label: '30亿'},{value: 40, label: '40亿'},
-          {value: 999, label: '50亿+'}
+          { value: 10, label: '10亿' }, { value: 20, label: '20亿' },
+          { value: 30, label: '30亿' }, { value: 40, label: '40亿' },
+          { value: 999, label: '50亿+' }
         ]
       },
       { title: '头像', key: 'avatar', type: 'upload', upload: upload },
@@ -89,13 +76,13 @@ export default defineComponent({
 
     // 规则
     const rules = {
-      name: [{required: true, message: '请输入姓名', trigger: 'change'}],
-      age: [{required: true, message: '请输入年龄', trigger: 'change',type:'number'}],
-      addr: [{required: true, message: '请输入地址', trigger: 'change'}],
-      phone: [{required: true, message: '请输入手机号', trigger: 'change'}],
-      industry: [{required: true, message: '请输入行业', trigger: 'change',type:'string'}],
-      wealth: [{required: true, message: '请输入净资产', trigger: 'change',type:'number'}],
-      formnet: [{required: true, message: '请输入表单插槽', trigger: 'change'}]
+      name: [{ required: true, message: '请输入姓名', trigger: 'change' }],
+      age: [{ required: true, message: '请输入年龄', trigger: 'change', type: 'number' }],
+      addr: [{ required: true, message: '请输入地址', trigger: 'change' }],
+      phone: [{ required: true, message: '请输入手机号', trigger: 'change' }],
+      industry: [{ required: true, message: '请输入行业', trigger: 'change', type: 'string' }],
+      wealth: [{ required: true, message: '请输入净资产', trigger: 'change', type: 'number' }],
+      formnet: [{ required: true, message: '请输入表单插槽', trigger: 'change' }]
     }
 
     // 改密
@@ -112,7 +99,7 @@ export default defineComponent({
     // 详情
     const router = useRouter()
     const toDetail = () => {
-      router.push({ path: '/element/detail', query: { id: Math.floor(Math.random()*100) } })
+      router.push({ path: '/element/detail', query: { id: Math.floor(Math.random() * 100) } })
     }
 
     // 事件钩子
@@ -133,9 +120,11 @@ export default defineComponent({
       console.log('添加提交成功，无数据')
     }
 
-    return { columns, formItem, selectItem, getData, addData, editGetData, editData, delData, options, rules, selectedRowKeys, onSelectChange, editPassword, toDetail, 
-    editOpen, addOpen, editSuccess, addSuccess }
-    
+    return {
+      columns, formItem, selectItem, getData, addData, editGetData, editData, delData, options, rules, selectedRowKeys, onSelectChange, editPassword, toDetail,
+      editOpen, addOpen, editSuccess, addSuccess
+    }
+
   }
 })
 </script>
