@@ -1,7 +1,7 @@
 import storage from 'store'
-import store from '@/store'
 import { whiteList } from './basics.router'
 import { Router, RouteRecordRaw } from 'vue-router'
+import { useUserStoreWithOut } from '@/store/modules/user'
 
 
 const loginPath = '/login'
@@ -10,17 +10,18 @@ const defultPath = '/'
 // 权限验证
 
 export const permission = (router: Router) => {
-  
+
   router.beforeEach((to, from, next) => {
     if (storage.get('token')) {
       if (to.path === loginPath) {
         next({ path: defultPath })
       } else {
-        if (store.state.user.name.length === 0) {
-          store.dispatch('user/userInfo').then(() => {
-            store.dispatch('user/menu').then(e => {
-              e.forEach((item: RouteRecordRaw) => {
-                router.addRoute(item)
+        const userStore = useUserStoreWithOut()
+        if (userStore.name.length === 0) {
+          userStore.userInfo().then(() => {
+            userStore.menu().then((e) => {
+              e.forEach((item) => {
+                router.addRoute(item as unknown as RouteRecordRaw)
               })
               router.addRoute({ path: '/:pathMatch(.*)*', redirect: '/404' })
               const redirect = from.query.redirect as string | undefined

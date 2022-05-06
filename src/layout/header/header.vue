@@ -14,11 +14,11 @@
         <div class="header__avatar">
           <a-avatar>
             <template #icon>
-              <img :src="avatar" v-if="avatar.length > 0" />
+              <img :src="userStore.avatar" v-if="userStore.avatar.length > 0" />
               <img src="@/assets/layout/avatar.png" v-else />
             </template>
           </a-avatar>
-          <div class="header__avatar-name">{{ name.length > 0 ? name : 'admin' }}</div>
+          <div class="header__avatar-name">{{ userStore.name.length > 0 ? userStore.name : 'admin' }}</div>
         </div>
         <template #overlay>
           <a-menu>
@@ -35,76 +35,66 @@
   </div>
 </template>
 <script lang="ts">
-import router from '@/router'
-import { mapState, useStore } from 'vuex'
+export default {
+  name: 'layoutHeader',
+};
+</script>
+
+<script lang="ts" setup>
 import aIcon from '@/components/aicon/aicon.vue'
 import { defineComponent, watch, computed, onBeforeMount } from "vue"
 import { RouterObj, RouterTable } from '@/types/api/login'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
-export default defineComponent({
-  name: 'layoutHeader',
-  components: {
-    MenuUnfoldOutlined,
-    MenuFoldOutlined,
-    aIcon
-  },
-  computed: {
-    ...mapState({
-      name: (state: any) => state.user.name,
-      avatar: (state: any) => state.user.avatar,
-      routers: (state: any) => {
-        const array: any[] = []
-        state.user.routers.forEach((item: any) => { if (!item.hidden) array.push(item) })
-        return array
-      }
-    })
-  },
-  emits: ['update:collapsed'],
-  props: {
-    collapsed: {
-      required: true,
-      type: Boolean
-    }
-  },
-  setup() {
+import { useUserStore } from '@/store/modules/user'
+import { useMenuStore } from '@/store/modules/menu'
 
-    const store = useStore()
-
-    const activeKey = computed(() => store.state.menu.menuId)
-
-    // 退出登录
-    const logout = () => {
-      store.dispatch('user/logout').then(e => {
-        router.push('/login')
-      })
-    }
-
-    // 切换tab
-    const tabClick = (e: number) => {
-      const routers = store.state.user.routers
-      let menuRouter: RouterTable = []
-      routers.forEach((item: RouterObj) => {
-        if (item.id === e) {
-          menuRouter = item.children || []
-        }
-      })
-      store.commit('menu/setMenu', menuRouter)
-      store.commit('menu/setId', e)
-    }
-
-    watch(activeKey, () => {
-      tabClick(activeKey.value)
-    })
-
-    onBeforeMount(() => {
-      tabClick(activeKey.value)
-    })
-
-    return { logout, tabClick, activeKey }
-
+defineProps({
+  collapsed: {
+    required: true,
+    type: Boolean
   }
+});
+defineEmits(['update:collapsed']);
+
+const userStore = useUserStore()
+const menuStore = useMenuStore()
+const router = useRouter()
+
+
+const activeKey = computed(() => menuStore.menuId)
+const routers = computed(() => {
+  const array: any[] = []
+  userStore.routers?.forEach((item: any) => { if (!item.hidden) array.push(item) })
+  return array
+})
+
+// 退出登录
+const logout = async () => {
+  await userStore.logout()
+  router.push('/login')
+}
+// 切换tab
+const tabClick = (active: any) => {
+  const routers = userStore.routers || []
+  let menuRouter: RouterTable = []
+  routers.forEach((item: RouterObj) => {
+    if (item.id === active)
+      menuRouter = item.children || []
+  })
+
+  menuStore.setId(active)
+  menuStore.setMenu(menuRouter)
+}
+
+watch(activeKey, () => {
+  tabClick(activeKey.value)
+})
+
+onBeforeMount(() => {
+  tabClick(activeKey.value)
 })
 </script>
+
 <style lang="scss" scoped>
 .layout__header {
   display: flex;
@@ -155,13 +145,3 @@ export default defineComponent({
   }
 }
 </style>
-<!-- <style lang="scss">
-.layout__header {
-  & .header__left {
-
-    & .ant-tabs-top>.ant-tabs-nav::before,
-    .ant-tabs-top>div>.ant-tabs-nav::before {
-    }
-  }
-}
-</style> -->

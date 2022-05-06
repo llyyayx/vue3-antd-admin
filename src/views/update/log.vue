@@ -148,7 +148,6 @@
     <div class="title">2021年11月12日</div>
     <ul>
       <li>完善路由缓存功能</li>
-      <li>vuex设置路由缓存白名单</li>
     </ul>
     <div class="title">2021年11月13日</div>
     <ul>
@@ -167,7 +166,7 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'log',
   setup() {
-    
+
   }
 });
 </script>
@@ -175,16 +174,20 @@ export default defineComponent({
 .log__container {
   padding: 20px;
   font-size: 14px;
+
   & .title {
     display: block;
     font-weight: 700;
     margin: 30px 0 10px;
   }
+
   & ul {
     margin: 0;
+
     & li {
       margin: 10px 0;
     }
+
     & .solve {
       text-decoration: line-through;
     }

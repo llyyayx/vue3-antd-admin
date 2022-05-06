@@ -35,12 +35,12 @@
 </template>
 
 <script lang="ts">
-import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { message } from 'ant-design-vue'
 import { LoginFrom } from '@/types/views/login'
 import { defineComponent, reactive, ref, UnwrapRef } from "vue"
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
+import { useUserStore } from '@/store/modules/user'
 export default defineComponent({
   name: "login",
   components: {
@@ -71,17 +71,17 @@ export default defineComponent({
 
     const formRef = ref()
 
-    const store = useStore()
 
     const router = useRouter()
-
+    const userStore = useUserStore()
     /**
      * @desc: 登录提交
      * @param 无
      */
     const handleSubmit = (): void => {
       formRef.value.validate().then(() => {
-        store.dispatch('user/login', form).then(e => {
+
+        userStore.login(form).then(e => {
           const route = router.currentRoute.value
           const url = route.query.redirect || '/'
           router.push(url as string)
