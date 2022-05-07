@@ -1,17 +1,12 @@
 <template>
   <pre>tableLayout使用详情见使用文档，这其实是另一个小得开源项目。(tip: 文档编写中)</pre>
-  <tableLayout
-    ref="layout" :columns="columns" :form-item="formItem" :select-item="selectItem" :rules="rules"
+  <tableLayout ref="layout" :columns="columns" :form-item="formItem" :select-item="selectItem" :rules="rules"
     :get="getData" :add="addData" :edit-data="editGetData" :edit="editData" :del="delData" :options="options"
     :replace-fields="{ id: 'user_id' }" :row-selection="{ selectedRowKeys, onChange: onSelectChange }"
-    @editOpen="editOpen" @addOpen="addOpen" @editSuccess="editSuccess" @addSuccess="addSuccess"
-  >
-    <template #status="item">
-      测试-{{ item.value.text.name }}
-    </template>
+    @editOpen="editOpen" @addOpen="addOpen" @editSuccess="editSuccess" @addSuccess="addSuccess">
     <template #button>
-      <a-button type="primary" style="margin-left: 20px" @click="toDetail">
-        彩蛋
+      <a-button style="margin-left: 20px" @click="toDetail">
+        插槽按钮
       </a-button>
     </template>
     <template #operationMore="item">
@@ -27,6 +22,11 @@
         </template>
       </a-dropdown>
     </template>
+
+    <template #status="item">
+      测试 {{ item.value.name }}
+    </template>
+
     <template #custom="data">
       <a-input v-model:value="data.formData[data.key]" />
     </template>
@@ -35,22 +35,32 @@
 
 <script lang="ts" setup name="el_table">
 import { useRouter } from 'vue-router'
-import { defineComponent, ref } from 'vue'
 import { addData, delData, editData, editGetData, getData, options, upload } from '@/api/table'
 import tableLayout from '@/components/tableLayout/tableLayout.vue'
+
+type Key = string | number
+
 // 列表
 const columns = [
-  { title: '序号', dataIndex: 'id' }, { title: '键名转换', dataIndex: 'user_id' }, { title: '姓名', dataIndex: 'name' },
-  { title: '年龄', dataIndex: 'age' }, { title: '住址', dataIndex: 'addr' },
-  { title: '手机号', dataIndex: 'phone' }, { title: '行业', dataIndex: 'industry' },
-  { title: '净资产(亿元)', dataIndex: 'wealth' }, { title: '状态', slots: { customRender: 'status' } },
+  { title: '序号', dataIndex: 'id' },
+  { title: '键名转换', dataIndex: 'user_id' },
+  { title: '姓名', dataIndex: 'name' },
+  { title: '年龄', dataIndex: 'age' },
+  { title: '住址', dataIndex: 'addr' },
+  { title: '手机号', dataIndex: 'phone' },
+  { title: '行业', dataIndex: 'industry' },
+  { title: '净资产(亿元)', dataIndex: 'wealth' },
+  { title: '状态', key: 'status' },
 ]
 
 // 表单
 const formItem = [
-  { title: '姓名', key: 'name', type: 'input' }, { title: '年龄', key: 'age', type: 'number' },
-  { title: '住址', key: 'addr', type: 'input' }, { title: '手机号', key: 'phone', type: 'input' },
-  { title: '行业', key: 'industry', type: 'input' }, {
+  { title: '姓名', key: 'name', type: 'input' },
+  { title: '年龄', key: 'age', type: 'number' },
+  { title: '住址', key: 'addr', type: 'input' },
+  { title: '手机号', key: 'phone', type: 'input' },
+  { title: '行业', key: 'industry', type: 'input' },
+  {
     title: '净资产',
     key: 'wealth',
     type: 'select',
@@ -68,8 +78,10 @@ const formItem = [
 
 // 筛选
 const selectItem = ref([
-  { title: '姓名', key: 'name', type: 'input', itemWidth: '290px' }, { title: '年龄', key: 'age', type: 'number', itemWidth: '290px', defaultVal: 20 },
-  { title: '住址', key: 'addr', type: 'input', itemWidth: '290px' }, { title: '日期', key: 'time', type: 'rangePicker', itemWidth: '290px' },
+  { title: '姓名', key: 'name', type: 'input', itemWidth: '290px' },
+  { title: '年龄', key: 'age', type: 'number', itemWidth: '290px', defaultVal: 20 },
+  { title: '住址', key: 'addr', type: 'input', itemWidth: '290px' },
+  { title: '日期', key: 'time', type: 'rangePicker', itemWidth: '290px' },
   { title: '行业', key: 'industry', type: 'select', options: [], optionKey: 'industry', itemWidth: '290px' },
 ])
 
@@ -91,7 +103,7 @@ const editPassword = (item: any) => {
 
 // 多选
 const selectedRowKeys = ref<any[]>([])
-const onSelectChange = (keys: []) => {
+const onSelectChange = (keys: Key[]) => {
   selectedRowKeys.value = keys
 }
 

@@ -6,7 +6,7 @@
           @succeed="selectComplete">
           <template v-for="item in (selectItem ? selectItem : [])" #[formSlot(item)]="{ formData, key }"
             :key="item.key">
-            <slot v-if="item.type === 'slot'" :key="item.key" :name="item.slotName" :form-data="formData" />
+            <slot v-if="item.type === 'slot'" :key="key" :name="item.slotName" :form-data="formData" />
           </template>
         </Form>
         <div class="table__top_select">
@@ -27,23 +27,31 @@
     </template>
     <a-table v-bind="tableProps" :row-key="rowkey" :data-source="dataSource"
       :pagination="page === true ? paging : false" :loading="loading" @change="tableChange">
-      <template #operation="item">
-        <div class="operation">
-          <a v-if="edit" @click="defaultEdit(item)">编辑</a>
-          <a-divider v-if="del" type="vertical" />
-          <a v-if="del" class="danger" @click="defaultDel(item)">删除</a>
-          <slot name="operationMore" :value="item" />
-        </div>
-      </template>
-      <template v-for="(value, key) in $slots" #[key]="item">
-        <slot :name="key" :value="item" />
+      <template #bodyCell="{ column, record }">
+        <!-- 操作 -->
+        <template v-if="column.key === 'operation'">
+          <div class="operation">
+            <a v-if="edit" @click="defaultEdit(record)">编辑</a>
+            <a-divider v-if="del" type="vertical" />
+            <a v-if="del" class="danger" @click="defaultDel(record)">删除</a>
+            <slot name="operationMore" :value="record" />
+          </div>
+        </template>
+
+        <!-- 遍历其他slot -->
+        <template v-for="(value, key) in $slots" :key="key">
+          <template v-if="column.key === key">
+            <slot :name="key" :value="record" />
+          </template>
+        </template>
       </template>
     </a-table>
   </a-card>
+
   <Modal v-if="add" ref="addModal" title="添加数据" @ok="addSubmit" @cancel="addForm.reset()">
     <Form ref="addForm" name="add" :form-item="addItem ? addItem : formItem" :rules="addRules ? addRules : rules"
       :set-data="add" :additional="addToData" @succeed="addComplete" @fail="addModal.loading(false)">
-      <template v-for="item in (addItem ? addItem : formItem)" #[formSlot(item)]="{ formData, key }">
+      <template v-for="item in (addItem ? addItem : formItem)" :key="item.key" #[formSlot(item)]="{ formData, key }">
         <slot v-if="item.type === 'slot'" :key="key" :name="item.slotName" :form-data="formData" />
       </template>
     </Form>
@@ -52,15 +60,12 @@
     <Form ref="editForm" name="edit" :data-key="editKey ? editKey : rowkey" :form-item="editItem ? editItem : formItem"
       :rules="editRules ? editRules : rules" :set-data="edit" :default-data="editDefData" @succeed="editComplete"
       @fail="editModal.loading(false)">
-      <template v-for="item in (editItem ? editItem : formItem)" #[formSlot(item)]="{ formData, key }">
+      <template v-for="item in (editItem ? editItem : formItem)" :key="item.key" #[formSlot(item)]="{ formData, key }">
         <slot v-if="item.type === 'slot'" :key="key" :name="item.slotName" :form-data="formData" />
       </template>
     </Form>
   </Modal>
 </template>
-
-<script lang="ts">
-</script>
 
 <script lang="ts" setup name="comTable">
 import { Modal as antModal, message } from 'ant-design-vue'
@@ -74,9 +79,9 @@ import type { EditData, FormItem, GetData, OptionsData, SetData } from './type'
 import Modal from './modal.vue'
 import Form from './form.vue'
 import utils from './utils'
+
 const props = defineProps({
-  ...aTableProps,
-  // 重置ant-design的columns数据类型(属于ant的ts类型定义bug,他定义的是ColumnProps对象,实质为数组嵌套ColumnProps)
+  ...aTableProps(),
   columns: {
     type: Object as PropType<TableColumnsType>,
     required: true,
@@ -215,15 +220,9 @@ const props = defineProps({
     required: false,
     default: {},
   },
-
 })
-const emit = defineEmits(['editOpen', 'addOpen', 'editSuccess', 'addSuccess'])
 
-const context = {
-  emit,
-  slots: useSlots(),
-  attrs: useAttrs(),
-}
+const emit = defineEmits(['editOpen', 'addOpen', 'editSuccess', 'addSuccess'])
 
 /** ** 表单初始化 ****/
 
@@ -231,17 +230,17 @@ const context = {
 const dataSource = ref<any[]>([])
 
 // 初始化表单配置
-const tableKeys = Object.keys(aTableProps)
+const tableKeys = Object.keys(aTableProps())
 const tableProps = computed(() => {
   const dataProps = reactive({})
-  Object.keys(props).forEach((key) => {
+  Object.keys(toRaw(props)).forEach((key) => {
     if (tableKeys.includes(key))
       dataProps[key] = props[key]
   })
   return dataProps
 })
 
-// 初始化操作栏
+// 初始化操作栏,插入一个operation列
 onBeforeMount(() => {
   if (props.operationShow && (props.del || props.edit)) {
     const action: ColumnProps = {
@@ -249,10 +248,10 @@ onBeforeMount(() => {
       width: props.operationWidth,
       key: 'operation',
       fixed: 'right',
-      slots: { customRender: 'operation' },
     }
     // 防止多次插入
-    if (!utils.arrIsKey(props.columns, 'key', 'operation'))
+    if (props.columns && (!utils.arrIsKey(props.columns, 'key', 'operation')))
+      // eslint-disable-next-line vue/no-mutating-props
       props.columns.push(action)
   }
 })
@@ -288,16 +287,26 @@ const getData = () => {
   if (props.params)
     Object.assign(params, props.params)
 
-  props.get(params).then((e) => {
-    dataSource.value = utils.addKeyIsReplace(e.data.data, props.replaceFields)
-    const { current, total, pageSize } = e.data
-    paging.current = current
-    paging.total = total
-    paging.pageSize = pageSize
-    loading.value = false
-  }).catch((err) => {
-    message.error(err.message || err.data.message)
-    loading.value = false
+  if (props.get) {
+    props.get(params).then((e) => {
+      dataSource.value = utils.addKeyIsReplace(e.data.data, props.replaceFields)
+      const { current, total, pageSize } = e.data
+      paging.current = current
+      paging.total = total
+      paging.pageSize = pageSize
+      loading.value = false
+    }).catch((err) => {
+      message.error(err.message || err.data.message)
+      loading.value = false
+    })
+  }
+}
+
+// 设置远程选项到配置项内
+const setOptions = (items: FormItem[], data: any) => {
+  items.forEach((item) => {
+    if (item.optionKey)
+      item.options = data[item.optionKey] || []
   })
 }
 
@@ -313,14 +322,6 @@ const getOptions = () => {
       message.error(err.message || err.data.message)
     })
   }
-}
-
-// 设置远程选项到配置项内
-const setOptions = (items: FormItem[], data: any) => {
-  items.forEach((item) => {
-    if (item.optionKey)
-      item.options = data[item.optionKey] || []
-  })
 }
 
 onMounted(() => {
@@ -391,7 +392,7 @@ const defaultEdit = (e: any) => {
     Object.keys(data).forEach((key) => {
       editDefData[key] = data[key]
     })
-    context.emit('editOpen', editDefData)
+    emit('editOpen', editDefData)
   }
   else {
     loading.value = true
@@ -401,7 +402,7 @@ const defaultEdit = (e: any) => {
       Object.keys(data).forEach((key) => {
         editDefData[key] = data[key]
       })
-      context.emit('editOpen', editDefData)
+      emit('editOpen', editDefData)
       loading.value = false
       editModal.value.open()
     }).catch((err) => {
@@ -420,7 +421,7 @@ const editSubmit = () => {
 // 表单编辑提交完成回调
 const editComplete = () => {
   editModal.value.close()
-  context.emit('editSuccess')
+  emit('editSuccess')
   utils.initData(props.editItem || props.formItem, editDefData)
   getData()
   getOptions()
@@ -463,7 +464,7 @@ const addModal = ref()
 // 点击表单添加按钮
 const defaultAdd = () => {
   addModal.value.open()
-  context.emit('addOpen')
+  emit('addOpen')
 }
 
 // 提交添加的数据
@@ -476,7 +477,7 @@ const addSubmit = () => {
 const addComplete = () => {
   addModal.value.close()
   addForm.value.reset()
-  context.emit('addSuccess')
+  emit('addSuccess')
   getData()
   getOptions()
 }

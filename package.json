@@ -18,7 +18,9 @@
     "pinia": "^2.0.14",
     "store": "^2.0.12",
     "vue": "^3.2.33",
-    "vue-router": "^4.0.15"
+    "vue-router": "^4.0.15",
+    "vxe-table": "^4.2.4-beta.0",
+    "xe-utils": "^3.5.4"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.23.0",
@@ -35,6 +37,7 @@
     "unplugin-icons": "^0.14.3",
     "unplugin-vue-components": "^0.19.3",
     "vite": "^2.9.8",
+    "vite-plugin-style-import": "^2.0.0",
     "vite-plugin-vue-setup-extend": "^0.4.0",
     "vue-tsc": "^0.34.11"
   }
