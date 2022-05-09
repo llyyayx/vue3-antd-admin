@@ -1,7 +1,7 @@
 <template>
   <a-layout class="layout">
     <!-- 侧边 -->
-    <a-layout-sider v-model:collapsed="collapsed" width="256" :trigger="null" collapsible>
+    <a-layout-sider v-model:collapsed="collapsed" width="256" :trigger="null" :theme="theme" collapsible>
       <LayoutMenu :collapsed="collapsed" />
     </a-layout-sider>
 
@@ -31,11 +31,15 @@ export default defineComponent({
     LayoutMenu: layoutMenu,
     LayoutHeader: layoutHeader,
     LayoutTabs: layoutTabs,
-    AIcon: aIcon,
+    // AIcon: aIcon,
   },
   setup() {
     const collapsed = ref<boolean>(false)
-    return { collapsed }
+
+    const theme = ref('dark')
+    provide('theme', theme)
+
+    return { collapsed, theme }
   },
 })
 </script>

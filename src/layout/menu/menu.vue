@@ -5,8 +5,8 @@
     </div>
     <span v-show="!collapsed">通用后台</span>
   </div>
-  <a-menu v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" theme="dark" mode="inline">
-    <create v-for="item in menuRouter" :key="item.id" :router="item" />
+  <a-menu v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" :theme="theme" mode="inline">
+    <create v-for="item in menuRouter" :key="item.name" :router="item" />
   </a-menu>
 </template>
 
@@ -22,6 +22,7 @@ defineProps({
   },
 })
 
+const theme = inject('theme')
 const menuStore = useMenuStore()
 const route = useRoute()
 const selectedKeys = ref<string[]>([])
@@ -37,7 +38,7 @@ const setMenuKey = () => {
       openKeys.value.push(item.name as string)
     })
     // 设置顶部tab(栏目)切换
-    menuStore.setId((route.matched[0].meta.id as number))
+    menuStore.setMenuTab((route.matched[0].name as string))
   }
 }
 

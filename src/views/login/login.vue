@@ -8,7 +8,7 @@
             您好!
           </div>
           <div class="login-container-title">
-            欢迎来到通用管理后台
+            欢迎来到 卡比娱乐丨北美陪玩公会
           </div>
           <a-form ref="formRef" :model="form" :rules="rules" @keyup.enter="handleSubmit">
             <a-form-item name="username">
@@ -35,7 +35,7 @@
       </a-col>
     </a-row>
     <div class="login-container-tips">
-      基于vue3+ant-design-vue+vite+ts开发的开源通用后台框架
+      卡比娱乐丨北美陪玩公会
     </div>
   </div>
 </template>

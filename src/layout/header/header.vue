@@ -5,7 +5,7 @@
       <menu-fold-outlined v-else class="trigger" @click="$emit('update:collapsed', !collapsed)" />
       <div class="group__tabs">
         <a-tabs :active-key="activeKey" @tabClick="tabClick">
-          <a-tab-pane v-for="item in routers" :key="item.id" :tab="item.name" />
+          <a-tab-pane v-for="item in routers" :key="item.name" :tab="item.meta.title || item.name" />
         </a-tabs>
       </div>
     </div>
@@ -40,6 +40,7 @@
 <script lang="ts" setup name="layoutHeader">
 import { computed, defineComponent, onBeforeMount, watch } from 'vue'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue'
+import type { RouteRecordRaw } from 'vue-router'
 import aIcon from '@/components/aicon/aicon.vue'
 import type { RouterObj, RouterTable } from '@/types/api/login'
 import { useUserStore } from '@/store/modules/user'
@@ -56,7 +57,7 @@ const userStore = useUserStore()
 const menuStore = useMenuStore()
 const router = useRouter()
 
-const activeKey = computed(() => menuStore.menuId)
+const activeKey = computed(() => menuStore.menuTabName)
 const routers = computed(() => {
   const array: any[] = []
   userStore.routers?.forEach((item: any) => {
@@ -72,15 +73,15 @@ const logout = async () => {
   router.push('/login')
 }
 // 切换tab
-const tabClick = (active: any) => {
+const tabClick = (active: string) => {
   const routers = userStore.routers || []
-  let menuRouter: RouterTable = []
-  routers.forEach((item: RouterObj) => {
-    if (item.id === active)
+  let menuRouter: RouteRecordRaw[] = []
+  routers.forEach((item) => {
+    if (item.name === active)
       menuRouter = item.children || []
   })
 
-  menuStore.setId(active)
+  menuStore.setMenuTab(active)
   menuStore.setMenu(menuRouter)
 }
 

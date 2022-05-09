@@ -2,13 +2,12 @@ import type { Component } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 import BasicLayout from '@/layout/index.vue'
 import type { RouterTable } from '@/types/api/login'
-import { RouterObj } from '@/types/api/login'
 import RouteView from '@/layout/routerView/routerView.vue'
 
 const modules = import.meta.glob('/src/views/**/*.vue')
 
 /**
- * @desc: 解析路由
+ * @desc: 解析后端传回的路由
  * @param { Array } routerMap 后台返回的路由表
  * @param { Object } 可选 路由对象
  * @return 返回RouteRecordRaw

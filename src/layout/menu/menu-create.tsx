@@ -1,7 +1,7 @@
 import type { Slots } from 'vue'
 import { defineComponent } from 'vue'
 import { MenuItem, SubMenu } from 'ant-design-vue/es/menu'
-import type { RouterObj } from '@/types/api/login'
+import type { RouteRecordRaw } from 'vue-router'
 import aIcon from '@/components/aicon/aicon.vue'
 export default defineComponent({
   components: {
@@ -14,13 +14,16 @@ export default defineComponent({
     },
   },
   render() {
-    const menuSub = (router: RouterObj) => {
+    const menuSub = (router: RouteRecordRaw) => {
+      const title = (router.meta?.title || router.name) as string
+      const icon = router.meta?.icon || 'FolderOutlined'
       return (
-        <SubMenu key={router.key}>{
+        <SubMenu key={title}>{
           {
-            title: () => [<span>{router.name}</span>],
-            icon: () => [<aIcon type={router.icon || 'FolderOutlined'} />],
+            title: () => [<span>{ title}</span>],
+            icon: () => [<aIcon type={icon} />],
             default: () => [router.children && router.children.map(item => (
+              // eslint-disable-next-line @typescript-eslint/no-use-before-define
               menuCreate(item)
             )),
             ],
@@ -29,26 +32,26 @@ export default defineComponent({
       )
     }
 
-    const menuItem = (router: RouterObj) => {
+    const menuItem = (router: RouteRecordRaw) => {
       const itemSlots: Slots = {
-        icon: () => router.icon ? [<aIcon type={router.icon || ''} />] : [],
+        icon: () => router.meta?.icon ? [<aIcon type={router.meta?.icon || ''} />] : [],
       }
       return (
-        <MenuItem v-slots={itemSlots} key={router.key}>
+        <MenuItem v-slots={itemSlots} key={router.name}>
 
-          <router-link to={router.path}>{router.name}</router-link>
+          <router-link to={router.path}>{router.meta?.title}</router-link>
 
         </MenuItem>
       )
     }
 
-    const menuCreate = (router: RouterObj) => {
-      if (router.children && !router.hidden)
+    const menuCreate = (router: RouteRecordRaw) => {
+      if (router.children && !router.meta?.hidden)
         return menuSub(router)
-      else if (!router.hidden)
+      else if (!router.meta?.hidden)
         return menuItem(router)
     }
 
-    return menuCreate(this.router as RouterObj)
+    return menuCreate(this.router as RouteRecordRaw)
   },
 })

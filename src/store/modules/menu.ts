@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia'
+import type { RouteRecordRaw } from 'vue-router'
 import { store } from '@/store'
-import type { RouterTable } from '@/types/api/login'
 
 // 侧边菜单
 
 export interface menuState {
-  menuRouter: RouterTable
-  menuId: number
+  menuRouter: RouteRecordRaw[]
+  menuTabName: string
 }
 
 export const useMenuStore = defineStore({
@@ -15,17 +15,17 @@ export const useMenuStore = defineStore({
     // 侧边菜单
     menuRouter: [],
     // 顶层id(栏目)
-    menuId: 1,
+    menuTabName: '',
   }),
   getters: {
   },
   actions: {
-    setMenu(router: RouterTable) {
-      this.menuRouter = router
+    setMenu(routers: RouteRecordRaw[]) {
+      this.menuRouter = routers
     },
 
-    setId(id: number) {
-      this.menuId = id
+    setMenuTab(name: string) {
+      this.menuTabName = name
     },
 
   },

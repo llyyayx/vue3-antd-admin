@@ -1,12 +1,15 @@
 import { defineStore } from 'pinia'
 import storage from 'store'
 import { message } from 'ant-design-vue'
-import { useMenuStore } from './menu'
+import type { RouteRecordRaw } from 'vue-router'
+import { useMenuStoreWithOut } from './menu'
 import { store } from '@/store'
-import type { RouterTable } from '@/types/api/login'
 import type { LoginFrom } from '@/types/views/login'
 import { info, login, logout, menu } from '@/api/login'
 import { generator } from '@/utils/parsingRouter'
+import { isBackend } from '@/router'
+import { setFilterHasRolesMenu } from '@/router/util'
+import { dynamicRouterMap } from '@/router/basics.router'
 
 // 处理用户登录、登出、个人信息、权限路由
 
@@ -15,7 +18,7 @@ export interface UserState {
   name: string
   avatar: string
   roles: string[]
-  routers?: RouterTable
+  routers?: RouteRecordRaw[]
 }
 
 export const useUserStore = defineStore({
@@ -29,7 +32,7 @@ export const useUserStore = defineStore({
     avatar: '',
     // 角色(鉴权)
     roles: [],
-    // 路由表(原始未解析)
+    // 路由表
     routers: [],
   }),
   getters: {
@@ -43,8 +46,8 @@ export const useUserStore = defineStore({
       this.roles = roles
     },
 
-    // 设置路由表(原始未解析)
-    setRouters(routers: RouterTable) {
+    // 设置路由表
+    setRouters(routers: RouteRecordRaw[]) {
       this.routers = routers
     },
 
@@ -53,6 +56,7 @@ export const useUserStore = defineStore({
       storage.remove('token')
       // 为了重新加载用户信息及路由组
       this.name = ''
+      this.routers = []
     },
 
     // 登录
@@ -87,18 +91,34 @@ export const useUserStore = defineStore({
     // 获取菜单
     async menu() {
       return new Promise((resolve) => {
-        menu().then((e) => {
-          const routeTable = e.data.data
-          this.setRouters(routeTable)
-          // 初始化侧边菜单
-          const menuStore = useMenuStore()
-          menuStore.setId(routeTable[0].id)
-          menuStore.setMenu(routeTable[0].children || [])
+        // 判断是否是后端控制路由
+        if (isBackend) {
+          menu().then((e) => {
+            const routeTable = e.data.data
+            const generatoredRouter = generator(routeTable)
+            this.setRouters(generatoredRouter)
 
-          resolve(generator(routeTable))
-        }).catch((err) => {
-          message.error(err.message || err.data.message)
-        })
+            // 初始化侧边菜单
+            const menuStore = useMenuStoreWithOut()
+            menuStore.setMenuTab(generatoredRouter[0].name as string)
+            menuStore.setMenu(generatoredRouter[0].children || [])
+
+            resolve(generator(routeTable))
+          }).catch((err) => {
+            message.error(err.message || err.data.message)
+          })
+        }
+        else {
+          const routes = setFilterHasRolesMenu(dynamicRouterMap, this.roles)
+          this.setRouters(routes)
+
+          // 初始化侧边菜单
+          const menuStore = useMenuStoreWithOut()
+          menuStore.setMenuTab(routes[0].name as string)
+          menuStore.setMenu((routes[0].children as any) || [])
+
+          resolve(routes)
+        }
       })
     },
 

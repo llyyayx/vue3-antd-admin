@@ -16,11 +16,14 @@ export const permission = (router: Router) => {
       }
       else {
         const userStore = useUserStoreWithOut()
+
+        // 没有加载用户信息
         if (userStore.name.length === 0) {
           userStore.userInfo().then(() => {
-            userStore.menu().then((e) => {
-              e.forEach((item) => {
-                router.addRoute(item as unknown as RouteRecordRaw)
+            // 判断是否开启后端控制路由
+            userStore.menu().then((e: any) => {
+              e.forEach((item: RouteRecordRaw) => {
+                router.addRoute(item)
               })
               router.addRoute({ path: '/:pathMatch(.*)*', redirect: '/404' })
               const redirect = from.query.redirect as string | undefined
@@ -40,10 +43,12 @@ export const permission = (router: Router) => {
       }
     }
     else {
-      if (whiteList.includes(to.path))
-        next()
-      else
+      if (whiteList.includes(to.path)) { next() }
+      else {
+        const userStore = useUserStoreWithOut()
+        userStore.clearState()
         next({ path: loginPath, query: { redirect: to.fullPath } })
+      }
     }
   })
 }
