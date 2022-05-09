@@ -4,7 +4,6 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
-import { AntdResolve, VxeTableResolve, createStyleImportPlugin } from 'vite-plugin-style-import'
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import Unocss from 'unocss/vite'
@@ -22,13 +21,6 @@ export default defineConfig({
     // https://icones.netlify.app/
     Icons({
       autoInstall: true,
-    }),
-
-    createStyleImportPlugin({
-      resolves: [
-        VxeTableResolve(),
-        AntdResolve(),
-      ],
     }),
 
     // https://github.com/antfu/unplugin-auto-import
@@ -49,14 +41,12 @@ export default defineConfig({
       include: [/\.vue$/, /\.vue\?vue/],
       dts: 'src/components.d.ts',
       resolvers: [
-        (componentName) => {
-          // where `componentName` is always CapitalCase
-          if (componentName.startsWith('Van'))
-            return { name: componentName.slice(3), from: 'vant' }
-        },
         IconsResolver(),
         VueUseComponentsResolver(),
-        AntDesignVueResolver(),
+        AntDesignVueResolver({
+          importStyle: 'less',
+          resolveIcons: true,
+        }),
       ],
     }),
 
@@ -70,6 +60,17 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
+    },
+  },
+  css: {
+    preprocessorOptions: {
+      less: {
+        modifyVars: {
+          // 此处也可设置直角、边框色、字体大小等
+          '@primary-color': '#ef94b3',
+        },
+        javascriptEnabled: true,
+      },
     },
   },
   server: {
