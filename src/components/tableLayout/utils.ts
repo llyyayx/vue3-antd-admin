@@ -12,7 +12,7 @@ export default {
     const dataComponentArray: string[] = ['rangePicker', 'checkbox']
 
     formItem.forEach((item) => {
-      if (dataComponentArray.includes(item.type))
+      if (dataComponentArray.includes(item.type))
         formData[item.key] = item.defaultVal || []
       else
         formData[item.key] = item.defaultVal || undefined
@@ -28,7 +28,9 @@ export default {
    */
   arrIsKey(arr: any[], key: string, value: string | number) {
     let result = false
-    result = arr.some((item: any) => { if (item[key] == value) { return true } })
+    result = arr.some((item: any) => {
+      return item[key] === value
+    })
     return result
   },
 
@@ -44,7 +46,7 @@ export default {
     if (replaceKeys.length > 0) {
       tableData.forEach((item: any) => {
         replaceKeys.forEach((replaceKey: string) => {
-          if (item.hasOwnProperty(replaceKey))
+          if (Object.prototype.hasOwnProperty.call(item, replaceKey))
             item[replaceFields[replaceKey]] = item[replaceKey]
         })
       })
@@ -62,7 +64,7 @@ export default {
     const replaceKeys = Object.keys(replaceFields)
     if (replaceKeys.length > 0) {
       replaceKeys.forEach((replaceKey: string) => {
-        if (obj.hasOwnProperty(replaceKey))
+        if (Object.prototype.hasOwnProperty.call(obj, replaceKey))
           obj[replaceFields[replaceKey]] = obj[replaceKey]
       })
     }

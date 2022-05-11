@@ -1,10 +1,7 @@
 <template>
   <div class="uploadFile__component">
     <a-upload
-      name="file"
-      class="file-uploader"
-      :show-upload-list="false"
-      :custom-request="customRequest"
+      name="file" class="file-uploader" :show-upload-list="false" :custom-request="customRequest"
       :disabled="disabled"
     >
       <a-button type="primary" :loading="loading">
@@ -29,8 +26,8 @@ export default defineComponent({
   emits: ['update:value', 'change'],
   props: {
     value: {
-      type: String,
-      required: false,
+      type: String,
+      required: false,
     },
     // 上传文件的api接口
     upload: {
@@ -38,9 +35,9 @@ export default defineComponent({
       required: false,
     },
     // 是否禁用
-    disabled: {
+    disabled: {
       type: Boolean,
-      required: false,
+      required: false,
     },
   },
   setup(props, context) {
@@ -86,6 +83,7 @@ export default defineComponent({
 .uploadFile__component {
   display: flex;
   align-items: flex-end;
+
   & a {
     flex-shrink: 1;
     flex-grow: 1;

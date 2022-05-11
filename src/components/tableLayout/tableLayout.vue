@@ -25,7 +25,7 @@
         <slot name="button" />
       </div>
     </template>
-    <a-table v-bind="tableProps" :row-key="rowkey" :data-source="dataSource"
+    <a-table v-bind="tableProps" :row-key="rowKey" :data-source="dataSource"
       :pagination="page === true ? paging : false" :loading="loading" @change="tableChange">
       <template #bodyCell="{ column, record }">
         <!-- 操作 -->
@@ -39,7 +39,7 @@
         </template>
 
         <!-- 遍历其他slot -->
-        <template v-for="(value, key) in $slots" :key="key">
+        <template v-for="(value, key) in $slots">
           <template v-if="column.key === key">
             <slot :name="key" :value="record" />
           </template>
@@ -57,7 +57,7 @@
     </Form>
   </Modal>
   <Modal v-if="edit" ref="editModal" title="编辑数据" @ok="editSubmit" @cancel="enditCancel">
-    <Form ref="editForm" name="edit" :data-key="editKey ? editKey : rowkey" :form-item="editItem ? editItem : formItem"
+    <Form ref="editForm" name="edit" :data-key="editKey ? editKey : rowKey" :form-item="editItem ? editItem : formItem"
       :rules="editRules ? editRules : rules" :set-data="edit" :default-data="editDefData" @succeed="editComplete"
       @fail="editModal.loading(false)">
       <template v-for="item in (editItem ? editItem : formItem)" :key="item.key" #[formSlot(item)]="{ formData, key }">
@@ -80,147 +80,149 @@ import Modal from './modal.vue'
 import Form from './form.vue'
 import utils from './utils'
 
-const props = defineProps({
-  ...aTableProps(),
-  columns: {
-    type: Object as PropType<TableColumnsType>,
-    required: true,
-  },
-  // 添加/修改_条目
-  formItem: {
-    type: Array as PropType<FormItem[]>,
-    required: false,
-    default: [] as FormItem[],
-  },
-  // 查询条目
-  selectItem: {
-    type: Array as PropType<FormItem[]>,
-    required: false,
-    default: undefined,
-  },
-  // 添加/查询_规则
-  rules: {
-    type: Object,
-    required: false,
-    default: undefined,
-  },
-  // 查询接口
-  get: {
-    type: Function as PropType<GetData>,
-    required: true,
-  },
-  // 添加接口_false不展示
-  add: {
-    type: Function as PropType<SetData>,
-    required: false,
-    default: undefined,
-  },
-  // 拉取修改数据接口_false修改前不调用
-  editData: {
-    type: Function as PropType<EditData>,
-    required: false,
-    default: undefined,
-  },
-  // 修改接口_false不展示
-  edit: {
-    type: Function as PropType<SetData>,
-    required: false,
-    default: undefined,
-  },
-  // 删除接口_false不展示
-  del: {
-    type: Function as PropType<SetData>,
-    required: false,
-    default: undefined,
-  },
-  // 取远程多选项接口
-  options: {
-    type: Function as PropType<OptionsData>,
-    required: false,
-    default: undefined,
-  },
-  // 列表/编辑/删除_主键
-  rowkey: {
-    type: String,
-    required: false,
-    default: 'id',
-  },
-  // 分页显隐
-  page: {
-    type: Boolean,
-    required: false,
-    default: true,
-  },
-  // 默认操作栏宽度
-  operationWidth: {
-    type: Number,
-    required: false,
-    default: 200,
-  },
-  // 默认操作显隐
-  operationShow: {
-    type: Boolean,
-    required: false,
-    default: true,
-  },
+const props = defineProps(
+  {
+    ...aTableProps(),
+    columns: {
+      type: Object as PropType<TableColumnsType>,
+      required: true,
+    },
+    // 添加/修改_条目
+    formItem: {
+      type: Array as PropType<FormItem[]>,
+      required: false,
+      default: [] as FormItem[],
+    },
+    // 查询条目
+    selectItem: {
+      type: Array as PropType<FormItem[]>,
+      required: false,
+      default: undefined,
+    },
+    // 添加/查询_规则
+    rules: {
+      type: Object,
+      required: false,
+      default: undefined,
+    },
+    // 查询接口
+    get: {
+      type: Function as PropType<GetData>,
+      required: true,
+    },
+    // 添加接口_false不展示
+    add: {
+      type: Function as PropType<SetData>,
+      required: false,
+      default: undefined,
+    },
+    // 拉取修改数据接口_false修改前不调用
+    editData: {
+      type: Function as PropType<EditData>,
+      required: false,
+      default: undefined,
+    },
+    // 修改接口_false不展示
+    edit: {
+      type: Function as PropType<SetData>,
+      required: false,
+      default: undefined,
+    },
+    // 删除接口_false不展示
+    del: {
+      type: Function as PropType<SetData>,
+      required: false,
+      default: undefined,
+    },
+    // 取远程多选项接口
+    options: {
+      type: Function as PropType<OptionsData>,
+      required: false,
+      default: undefined,
+    },
+    // 列表/编辑/删除_主键
+    rowKey: {
+      type: String,
+      required: false,
+      default: 'id',
+    },
+    // 分页显隐
+    page: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+    // 默认操作栏宽度
+    operationWidth: {
+      type: Number,
+      required: false,
+      default: 200,
+    },
+    // 默认操作显隐
+    operationShow: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
 
-  // 自定义设置项
+    // 自定义设置项
 
-  // 添加条目
-  addItem: {
-    type: Array as PropType<FormItem[]>,
-    required: false,
-    default: undefined,
+    // 添加条目
+    addItem: {
+      type: Array as PropType<FormItem[]>,
+      required: false,
+      default: undefined,
+    },
+    // 编辑条目
+    editItem: {
+      type: Array as PropType<FormItem[]>,
+      required: false,
+      default: undefined,
+    },
+    // 编辑主键
+    editKey: {
+      type: String,
+      required: false,
+      default: undefined,
+    },
+    // 删除主键
+    delKey: {
+      type: String,
+      required: false,
+      default: undefined,
+    },
+    // 添加规则
+    addRules: {
+      type: Object,
+      required: false,
+      default: undefined,
+    },
+    // 编辑规则
+    editRules: {
+      type: Object,
+      required: false,
+      default: undefined,
+    },
+    // 固定参数
+    params: {
+      type: Object,
+      required: false,
+      default: undefined,
+    },
+    // 添加表单额外数据
+    addToData: {
+      type: Object,
+      required: false,
+      default: () => ({}),
+    },
+    // 列表数据键名自定义映射
+    replaceFields: {
+      type: Object,
+      required: false,
+      default: () => ({}),
+    },
   },
-  // 编辑条目
-  editItem: {
-    type: Array as PropType<FormItem[]>,
-    required: false,
-    default: undefined,
-  },
-  // 编辑主键
-  editKey: {
-    type: String,
-    required: false,
-    default: undefined,
-  },
-  // 删除主键
-  delKey: {
-    type: String,
-    required: false,
-    default: undefined,
-  },
-  // 添加规则
-  addRules: {
-    type: Object,
-    required: false,
-    default: undefined,
-  },
-  // 编辑规则
-  editRules: {
-    type: Object,
-    required: false,
-    default: undefined,
-  },
-  // 固定参数
-  params: {
-    type: Object,
-    required: false,
-    default: undefined,
-  },
-  // 添加表单额外数据
-  addToData: {
-    type: Object,
-    required: false,
-    default: {},
-  },
-  // 列表数据键名自定义映射
-  replaceFields: {
-    type: Object,
-    required: false,
-    default: {},
-  },
-})
+)
 
 const emit = defineEmits(['editOpen', 'addOpen', 'editSuccess', 'addSuccess'])
 
@@ -242,7 +244,9 @@ const tableProps = computed(() => {
 
 // 初始化操作栏,插入一个operation列
 onBeforeMount(() => {
-  if (props.operationShow && (props.del || props.edit)) {
+  const hasApi = Boolean(props.del || props.edit)
+  const hasSlots = Boolean(useSlots().operationMore)
+  if (props.operationShow && (hasApi || hasSlots)) {
     const action: ColumnProps = {
       title: '操作',
       width: props.operationWidth,
@@ -289,11 +293,17 @@ const getData = () => {
 
   if (props.get) {
     props.get(params).then((e) => {
-      dataSource.value = utils.addKeyIsReplace(e.data.data, props.replaceFields)
-      const { current, total, pageSize } = e.data
-      paging.current = current
-      paging.total = total
-      paging.pageSize = pageSize
+      // 解析数据
+      if (!e.data.data)
+        return
+
+      console.log('get', e.data.data)
+      const docs = e.data.data.docs as any[]
+      dataSource.value = utils.addKeyIsReplace(docs, props.replaceFields)
+      const { page: current, totalDocs: total, limit: pageSize } = e.data.data
+      paging.current = current!
+      paging.total = total!
+      paging.pageSize = pageSize!
       loading.value = false
     }).catch((err) => {
       message.error(err.message || err.data.message)
@@ -385,19 +395,19 @@ const editModal = ref()
 const editDefData: any = reactive({})
 
 // 点击表单编辑按钮
-const defaultEdit = (e: any) => {
+const defaultEdit = (record: any) => {
   if (props.editData === undefined) {
     editModal.value.open()
-    const data = e.text
-    Object.keys(data).forEach((key) => {
-      editDefData[key] = data[key]
+
+    Object.keys(record).forEach((key) => {
+      editDefData[key] = record[key]
     })
     emit('editOpen', editDefData)
   }
   else {
     loading.value = true
-    const editKey = props.editKey || props.rowkey
-    props.editData({ [editKey]: e.text[editKey] }).then((e) => {
+    const editKey = props.editKey || props.rowKey
+    props.editData({ [editKey]: record[editKey] }).then((e) => {
       const data = utils.objKeyIsReplace(e.data.data, props.replaceFields)
       Object.keys(data).forEach((key) => {
         editDefData[key] = data[key]
@@ -435,18 +445,19 @@ const enditCancel = () => {
 /** ** 删除数据 ****/
 
 // 删除事件
-const defaultDel = (e: any) => {
+const defaultDel = (record: any) => {
   const delFun = props.del as SetData
   const data = {}
-  const key = props.delKey ? props.delKey : props.rowkey
-  data[key] = e.text[key]
+  const key = props.delKey ? props.delKey : props.rowKey
+  data[key] = record[key]
+  console.log('del', data)
   antModal.confirm({
     title: '您确定删除该条数据么？',
     content: '请谨慎选择此操作不可逆',
     icon: createVNode(QuestionCircleOutlined),
     onOk() {
       return delFun(data).then((e) => {
-        message.success(e.data.message)
+        message.success(e.data.msg)
         getData()
         getOptions()
       }).catch((err) => {

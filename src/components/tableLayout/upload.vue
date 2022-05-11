@@ -1,11 +1,7 @@
 <template>
   <a-upload
-    name="file"
-    list-type="picture-card"
-    class="avatar-uploader"
-    :show-upload-list="false"
-    :custom-request="customRequest"
-    :disabled="disabled"
+    name="file" list-type="picture-card" class="avatar-uploader" :show-upload-list="false"
+    :custom-request="customRequest" :disabled="disabled"
   >
     <a-avatar v-if="imageUrl" :size="128" shape="square" :src="imageUrl" />
     <div v-else>
@@ -21,7 +17,6 @@
 <script lang="ts">
 import { message } from 'ant-design-vue'
 import type { PropType } from 'vue'
-import { defineComponent, ref, watch } from 'vue'
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons-vue'
 import type { UploadFun } from './type'
 export default defineComponent({
@@ -32,9 +27,9 @@ export default defineComponent({
   },
   emits: ['update:value', 'change'],
   props: {
-    value: {
-      type: String,
-      required: false,
+    value: {
+      type: String,
+      required: false,
     },
     // 上传文件的api接口
     upload: {
@@ -42,9 +37,9 @@ export default defineComponent({
       required: false,
     },
     // 是否禁用
-    disabled: {
+    disabled: {
       type: Boolean,
-      required: false,
+      required: false,
     },
   },
   setup(props, context) {

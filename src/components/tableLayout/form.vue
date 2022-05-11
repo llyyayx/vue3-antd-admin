@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-form ref="formRef" :rules="rules" :model="formData" :name="name" layout="inline" class="thecomform">
+    <a-form ref="formRef" :rules="rules" :model="formData" :name="name" class="thecomform">
       <template v-for="item in formItem" :key="item.key">
         <a-form-item :label="item.title" :name="item.key" :style="{ width: item.itemWidth || 'calc(50% - 20px)' }"
           :label-col="{ span: item.labelCol ? item.labelCol : 6 }"
@@ -62,8 +62,6 @@
 import { message } from 'ant-design-vue'
 import type { PropType } from 'vue'
 import utils from './utils'
-import Upload from './upload.vue'
-import UploadFile from './uploadFile.vue'
 import type { FormItem, SetData } from './type'
 
 export default defineComponent({
@@ -94,19 +92,19 @@ export default defineComponent({
     rules: {
       type: Object,
       required: false,
-      default: {},
+      default: () => ({}),
     },
     // 初始化数据(编辑)
     defaultData: {
       type: Object,
       required: false,
-      default: {},
+      default: () => ({}),
     },
     // 表单额外追加数据
     additional: {
       type: Object,
       required: false,
-      default: {},
+      default: () => ({}),
     },
   },
   emits: ['succeed', 'fail'],
@@ -135,8 +133,10 @@ export default defineComponent({
     const onSubmit = () => {
       formRef.value.validate().then(() => {
         Object.assign(formData.value, props.additional)
+        console.log(formData.value)
         props.setData(formData.value).then((e) => {
-          message.success(e.data.message)
+          console.log('add', e)
+          message.success(e.data.msg)
           emit('succeed', e)
         }).catch((err) => {
           message.error(err.message || err.data.message)
