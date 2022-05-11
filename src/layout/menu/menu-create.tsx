@@ -46,7 +46,7 @@ export default defineComponent({
     }
 
     const menuCreate = (router: RouteRecordRaw) => {
-      if (router.children && !router.meta?.hidden)
+      if (router.children && router.children.length > 0 && !router.meta?.hidden)
         return menuSub(router)
       else if (!router.meta?.hidden)
         return menuItem(router)

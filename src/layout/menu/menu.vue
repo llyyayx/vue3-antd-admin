@@ -11,10 +11,25 @@
 </template>
 
 <script lang="ts" setup name="layoutMenu">
+import type { RouteRecordRaw } from 'vue-router'
 import { useRoute } from 'vue-router'
 import create from './menu-create'
 import aIcon from '@/components/aicon/aicon.vue'
 import { useMenuStore } from '@/store/modules/menu'
+
+// 过滤 meta.hidden 为true的路由, 递归children
+function filterMenu(menu: RouteRecordRaw[]) {
+  return menu.filter((item) => {
+    if (item.meta && item.meta.hidden)
+      return false
+
+    if (item.children)
+      item.children = filterMenu(item.children)
+
+    return true
+  })
+}
+
 defineProps({
   collapsed: {
     required: true,
@@ -27,8 +42,9 @@ const menuStore = useMenuStore()
 const route = useRoute()
 const selectedKeys = ref<string[]>([])
 const openKeys = ref<string[]>([])
+
 const menuRouter = computed(() => {
-  return menuStore.menuRouter
+  return filterMenu(menuStore.menuRouter)
 })
 const setMenuKey = () => {
   if (!route.meta.hidden) {
