@@ -1,13 +1,12 @@
 import { App } from 'vue'
+import { createRouter, createWebHistory } from 'vue-router'
 import { permission } from './permission'
 import { constantRouterMap } from './basics.router'
-import { createRouter, createWebHistory } from 'vue-router'
-
 
 // 实例化路由
 const router = createRouter({
   history: createWebHistory('/'),
-  routes: constantRouterMap
+  routes: constantRouterMap,
 })
 
 permission(router)

@@ -1,52 +1,54 @@
-import { defineComponent, Slots } from "vue"
-import { RouterObj } from '@/types/api/login'
+import type { Slots } from 'vue'
+import { defineComponent } from 'vue'
+import { MenuItem, SubMenu } from 'ant-design-vue/es/menu'
+import type { RouterObj } from '@/types/api/login'
 import aIcon from '@/components/aicon/aicon.vue'
 export default defineComponent({
   components: {
-    aIcon
+    AIcon: aIcon,
   },
   props: {
     router: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
-  render () {
+  render() {
     const menuSub = (router: RouterObj) => {
-      const subSlots: Slots = {
-        title: () => [<span>{ router.name }</span>],
-        icon: () => [<aIcon type= { router.icon || 'FolderOutlined' } />] 
-      }
       return (
-        <a-sub-menu v-slots={ subSlots } key={ router.key }>
-          { 
-            router.children && router.children.map(item => (
+        <SubMenu key={router.key}>{
+          {
+            title: () => [<span>{router.name}</span>],
+            icon: () => [<aIcon type={router.icon || 'FolderOutlined'} />],
+            default: () => [router.children && router.children.map(item => (
               menuCreate(item)
-            )) 
+            )),
+            ],
           }
-        </a-sub-menu>
+        }</SubMenu>
       )
     }
 
     const menuItem = (router: RouterObj) => {
       const itemSlots: Slots = {
-        icon: () => router.icon ? [<aIcon type= { router.icon || '' } />] : []
+        icon: () => router.icon ? [<aIcon type={router.icon || ''} />] : [],
       }
       return (
-        <a-menu-item v-slots={ itemSlots } key={ router.key }>
-          <router-link to={ router.path }>{ router.name }</router-link>
-        </a-menu-item>
+        <MenuItem v-slots={itemSlots} key={router.key}>
+
+          <router-link to={router.path}>{router.name}</router-link>
+
+        </MenuItem>
       )
     }
 
     const menuCreate = (router: RouterObj) => {
-      if (router.children && !router.hidden) {
+      if (router.children && !router.hidden)
         return menuSub(router)
-      } else if (!router.hidden) {
+      else if (!router.hidden)
         return menuItem(router)
-      }
     }
 
     return menuCreate(this.router as RouterObj)
-  }
+  },
 })
