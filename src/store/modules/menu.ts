@@ -1,37 +1,37 @@
-import { RouterTable } from '@/types/api/login'
+import { defineStore } from 'pinia'
+import type { RouteRecordRaw } from 'vue-router'
+import { store } from '@/store'
 
 // 侧边菜单
 
-export type menuState = {
-  menuRouter: RouterTable,
-  menuId: number
+export interface menuState {
+  menuRouter: RouteRecordRaw[]
+  menuTabName: string
 }
 
-const state: menuState = {
-  // 侧边菜单
-  menuRouter: [],
-  // 顶层id(栏目)
-  menuId: 1
-}
-
-const menu = {
-
-  namespaced: true,
-
-  state,
-
-  mutations: {
-
-    setMenu (state: menuState, router: RouterTable) {
-      state.menuRouter = router
+export const useMenuStore = defineStore({
+  id: 'app-menu',
+  state: (): menuState => ({
+    // 侧边菜单
+    menuRouter: [],
+    // 顶层id(栏目)
+    menuTabName: '',
+  }),
+  getters: {
+  },
+  actions: {
+    setMenu(routers: RouteRecordRaw[]) {
+      this.menuRouter = routers
     },
 
-    setId (state: menuState, id: number) {
-      state.menuId = id
-    }
-    
-  }
+    setMenuTab(name: string) {
+      this.menuTabName = name
+    },
 
+  },
+})
+
+// Need to be used outside the setup
+export function useMenuStoreWithOut() {
+  return useMenuStore(store)
 }
-
-export default menu

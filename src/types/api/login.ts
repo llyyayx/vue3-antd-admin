@@ -1,5 +1,5 @@
-import { ResponseData } from './public'
-import { UserState } from '@/store/modules/user'
+import type { ResponseData } from './public'
+import type { UserState } from '@/store/modules/user'
 
 // 登录接口约束
 export interface LoginSuccess extends ResponseData {
@@ -13,16 +13,16 @@ export interface UserInfo extends ResponseData {
 
 // 路由对象约束
 export interface RouterObj {
-  id: number,
-  path: string,
-  name: string,
-  component: string,
-  key: string,
-  redirect?: string,
-  icon?: string,
-  children?: RouterObj[],
-  pid?: number,
-  hidden?: boolean,
+  id: number
+  path: string
+  name: string
+  component: string
+  key: string
+  redirect?: string
+  icon?: string
+  children?: RouterObj[]
+  pid?: number
+  hidden?: boolean
   keepAlive?: boolean
 }
 

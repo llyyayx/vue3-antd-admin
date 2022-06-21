@@ -1,133 +1,144 @@
+import { defineStore } from 'pinia'
 import storage from 'store'
-import { AllState } from '../index'
-import { ActionContext } from 'vuex'
 import { message } from 'ant-design-vue'
-import { LoginFrom } from '@/types/views/login'
-import { RouterTable } from '@/types/api/login'
+import type { RouteRecordRaw } from 'vue-router'
+import { useMenuStoreWithOut } from './menu'
+import { store } from '@/store'
+import type { LoginFrom } from '@/types/views/login'
+import { info, login, logout, menu } from '@/api/login'
 import { generator } from '@/utils/parsingRouter'
-import { login, info, menu, logout } from '@/api/login'
+import { isBackend } from '@/router'
+import { setFilterHasRolesMenu } from '@/router/util'
+import { dynamicRouterMap } from '@/router/basics.router'
 
 // 处理用户登录、登出、个人信息、权限路由
 
-export type UserState = {
-  token: string,
-  name: string,
-  avatar: string,
-  roles: string[],
-  routers?: RouterTable
+export interface UserState {
+  token: string
+  name: string
+  avatar: string
+  roles: string[]
+  routers?: RouteRecordRaw[]
 }
 
-const state: UserState = {
-  // 标识
-  token: storage.get('token'),
-  // 昵称
-  name: '',
-  // 头像
-  avatar: '',
-  // 角色(鉴权)
-  roles: [],
-  // 路由表(原始未解析)
-  routers: []
-}
-
-const user = {
-
-  namespaced: true,
-
-  state,
-
-  mutations: {
-
-    // 设置token
-    setToken (state: UserState, token: string) {
-      state.token = token
-    },
-    
+export const useUserStore = defineStore({
+  id: 'app-user',
+  state: (): UserState => ({
+    // 标识
+    token: storage.get('token'),
+    // 昵称
+    name: '',
+    // 头像
+    avatar: '',
+    // 角色(鉴权)
+    roles: [],
+    // 路由表
+    routers: [],
+  }),
+  getters: {
+  },
+  actions: {
     // 设置用户信息
-    setInfo (state: UserState, info: UserState) {
+    setInfo(info: UserState) {
       const { name, avatar, roles } = info
-      state.name = name
-      state.avatar = avatar
-      state.roles = roles
+      this.name = name
+      this.avatar = avatar
+      this.roles = roles
     },
 
-    // 设置路由表(原始未解析)
-    setRouters (state: UserState, routers: RouterTable) {
-      state.routers = routers
+    // 设置路由表
+    setRouters(routers: RouteRecordRaw[]) {
+      this.routers = routers
     },
 
     // 用户退出登录
-    clearState (state: UserState) {
+    clearState() {
       storage.remove('token')
       // 为了重新加载用户信息及路由组
-      state.name = ''
-    }
-  
-  },
-
-  actions: {
+      this.name = ''
+      this.routers = []
+    },
 
     // 登录
-    login (context: ActionContext<UserState, AllState>, params: LoginFrom) {
+    async login(params: LoginFrom) {
       return new Promise((resolve, reject) => {
-        login(params).then(e => {
-          const data = e.data
+        login(params).then((res) => {
+          const { data } = res
           storage.set('token', data.token)
-          context.commit('setToken', data.token)
+          this.token = data.token
           resolve(data)
-        }).catch(err => {
+        }).catch((err) => {
           reject(err)
         })
       })
     },
 
     // 获取用户信息
-    userInfo (context: ActionContext<UserState, AllState>) {
+    async userInfo() {
       return new Promise((resolve, reject) => {
-        info().then(e => {
-          const info = e.data.info 
-          context.commit('setInfo', info)
+        info().then((e) => {
+          const info = e.data.info
+          this.setInfo(info)
           resolve(e)
-        }).catch(err => {
+        }).catch((err) => {
           message.error(err.message || err.data.message)
-          if (err.data && err.data.code !== -401) {
+          if (err.data && err.data.code !== -401)
             reject(err)
-          }
         })
       })
     },
 
     // 获取菜单
-    menu (context: ActionContext<UserState, AllState>) {
+    async menu() {
       return new Promise((resolve) => {
-        menu().then(e => {
-          const routeTable = e.data.data
-          context.commit('setRouters', routeTable)
+        // 判断是否是后端控制路由
+        if (isBackend) {
+          menu().then((e) => {
+            const routeTable = e.data.data
+            const generatoredRouter = generator(routeTable)
+            this.setRouters(generatoredRouter)
+
+            // 初始化侧边菜单
+            const menuStore = useMenuStoreWithOut()
+            menuStore.setMenuTab(generatoredRouter[0].name as string)
+            menuStore.setMenu(generatoredRouter[0].children || [])
+
+            resolve(generator(routeTable))
+          }).catch((err) => {
+            message.error(err.message || err.data.message)
+          })
+        }
+        else {
+          const routes = setFilterHasRolesMenu(dynamicRouterMap, this.roles)
+          this.setRouters(routes)
+
           // 初始化侧边菜单
-          context.rootState.menu.menuRouter = routeTable[0]['children'] || []
-          context.rootState.menu.menuId = routeTable[0]['id']
-          resolve(generator(routeTable))
-        }).catch(err => {
-          message.error(err.message || err.data.message)
-        })
+          const menuStore = useMenuStoreWithOut()
+          menuStore.setMenuTab(routes[0].name as string)
+          menuStore.setMenu((routes[0].children as any) || [])
+
+          resolve(routes)
+        }
       })
     },
 
     // 退出登录
-    logout (context: ActionContext<UserState, AllState>) {
+    async logout() {
       return new Promise((resolve, reject) => {
-        logout().then(e => {
-          context.commit('clearState')
+        logout().then((e) => {
+          this.clearState()
           resolve(e)
-        }).catch(err => {
+        }).catch((err) => {
           message.error(err.message || err.data.message)
           reject(err)
         })
       })
-    }
+    },
 
-  }
+  },
+})
 
+// Need to be used outside the setup
+export function useUserStoreWithOut() {
+  return useUserStore(store)
 }
-
-export default user

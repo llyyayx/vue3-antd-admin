@@ -1,9 +1,9 @@
-import { ResponseData } from './public'
+import type { ResponseData } from './public'
 
 export interface TableList extends ResponseData {
-  total: number,
-  current: number,
-  pageSize: number,
+  total: number
+  current: number
+  pageSize: number
   data: []
 }
 

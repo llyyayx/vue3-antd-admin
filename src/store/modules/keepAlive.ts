@@ -1,30 +1,29 @@
-// 路由缓存(白)名单
+import { defineStore } from 'pinia'
+import { store } from '@/store'
 
-export type keepAliveState = {
+// 侧边菜单
+
+export interface keepAliveState {
   includeList: string[]
 }
 
-const state: keepAliveState = {
-  // 需缓存路由名称
-  includeList: []
+export const useKeepAliveStore = defineStore({
+  id: 'app-keepAlive',
+  state: (): keepAliveState => ({
+    // 需缓存路由名称
+    includeList: [],
+  }),
+  getters: {
+  },
+  actions: {
+    setKeepAlive(routeName: string) {
+      if (routeName && !this.includeList.includes(routeName))
+        this.includeList.push(routeName)
+    },
+  },
+})
+
+// Need to be used outside the setup
+export function useKeepAliveStoreWithOut() {
+  return useKeepAliveStore(store)
 }
-
-const keepAlive = {
-
-  namespaced: true,
-
-  state,
-
-  mutations: {
-
-    setKeepAlive (state: keepAliveState, routeName: string) {
-      if (routeName && !state.includeList.includes(routeName)) {
-        state.includeList.push(routeName)
-      }
-    }
-
-  }
-
-}
-
-export default keepAlive

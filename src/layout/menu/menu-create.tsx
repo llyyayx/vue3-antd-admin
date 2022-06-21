@@ -1,52 +1,57 @@
-import { defineComponent, Slots } from "vue"
-import { RouterObj } from '@/types/api/login'
+import type { Slots } from 'vue'
+import { defineComponent } from 'vue'
+import { MenuItem, SubMenu } from 'ant-design-vue/es/menu'
+import type { RouteRecordRaw } from 'vue-router'
 import aIcon from '@/components/aicon/aicon.vue'
 export default defineComponent({
   components: {
-    aIcon
+    AIcon: aIcon,
   },
   props: {
     router: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
-  render () {
-    const menuSub = (router: RouterObj) => {
-      const subSlots: Slots = {
-        title: () => [<span>{ router.name }</span>],
-        icon: () => [<aIcon type= { router.icon || 'FolderOutlined' } />] 
-      }
+  render() {
+    const menuSub = (router: RouteRecordRaw) => {
+      const title = (router.meta?.title || router.name) as string
+      const icon = router.meta?.icon || 'FolderOutlined'
       return (
-        <a-sub-menu v-slots={ subSlots } key={ router.key }>
-          { 
-            router.children && router.children.map(item => (
+        <SubMenu key={title}>{
+          {
+            title: () => [<span>{ title}</span>],
+            icon: () => [<aIcon type={icon} />],
+            default: () => [router.children && router.children.map(item => (
+              // eslint-disable-next-line @typescript-eslint/no-use-before-define
               menuCreate(item)
-            )) 
+            )),
+            ],
           }
-        </a-sub-menu>
+        }</SubMenu>
       )
     }
 
-    const menuItem = (router: RouterObj) => {
+    const menuItem = (router: RouteRecordRaw) => {
       const itemSlots: Slots = {
-        icon: () => router.icon ? [<aIcon type= { router.icon || '' } />] : []
+        icon: () => router.meta?.icon ? [<aIcon type={router.meta?.icon || ''} />] : [],
       }
       return (
-        <a-menu-item v-slots={ itemSlots } key={ router.key }>
-          <router-link to={ router.path }>{ router.name }</router-link>
-        </a-menu-item>
+        <MenuItem v-slots={itemSlots} key={router.name}>
+
+          <router-link to={router.path}>{router.meta?.title}</router-link>
+
+        </MenuItem>
       )
     }
 
-    const menuCreate = (router: RouterObj) => {
-      if (router.children && !router.hidden) {
+    const menuCreate = (router: RouteRecordRaw) => {
+      if (router.children && router.children.length > 0 && !router.meta?.hidden)
         return menuSub(router)
-      } else if (!router.hidden) {
+      else if (!router.meta?.hidden)
         return menuItem(router)
-      }
     }
 
-    return menuCreate(this.router as RouterObj)
-  }
+    return menuCreate(this.router as RouteRecordRaw)
+  },
 })

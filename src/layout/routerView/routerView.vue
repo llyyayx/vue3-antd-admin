@@ -5,15 +5,12 @@
     </keep-alive>
   </router-view>
 </template>
-<script lang="ts">
-import { mapState } from 'vuex'
-import { defineComponent } from 'vue'
-export default defineComponent({
-  name: 'layoutView',
-  computed: {
-    ...mapState({
-      includeList: (state: any) => state.keepAlive.includeList
-    })
-  }
-})
+
+<script lang="ts" setup name="LayoutView">
+import { useKeepAliveStore } from '@/store/modules/keepAlive'
+
+const keepAliveStore = useKeepAliveStore()
+
+const includeList = computed(() => keepAliveStore.includeList)
 </script>
+
