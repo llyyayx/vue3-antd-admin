@@ -11,7 +11,7 @@
     v-model:selectedKeys="selectedKeys"
     v-model:openKeys="openKeys"
   >
-    <create :router="item" v-for="item in menuRouter" />
+    <create :router="item" v-for="item in menuRouter" :key="item.id" />
   </a-menu>
 </template>
 <script lang="ts">
